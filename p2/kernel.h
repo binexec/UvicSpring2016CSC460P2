@@ -2,8 +2,7 @@
 #define OS_INTERNAL_H_
 
 //Global configurations
-#define WORKSPACE     256
-#define MAXPROCESS   4
+#define TICK_LENG 157			//The length of a tick = 10ms, using 16Mhz clock and /8 prescsaler
 
 //Misc macros
 #define Disable_Interrupt()		asm volatile ("cli"::)
@@ -26,7 +25,8 @@ typedef enum process_states
    DEAD = 0, 
    READY, 
    RUNNING,
-   SUSPENDED 
+   SUSPENDED,
+   SLEEPING 
 } PROCESS_STATES;
 
 typedef enum kernel_request_type 
@@ -36,7 +36,8 @@ typedef enum kernel_request_type
    YIELD,
    TERMINATE,
    SUSPEND,
-   RESUME
+   RESUME,
+   SLEEP
 } KERNEL_REQUEST_TYPE;
 
 
@@ -47,7 +48,7 @@ typedef struct ProcessDescriptor
    PRIORITY pri;							//The priority of this task, from 0 (highest) to 10 (lowest).
    PROCESS_STATES state;					//What's the current state of this task?
    KERNEL_REQUEST_TYPE request;				//What the task want the kernel to do (when needed).
-   int request_arg;							//What value is needed for the specified kernel request.
+   volatile int request_arg;							//What value is needed for the specified kernel request.
    int arg;									//Initial argument for the task (if specified).
    unsigned char *sp;						//stack pointer into the "workSpace".
    unsigned char workSpace[WORKSPACE];		//Data memory allocated to this process.

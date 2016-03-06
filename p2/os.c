@@ -15,7 +15,8 @@ extern void CSwitch();
 extern void Exit_Kernel();
 extern void Enter_Kernel();
 
-static PD Process[MAXPROCESS];					//Contains the process descriptor for all tasks, regardless of their current state.
+volatile static PD Process[MAXTHREAD];					//Contains the process descriptor for all tasks, regardless of their current state.
+
 volatile static PD* Cp;							//The process descriptor of the currently RUNNING task. CP is used to pass information from OS calls to the kernel telling it what to do.
 volatile unsigned char *KernelSp;				//Pointer to the Kernel's own stack location.
 volatile unsigned char *CurrentSp;				//Pointer to the stack location of the current running task. Used for saving into PD during ctxswitch.
@@ -24,7 +25,6 @@ volatile static unsigned int KernelActive;		//Indicates if kernel has been initi
 volatile static unsigned int Tasks;				//Number of tasks created so far .
 volatile static unsigned int last_PID = 0;		//Highest PID value created so far.
 volatile static ERROR_TYPE err = NO_ERR;		//Error code for the previous kernel operation (if any)
-
 
 
 /************************************************************************/
@@ -36,7 +36,7 @@ PD* findProcessByPID(int pid)
 {
 	int i;
 	
-	for(i=0; i<MAXPROCESS; i++)
+	for(i=0; i<MAXTHREAD; i++)
 	{
 		if (Process[i].pid == pid)
 			return &(Process[i]);
@@ -45,13 +45,12 @@ PD* findProcessByPID(int pid)
 	//No process with such PID
 	return NULL;
 }
-
 /*Returns the PID associated with a function's memory address*/
 int findPIDByFuncPtr(voidfuncptr f)
 {
 	int i;
 	
-	for(i=0; i<MAXPROCESS; i++)
+	for(i=0; i<MAXTHREAD; i++)
 	{
 		if (Process[i].code == f)
 			return Process[i].pid;
@@ -65,21 +64,48 @@ int findPIDByFuncPtr(voidfuncptr f)
 /*                           KERNEL FUNCTIONS                           */
 /************************************************************************/
 
+//This ISR processes all tasks that are currently sleeping, waking them up when their tick expires
+ISR(TIMER1_COMPA_vect)
+{
+	int i;
+	int temp;
+	for(i=0; i<MAXTHREAD; i++)
+	{
+		//Ignore any processes that's not SLEEPING
+		if(Process[i].state == SLEEPING)
+		{
+			//If the current sleeping task's tick count expires, put it back into its READY state
+			if(--Process[i].request_arg <= 0)
+				Process[i].state = READY;
+		}
+	}
+}
+
 /* This internal kernel function is a part of the "scheduler". It chooses the next task to run, i.e., Cp. */
 static void Dispatch()
 {
-   //Find the next READY task.
-   //Note: if there is no READY task, then this will loop forever!.
-   while(Process[NextP].state != READY) {
-      NextP = (NextP + 1) % MAXPROCESS;
+   int i = 0;
+   
+   //Find the next READY task by iterating through the process list
+   while(Process[NextP].state != READY) 
+   {
+      NextP = (NextP + 1) % MAXTHREAD;
+	  i++;
+	  
+	  //Not a single task is ready. We'll temporarily re-enable interrupt in case if one or more task is waiting on events/interrupts or sleeping
+	  if(i > MAXTHREAD) Enable_Interrupt();
    }
+   
+   //Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
+   Disable_Interrupt();
 	
    //Load the task's process descriptor into Cp
    Cp = &(Process[NextP]);
    CurrentSp = Cp->sp;
    Cp->state = RUNNING;
-
-   NextP = (NextP + 1) % MAXPROCESS;
+	
+	//Increment NextP so the next dispatch will not run the same process (unless everything else isn't ready)
+   NextP = (NextP + 1) % MAXTHREAD;
 }
 
 /* Handles all low level operations for creating a new task */
@@ -94,14 +120,14 @@ static void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 	#endif
 	
 	//Make sure the system can still have enough resources to create more tasks
-	if (Tasks == MAXPROCESS)
+	if (Tasks == MAXTHREAD)
 	{
 		err = MAX_PROCESS_ERR;
 		return;
 	}
 
 	//Find a dead or empty PD slot to allocate our new task
-	for (x = 0; x < MAXPROCESS; x++)
+	for (x = 0; x < MAXTHREAD; x++)
 	if (Process[x].state == DEAD) break;
 	
 	++Tasks;
@@ -224,7 +250,7 @@ static void Next_Kernel_Request()
 	{
 		//Clears the process' request fields
 		Cp->request = NONE;
-		Cp->request_arg = 0;
+		//Cp->request_arg is not reset, because task_sleep uses it to keep track of remaining ticks
 
 		//Load the current task's stack pointer and switch to its context
 		CurrentSp = Cp->sp;
@@ -253,6 +279,11 @@ static void Next_Kernel_Request()
 			case RESUME:
 			Kernel_Resume_Task();
 			break;
+			
+			case SLEEP:
+			Cp->state = SLEEPING;
+			Dispatch();					
+			break;
 		   
 			case YIELD:
 			case NONE:					// NONE could be caused by a timer interrupt
@@ -274,6 +305,24 @@ static void Next_Kernel_Request()
 /*						   RTOS API FUNCTIONS                           */
 /************************************************************************/
 
+/*Sets up the timer needed for task_sleep*/
+void Timer_init()
+{
+	/*Timer1 is configured for the task*/
+	
+	//Use Prescaler = 1024
+	TCCR1B |= (1<<CS12)|(1<<CS10);
+	TCCR1B &= ~(1<<CS11);
+
+	//Use CTC mode (mode 4)
+	TCCR1B |= (1<<WGM12);
+	TCCR1B &= ~((1<<WGM13)|(1<<WGM11)|(1<<WGM10));
+	
+	OCR1A = TICK_LENG;			//Set timer top comparison value to ~10ms
+	TCNT1 = 0;					//Load initial value for timer
+	TIMSK1 |= (1<<OCIE1A);      //enable match for OCR1A interrupt       
+}
+
 /*This function initializes the RTOS and must be called before any othersystem calls.*/
 void OS_Init() 
 {
@@ -282,9 +331,11 @@ void OS_Init()
    Tasks = 0;
    KernelActive = 0;
    NextP = 0;
+   
 	//Reminder: Clear the memory for the task on creation.
-   for (x = 0; x < MAXPROCESS; x++) {
-      memset(&(Process[x]),0,sizeof(PD));
+  
+   for (x = 0; x < MAXTHREAD; x++) {
+      memset(&(Process[x]), 0, sizeof(PD));
       Process[x].state = DEAD;
    }
 }
@@ -292,8 +343,13 @@ void OS_Init()
 /* This function starts the RTOS after creating a few tasks.*/
 void OS_Start() 
 {   
-   if ( (! KernelActive) && (Tasks > 0)) {
+   if ( (! KernelActive) && (Tasks > 0)) 
+   {
        Disable_Interrupt();
+	   
+	   /*Initialize and start Timer needed for sleep*/
+	   Timer_init();
+	   
       /* we may have to initialize the interrupt vector for Enter_Kernel() here. */
 
       /* here we go...  */
@@ -316,10 +372,11 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
 	 Cp->arg = arg;
      Cp->request = CREATE;
      Cp->code = f;
+
      Enter_Kernel();
    } 
    else 
-       Kernel_Create_Task(f,py,arg);		//If kernel hasn't started yet, manually create the task
+	   Kernel_Create_Task(f,py,arg);		//If kernel hasn't started yet, manually create the task
    
    //Return zero as PID if the task creation process gave errors. Note that the smallest valid PID is 1
    if (err == MAX_PROCESS_ERR)
@@ -376,6 +433,7 @@ void Task_Suspend(PID p)
 	//Sets up the kernel request fields in the PD for this task
 	Cp->request = SUSPEND;
 	Cp->request_arg = p;
+	//printf("SUSPENDING: %u\n", Cp->request_arg);
 	Enter_Kernel();
 }
 
@@ -390,6 +448,22 @@ void Task_Resume(PID p)
 	//Sets up the kernel request fields in the PD for this task
 	Cp->request = RESUME;
 	Cp->request_arg = p;
+	//printf("RESUMING: %u\n", Cp->request_arg);
+	Enter_Kernel();
+}
+
+void Task_Sleep(int t)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+	Disable_Interrupt();
+	
+	Cp->request_arg = t;
+	Cp->request = SLEEP;
+
+	//printf("%u ticks\n", Cp->request_arg);
 	Enter_Kernel();
 }
 
@@ -411,7 +485,8 @@ void Ping()
 	{
 		PORTB |= LED_PIN_MASK;		//Turn on onboard LED
 		printf("PING!\n");
-		_delay_ms(100);
+		//_delay_ms(100);
+		Task_Sleep(10);
 		Task_Yield();
 	}
 }
@@ -422,7 +497,8 @@ void Pong()
 	{
 		PORTB &= ~LED_PIN_MASK;		//Turn off onboard LED
 		printf("PONG!\n");
-		_delay_ms(100);
+		//_delay_ms(100);
+		Task_Sleep(10);
 		Task_Yield();
 	}
 }
@@ -431,12 +507,14 @@ void suspend_pong()
 {
 	for(;;)
 	{
-		_delay_ms(1000);
+		//_delay_ms(1000);
+		Task_Sleep(10);
 		printf("SUSPENDING PONG!\n");
 		Task_Suspend(findPIDByFuncPtr(Pong));
 		Task_Yield();
 		
-		_delay_ms(1000);
+		//_delay_ms(1000);
+		Task_Sleep(10);
 		printf("RESUMING PONG!\n");
 		Task_Resume(findPIDByFuncPtr(Pong));
 		Task_Yield();
@@ -456,8 +534,8 @@ void main()
    testSetup();
    
    OS_Init();
-   Task_Create(Ping, 10, 0);
-   Task_Create(Pong, 10, 0);
+   Task_Create(Ping, 10, 210);
+   Task_Create(Pong, 10, 205);
    Task_Create(suspend_pong, 10, 0);
    OS_Start();
    

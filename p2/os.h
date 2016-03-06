@@ -31,7 +31,7 @@ int  Task_GetArg(void);
 void Task_Suspend( PID p );          
 void Task_Resume( PID p );
 
-void Task_Sleep(TICK t);  // sleep time is at least t*MSECPERTICK
+//void Task_Sleep(TICK t);  // sleep time is at least t*MSECPERTICK
 
 MUTEX Mutex_Init(void);
 void Mutex_Lock(MUTEX m);
