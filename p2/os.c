@@ -1,29 +1,65 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include <string.h>
-#include "os_internal.h"
+#include "os.h"
+#include "kernel.h"
 
 #define DEBUG
 
 #ifdef DEBUG
-#include "uart/uart.h"
+	#include "uart/uart.h"
+	#include <string.h>
 #endif 
 
 extern void CSwitch();
 extern void Exit_Kernel();
 extern void Enter_Kernel();
-void Task_Terminate(void);
 
 static PD Process[MAXPROCESS];					//Contains the process descriptor for all tasks, regardless of their current state.
-volatile static PD* Cp;							//The process descriptor of the currently RUNNING task. CP is used to pass information to the kernel telling it what to do.
+volatile static PD* Cp;							//The process descriptor of the currently RUNNING task. CP is used to pass information from OS calls to the kernel telling it what to do.
 volatile unsigned char *KernelSp;				//Pointer to the Kernel's own stack location.
 volatile unsigned char *CurrentSp;				//Pointer to the stack location of the current running task. Used for saving into PD during ctxswitch.
 volatile static unsigned int NextP;				//Which task in the process queue to dispatch next.
 volatile static unsigned int KernelActive;		//Indicates if kernel has been initialzied by OS_Start().
 volatile static unsigned int Tasks;				//Number of tasks created so far .
 volatile static unsigned int last_PID = 0;		//Highest PID value created so far.
-volatile static unsigned int err = NO_ERR;		//Error code for the previous kernel operation (if any)
+volatile static ERROR_TYPE err = NO_ERR;		//Error code for the previous kernel operation (if any)
+
+
+
+/************************************************************************/
+/*						    KERNEL HELPERS                              */
+/************************************************************************/
+
+/*Returns the pointer of a process descriptor in the global process list, by searching for its PID*/
+PD* findProcessByPID(int pid)
+{
+	int i;
+	
+	for(i=0; i<MAXPROCESS; i++)
+	{
+		if (Process[i].pid == pid)
+			return &(Process[i]);
+	}
+	
+	//No process with such PID
+	return NULL;
+}
+
+/*Returns the PID associated with a function's memory address*/
+int findPIDByFuncPtr(voidfuncptr f)
+{
+	int i;
+	
+	for(i=0; i<MAXPROCESS; i++)
+	{
+		if (Process[i].code == f)
+			return Process[i].pid;
+	}
+	
+	//No process with such PID
+	return -1;
+}
 
 /************************************************************************/
 /*                           KERNEL FUNCTIONS                           */
@@ -37,7 +73,8 @@ static void Dispatch()
    while(Process[NextP].state != READY) {
       NextP = (NextP + 1) % MAXPROCESS;
    }
-
+	
+   //Load the task's process descriptor into Cp
    Cp = &(Process[NextP]);
    CurrentSp = Cp->sp;
    Cp->state = RUNNING;
@@ -104,10 +141,69 @@ static void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 	p->arg = arg;
 	p->request = NONE;
 	p->state = READY;
-	p->sp = sp;				/* stack pointer into the "workSpace" */
+	p->sp = sp;					/* stack pointer into the "workSpace" */
 	p->code = f;				/* function to be executed as a task */
 	
 	//No errors occured
+	err = NO_ERR;
+}
+
+/*TODO: Check for mutex ownership. If PID owns any mutex, ignore this request*/
+static void Kernel_Suspend_Task() 
+{
+	//Finds the process descriptor for the specified PID
+	PD* p = findProcessByPID(Cp->request_arg);
+	
+	//Ensure the PID specified in the PD currently exists in the global process list
+	if(p == NULL)
+	{
+		#ifdef DEBUG
+			printf("Kernel_Suspend_Task: PID not found in global process list!\n");
+		#endif
+		err = PID_NOT_FOUND_ERR;
+		return;
+	}
+	
+	//Ensure the task is currently in the READY state
+	if(p->state != READY)
+	{
+		#ifdef DEBUG
+		printf("Kernel_Suspend_Task: Trying to suspend a task that's not READY!\n");
+		#endif
+		err = SUSPEND_NONRUNNING_TASK_ERR;
+		return;
+	}
+	
+	p->state = SUSPENDED;
+	err = NO_ERR;
+}
+
+static void Kernel_Resume_Task()
+{
+	//Finds the process descriptor for the specified PID
+	PD* p = findProcessByPID(Cp->request_arg);
+	
+	//Ensure the PID specified in the PD currently exists in the global process list
+	if(p == NULL)
+	{
+		#ifdef DEBUG
+			printf("Kernel_Resume_Task: PID not found in global process list!\n");
+		#endif
+		err = PID_NOT_FOUND_ERR;
+		return;
+	}
+	
+	//Ensure the task is currently in the SUSPENDED state
+	if(p->state != SUSPENDED)
+	{
+		#ifdef DEBUG
+		printf("Kernel_Resume_Task: Trying to resume a task that's not SUSPENDED!\n");
+		#endif
+		err = RESUME_NONSUSPENDED_TASK_ERR;
+		return;
+	}
+	
+	p->state = READY;
 	err = NO_ERR;
 }
 
@@ -121,41 +217,58 @@ static void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
   */
 static void Next_Kernel_Request() 
 {
-   Dispatch();  /* select a new task to run */
+	Dispatch();	//Select an initial task to run
 
-   while(1) {
-       Cp->request = NONE; /* clear its request */
+	//After OS initialization, this will be kernel's main loop
+	while(1) 
+	{
+		//Clears the process' request fields
+		Cp->request = NONE;
+		Cp->request_arg = 0;
 
-       /* activate this newly selected task */
-       CurrentSp = Cp->sp;
-       Exit_Kernel();    /* or CSwitch() */
+		//Load the current task's stack pointer and switch to its context
+		CurrentSp = Cp->sp;
+		Exit_Kernel();
 
-       /* if this task makes a system call, it will return to here! */
+		/* if this task makes a system call, it will return to here! */
 
-        /* save the Cp's stack pointer */
-       Cp->sp = CurrentSp;
+		//Save the current task's stack pointer and proceed to handle its request
+		Cp->sp = CurrentSp;
 
-       switch(Cp->request){
-       case CREATE:
-           Kernel_Create_Task(Cp->code, Cp->pri, Cp->arg);
-           break;
-       case YIELD:
-	   case NONE:
-           /* NONE could be caused by a timer interrupt */
-          Cp->state = READY;
-          Dispatch();
-          break;
-       case TERMINATE:
-          /* deallocate all resources used by this task */
-          Cp->state = DEAD;
-          Dispatch();
-          break;
-       default:
-          /* Houston! we have a problem here! */
-          break;
+		switch(Cp->request)
+		{
+			case CREATE:
+			Kernel_Create_Task(Cp->code, Cp->pri, Cp->arg);
+			break;
+			
+			case TERMINATE:
+			Cp->state = DEAD;			//Mark the task as DEAD so its resources will be recycled later when new tasks are created
+			Dispatch();
+			break;
+		   
+			case SUSPEND:
+			Kernel_Suspend_Task();
+			break;
+			
+			case RESUME:
+			Kernel_Resume_Task();
+			break;
+		   
+			case YIELD:
+			case NONE:					// NONE could be caused by a timer interrupt
+			Cp->state = READY;
+			Dispatch();
+			break;
+       
+			//Invalid request code, just ignore
+			default:
+				err = INVALID_KERNET_REQUEST_ERR;
+			break;
        }
     } 
 }
+
+
 
 /************************************************************************/
 /*						   RTOS API FUNCTIONS                           */
@@ -194,7 +307,7 @@ void OS_Start()
 PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
 {
    //Run the task creation through kernel if it's running already
-   if (KernelActive ) 
+   if (KernelActive) 
    {
      Disable_Interrupt();
 	 
@@ -203,7 +316,6 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
 	 Cp->arg = arg;
      Cp->request = CREATE;
      Cp->code = f;
-	 
      Enter_Kernel();
    } 
    else 
@@ -211,30 +323,41 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
    
    //Return zero as PID if the task creation process gave errors. Note that the smallest valid PID is 1
    if (err == MAX_PROCESS_ERR)
+   {
+		#ifdef DEBUG
+			printf("Task_Create: Failed to create task. The system is at its process threshold.\n");
+		#endif
 		return 0;
+   }
    
    return last_PID;
 }
 
 /* The calling task terminates itself. */
+/*TODO: CLEAN UP EVENTS AND MUTEXES*/
 void Task_Terminate()
 {
-	if (KernelActive) {
-		Disable_Interrupt();
-		Cp -> request = TERMINATE;
-		Enter_Kernel();
-		/* never returns here! */
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
 	}
+
+	Disable_Interrupt();
+	Cp -> request = TERMINATE;
+	Enter_Kernel();			
 }
 
 /* The calling task gives up its share of the processor voluntarily. Previously Task_Next() */
 void Task_Yield() 
 {
-   if (KernelActive) {
-     Disable_Interrupt();
-     Cp ->request = YIELD;
-     Enter_Kernel();
-  }
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+
+    Disable_Interrupt();
+    Cp ->request = YIELD;
+    Enter_Kernel();
 }
 
 int Task_GetArg()
@@ -244,12 +367,30 @@ int Task_GetArg()
 
 void Task_Suspend(PID p)
 {
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+	Disable_Interrupt();
 	
+	//Sets up the kernel request fields in the PD for this task
+	Cp->request = SUSPEND;
+	Cp->request_arg = p;
+	Enter_Kernel();
 }
 
 void Task_Resume(PID p)
 {
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+	Disable_Interrupt();
 	
+	//Sets up the kernel request fields in the PD for this task
+	Cp->request = RESUME;
+	Cp->request_arg = p;
+	Enter_Kernel();
 }
 
 
@@ -269,6 +410,7 @@ void Ping()
 	for(;;)
 	{
 		PORTB |= LED_PIN_MASK;		//Turn on onboard LED
+		printf("PING!\n");
 		_delay_ms(100);
 		Task_Yield();
 	}
@@ -279,9 +421,27 @@ void Pong()
 	for(;;)
 	{
 		PORTB &= ~LED_PIN_MASK;		//Turn off onboard LED
+		printf("PONG!\n");
 		_delay_ms(100);
 		Task_Yield();
 	}
+}
+
+void suspend_pong()
+{
+	for(;;)
+	{
+		_delay_ms(1000);
+		printf("SUSPENDING PONG!\n");
+		Task_Suspend(findPIDByFuncPtr(Pong));
+		Task_Yield();
+		
+		_delay_ms(1000);
+		printf("RESUMING PONG!\n");
+		Task_Resume(findPIDByFuncPtr(Pong));
+		Task_Yield();
+	}
+	
 }
 
 void main() 
@@ -298,6 +458,8 @@ void main()
    OS_Init();
    Task_Create(Ping, 10, 0);
    Task_Create(Pong, 10, 0);
+   Task_Create(suspend_pong, 10, 0);
    OS_Start();
+   
 }
 
