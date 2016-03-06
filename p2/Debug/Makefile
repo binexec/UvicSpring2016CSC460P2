@@ -38,6 +38,7 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../kernel.c \
 ../os.c \
 ../uart/uart.c
 
@@ -51,21 +52,25 @@ ASM_SRCS +=
 
 OBJS +=  \
 cswitch.o \
+kernel.o \
 os.o \
 uart/uart.o
 
 OBJS_AS_ARGS +=  \
 cswitch.o \
+kernel.o \
 os.o \
 uart/uart.o
 
 C_DEPS +=  \
 cswitch.d \
+kernel.d \
 os.d \
 uart/uart.d
 
 C_DEPS_AS_ARGS +=  \
 cswitch.d \
+kernel.d \
 os.d \
 uart/uart.d
 
@@ -83,6 +88,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

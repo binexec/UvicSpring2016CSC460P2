@@ -115,6 +115,9 @@
     <Compile Include="cswitch.s">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="kernel.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="os.c">
       <SubType>compile</SubType>
     </Compile>

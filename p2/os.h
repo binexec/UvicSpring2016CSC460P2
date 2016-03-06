@@ -1,3 +1,9 @@
+/***********************************************************************
+  OS.h and OS.c contains the front end of the RTOS. 
+  It contains subroutines on the syscall defined by the requirements. 
+  The syscall subroutines do not process the tasks themselves, but make appropriate kernel calls to handle them.
+  ***********************************************************************/
+
 #ifndef _OS_H_  
 #define _OS_H_  
    
@@ -31,7 +37,7 @@ int  Task_GetArg(void);
 void Task_Suspend( PID p );          
 void Task_Resume( PID p );
 
-//void Task_Sleep(TICK t);  // sleep time is at least t*MSECPERTICK
+void Task_Sleep(TICK t);  // sleep time is at least t*MSECPERTICK
 
 MUTEX Mutex_Init(void);
 void Mutex_Lock(MUTEX m);
