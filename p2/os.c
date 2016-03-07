@@ -3,6 +3,9 @@
 
 #define DEBUG
 
+/*test variables*/
+EVENT e1;
+
 /************************************************************************/
 /*						   RTOS API FUNCTIONS                           */
 /************************************************************************/
@@ -28,12 +31,7 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
    
    //Return zero as PID if the task creation process gave errors. Note that the smallest valid PID is 1
    if (err == MAX_PROCESS_ERR)
-   {
-		#ifdef DEBUG
-			printf("Task_Create: Failed to create task. The system is at its process threshold.\n");
-		#endif
 		return 0;
-   }
    
    #ifdef DEBUG
 	printf("Created PID: %d\n", last_PID);
@@ -104,6 +102,7 @@ void Task_Resume(PID p)
 	Enter_Kernel();
 }
 
+/*Puts the calling task to sleep for AT LEAST t ticks.*/
 void Task_Sleep(TICK t)
 {
 	if(!KernelActive){
@@ -118,7 +117,30 @@ void Task_Sleep(TICK t)
 	Enter_Kernel();
 }
 
+/*Initialize an event object*/
 EVENT Event_Init(void)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return 0;
+	}
+	Disable_Interrupt();
+	
+	Cp->request = CREATE_E;
+	Enter_Kernel();
+	
+	//Return zero as PID if the event creation process gave errors. Note that the smallest valid event ID is 1
+	if (err == MAX_EVENT_ERR)
+		return 0;
+	
+	#ifdef DEBUG
+	printf("Created Event: %d\n", last_EVENT);
+	#endif
+	
+	return last_EVENT;
+}
+
+void Event_Wait(EVENT e)
 {
 	if(!KernelActive){
 		err = KERNEL_INACTIVE_ERR;
@@ -126,23 +148,23 @@ EVENT Event_Init(void)
 	}
 	Disable_Interrupt();
 	
-	Cp->request = CREATE_E;
+	Cp->request = WAIT_E;
+	Cp->request_arg = e;
 	Enter_Kernel();
 	
-	//Return zero as PID if the task creation process gave errors. Note that the smallest valid PID is 1
-	if (err == MAX_EVENT_ERR)
-	{
-		#ifdef DEBUG
-		printf("Event_Init: Failed to create Event. The system is at its max event threshold.\n");
-		#endif
-		return 0;
+}
+
+void Event_Signal(EVENT e)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
 	}
+	Disable_Interrupt();
 	
-	#ifdef DEBUG
-	printf("Created Event: %d\n", last_EVENT);
-	#endif
-	
-	return last_EVENT;
+	Cp->request = SIGNAL_E;
+	Cp->request_arg = e;
+	Enter_Kernel();	
 }
 
 
@@ -158,12 +180,11 @@ void testSetup()
 }
 
 void Ping()
-{
+{	
 	for(;;)
 	{
 		PORTB |= LED_PIN_MASK;		//Turn on onboard LED
 		printf("PING!\n");
-		//_delay_ms(100);
 		Task_Sleep(30);
 		Task_Yield();
 	}
@@ -175,7 +196,6 @@ void Pong()
 	{
 		PORTB &= ~LED_PIN_MASK;		//Turn off onboard LED
 		printf("PONG!\n");
-		//_delay_ms(100);
 		Task_Sleep(30);
 		Task_Yield();
 	}
@@ -185,19 +205,55 @@ void suspend_pong()
 {
 	for(;;)
 	{
-		//_delay_ms(1000);
 		Task_Sleep(100);
 		printf("SUSPENDING PONG!\n");
 		Task_Suspend(findPIDByFuncPtr(Pong));
 		Task_Yield();
 		
-		//_delay_ms(1000);
 		Task_Sleep(100);
 		printf("RESUMING PONG!\n");
 		Task_Resume(findPIDByFuncPtr(Pong));
 		Task_Yield();
 	}
 	
+}
+
+void event_wait_test()
+{
+	e1 = Event_Init();
+	
+	for(;;)
+	{
+		Event_Wait(e1);
+		printf("Signal for e1 received! Total events: %d\n", getEventCount(e1));
+		
+		//Clear the event counts after we've handled them
+		clearEventCount(e1);
+	}
+}
+
+void event_signal_test()
+{
+	for(;;)
+	{
+		Task_Sleep(100);
+		Event_Signal(e1);
+		printf("Signalling e1...\n");
+		Task_Yield();
+		
+		//Signal again but suspend event_wait_test first
+		printf("Signalling e1 SUSPENDED...\n");
+		Task_Suspend(findPIDByFuncPtr(event_wait_test));
+		Event_Signal(e1);
+		Event_Signal(e1);
+		Event_Signal(e1);
+		Event_Signal(e1);
+		Event_Signal(e1);
+		Task_Sleep(500);
+		printf("Resuming...\n");
+		Task_Resume(findPIDByFuncPtr(event_wait_test));
+		Task_Yield();
+	}
 }
 
 void main() 
@@ -212,9 +268,11 @@ void main()
    testSetup();
    
    OS_Init();
-   Task_Create(Ping, 10, 210);
-   Task_Create(Pong, 10, 205);
-   Task_Create(suspend_pong, 10, 0);
+   //Task_Create(Ping, 6, 210);
+   //Task_Create(Pong, 6, 205);
+   //Task_Create(suspend_pong, 4, 0);
+   Task_Create(event_wait_test, 5, 0);
+   Task_Create(event_signal_test, 5, 0);
    OS_Start();
    
 }

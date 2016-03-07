@@ -1,7 +1,7 @@
 /***********************************************************************
   Kernel.h and Kernel.c contains the backend of the RTOS.
   It contains the underlying Kernel that process all requests coming in from OS syscalls.
-  Most of Kernel's functions are not directly usable, but few are provided for the OS for convenience and for booting purposes.
+  Most of Kernel's functions are not directly usable, but a few helpers are provided for the OS for convenience and for booting purposes.
   ***********************************************************************/
 
 #ifndef KERNEL_H_
@@ -28,13 +28,18 @@
 typedef enum error_codes
 {
 	NO_ERR  = 0,
+	INVALID_ARG_ERR,
 	INVALID_KERNET_REQUEST_ERR,
 	KERNEL_INACTIVE_ERR,
 	MAX_PROCESS_ERR,
 	PID_NOT_FOUND_ERR,
 	SUSPEND_NONRUNNING_TASK_ERR,
 	RESUME_NONSUSPENDED_TASK_ERR,
-	MAX_EVENT_ERR
+	MAX_EVENT_ERR,
+	EVENT_NOT_FOUND_ERR,
+	EVENT_ALREADY_OWNED_ERR,
+	SIGNAL_UNOWNED_EVENT_ERR,
+	EVENT_OWNER_NO_LONGER_WAITING_ERR
 } ERROR_TYPE;
   
 typedef enum process_states 
@@ -43,7 +48,8 @@ typedef enum process_states
    READY, 
    RUNNING,
    SUSPENDED,
-   SLEEPING 
+   SLEEPING,
+   WAIT_EVENT 
 } PROCESS_STATES;
 
 typedef enum kernel_request_type 
@@ -55,7 +61,9 @@ typedef enum kernel_request_type
    SUSPEND,
    RESUME,
    SLEEP,
-   CREATE_E									//Initialize an event object
+   CREATE_E,									//Initialize an event object
+   WAIT_E,
+   SIGNAL_E
 } KERNEL_REQUEST_TYPE;
 
 
@@ -67,7 +75,7 @@ typedef struct ProcessDescriptor
    PROCESS_STATES state;					//What's the current state of this task?
    PROCESS_STATES last_state;				//What's the PREVIOUS state of this task? Used for task suspension/resume.
    KERNEL_REQUEST_TYPE request;				//What the task want the kernel to do (when needed).
-   volatile int request_arg;				//What value is needed for the specified kernel request.
+   int request_arg;							//What value is needed for the specified kernel request.
    int arg;									//Initial argument for the task (if specified).
    unsigned char *sp;						//stack pointer into the "workSpace".
    unsigned char workSpace[WORKSPACE];		//Data memory allocated to this process.
@@ -96,6 +104,8 @@ void OS_Init();
 void OS_Start();
 void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg);
 int findPIDByFuncPtr(voidfuncptr f);
+int getEventCount(EVENT e);
+void clearEventCount(EVENT e);
 
 
 /*Kernel variables accessed by the OS*/

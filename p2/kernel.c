@@ -16,7 +16,7 @@ volatile unsigned int KernelActive;				//Indicates if kernel has been initialzie
 
 
 /************************************************************************/
-/*						    KERNEL HELPERS                              */
+/*						  KERNEL-ONLY HELPERS                           */
 /************************************************************************/
 
 /*Returns the pointer of a process descriptor in the global process list, by searching for its PID*/
@@ -24,15 +24,55 @@ PD* findProcessByPID(int pid)
 {
 	int i;
 	
+	//Valid PIDs must be greater than 0.
+	if(pid <=0)
+	return NULL;
+	
 	for(i=0; i<MAXTHREAD; i++)
 	{
 		if (Process[i].pid == pid)
-			return &(Process[i]);
+		return &(Process[i]);
 	}
 	
 	//No process with such PID
 	return NULL;
 }
+
+EVENT_TYPE* findEventByEventID(EVENT e)
+{
+	int i;
+	
+	//Ensure the request event ID is > 0
+	if(e <= 0)
+	{
+		#ifdef DEBUG
+		printf("findEventByID: The specified event ID is invalid!\n");
+		#endif
+		err = INVALID_ARG_ERR;
+		return NULL;
+	}
+	
+	//Find the requested Event
+	for(i=0; i<MAXEVENT; i++)
+	if(Event[i].id == e) break;
+	
+	//Ensure the event was actually found within the event list
+	if(i == MAXEVENT && Event[MAXEVENT].id != Cp->request_arg)
+	{
+		#ifdef DEBUG
+		printf("findEventByEventID: The requested event was not found!\n");
+		#endif
+		err = EVENT_NOT_FOUND_ERR;
+		return NULL;
+	}
+	
+	return &Event[i];
+}
+
+/************************************************************************/
+/*				   		       OS HELPERS                               */
+/************************************************************************/
+
 /*Returns the PID associated with a function's memory address*/
 int findPIDByFuncPtr(voidfuncptr f)
 {
@@ -48,11 +88,32 @@ int findPIDByFuncPtr(voidfuncptr f)
 	return -1;
 }
 
+int getEventCount(EVENT e)
+{
+	EVENT_TYPE* e1 = findEventByEventID(e);
+	
+	if(e1 == NULL) 
+		return 0;
+		
+	return e1->count;	
+}
+
+void clearEventCount(EVENT e)
+{
+	EVENT_TYPE* e1 = findEventByEventID(e);
+	
+	if(e1 == NULL)
+		return;
+		
+	e1->count = 0;
+}
+
+
 /************************************************************************/
-/*                           KERNEL FUNCTIONS                           */
+/*                    INTERNAL KERNEL ROUTINES                          */
 /************************************************************************/
 
-//This ISR processes all tasks that are currently sleeping, waking them up when their tick expires
+//This ISR processes all tasks that are currently sleeping and waking them up when their tick expires
 ISR(TIMER1_COMPA_vect)
 {
 	int i;
@@ -76,33 +137,6 @@ ISR(TIMER1_COMPA_vect)
 	}
 }
 
-/* This internal kernel function is a part of the "scheduler". It chooses the next task to run, i.e., Cp. */
-static void Dispatch()
-{
-   int i = 0;
-   
-   //Find the next READY task by iterating through the process list
-   while(Process[NextP].state != READY) 
-   {
-      NextP = (NextP + 1) % MAXTHREAD;
-	  i++;
-	  
-	  //Not a single task is ready. We'll temporarily re-enable interrupt in case if one or more task is waiting on events/interrupts or sleeping
-	  if(i > MAXTHREAD) Enable_Interrupt();
-   }
-   
-   //Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
-   Disable_Interrupt();
-	
-   //Load the task's process descriptor into Cp
-   Cp = &(Process[NextP]);
-   CurrentSp = Cp->sp;
-   Cp->state = RUNNING;
-	
-	//Increment NextP so the next dispatch will not run the same process (unless everything else isn't ready)
-   NextP = (NextP + 1) % MAXTHREAD;
-}
-
 /* Handles all low level operations for creating a new task */
 void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 {
@@ -117,6 +151,10 @@ void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 	//Make sure the system can still have enough resources to create more tasks
 	if (Tasks == MAXTHREAD)
 	{
+		#ifdef DEBUG
+		printf("Task_Create: Failed to create task. The system is at its process threshold.\n");
+		#endif
+		
 		err = MAX_PROCESS_ERR;
 		return;
 	}
@@ -233,13 +271,17 @@ static void Kernel_Resume_Task()
 	err = NO_ERR;
 }
 
-static void Kernel_Create_Event(EVENT e)
+static void Kernel_Create_Event(void)
 {
 	int i;
 	
 	//Make sure the system's events are not at max
 	if(last_EVENT >= MAXEVENT+1)
 	{
+		#ifdef DEBUG
+		printf("Event_Init: Failed to create Event. The system is at its max event threshold.\n");
+		#endif
+		
 		err = MAX_EVENT_ERR;
 		return;
 	}
@@ -250,9 +292,109 @@ static void Kernel_Create_Event(EVENT e)
 	
 	//Assign a new unique ID to the event. Note that the smallest valid Event ID is 1.
 	Event[i].id = ++last_EVENT;
+	Event[i].owner = 0;
+	err = NO_ERR;
+}
+
+static void Kernel_Wait_Event(void)
+{
+	EVENT_TYPE* e = findEventByEventID(Cp->request_arg);
 	
+	if(e == NULL)
+	{
+		#ifdef DEBUG
+		printf("Kernel_Wait_Event: Error finding requested event!\n");
+		#endif
+		return;
+	}
 	
+	//Ensure no one else is waiting for this same event
+	if(e->owner > 0 && e->owner != Cp->pid)
+	{
+		#ifdef DEBUG
+			printf("Kernel_Wait_Event: The requested event is already being waited by PID %d\n", e->owner);
+		#endif
+		err = EVENT_NOT_FOUND_ERR;
+		return;
+	}
+	
+	//Set the owner of the requested event to the current task and put it into the WAIT EVENT state
+	e->owner = Cp->pid;
+	Cp->state = WAIT_EVENT;
+	err = NO_ERR;
+}
+
+static void Kernel_Signal_Event(void)
+{
+	EVENT_TYPE* e = findEventByEventID(Cp->request_arg);
+	PD *e_owner;
+	
+	if(e == NULL)
+	{
+		#ifdef DEBUG
+		printf("Kernel_Wait_Event: Error finding requested event!\n");
+		#endif
+		return;
+	}
+	
+	//Ensure the event is waited by someone
+	if(e->owner == 0)
+	{
+		#ifdef DEBUG
+		printf("Kernel_Signal_Event: The requested event is not being waited by anyone!\n");
+		#endif
+		err = SIGNAL_UNOWNED_EVENT_ERR;
+		return;
+	}
+	
+	//Increment the event counter
+	e->count++;
+	
+	//Get the PD of the event owner
+	e_owner = findProcessByPID(e->owner);
+	
+	//Signal the owner of the event by setting its state to READY if it's waiting actively
+	if(e_owner->state == WAIT_EVENT)
+		e_owner->state = READY;
+	//Only other possibility is if the owner that is waiting has been suspended. In this case, do nothing and just let the counter increment.
+	else if (!(e_owner->state == SUSPENDED && e_owner->last_state == WAIT_EVENT))
+	{
+		#ifdef DEBUG
+		printf("Kernel_Signal_Event: Event Owner doesn't' seem to be expecting this event! Current state: %d!\n", e_owner->state);
+		#endif
+		err = EVENT_OWNER_NO_LONGER_WAITING_ERR;
+	}
+}
+
+/************************************************************************/
+/*                   CORE KERNEL SCHEDULING FUNCTIONS                   */
+/************************************************************************/
+
+/* This internal kernel function is a part of the "scheduler". It chooses the next task to run, i.e., Cp. */
+static void Dispatch()
+{
+	int i = 0;
+	
+	//Find the next READY task by iterating through the process list
+	while(Process[NextP].state != READY)
+	{
+		NextP = (NextP + 1) % MAXTHREAD;
+		i++;
 		
+		//Not a single task is ready. We'll temporarily re-enable interrupt in case if one or more task is waiting on events/interrupts or sleeping
+		if(i > MAXTHREAD) Enable_Interrupt();
+	}
+	
+	//Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
+	Disable_Interrupt();
+	
+	//Load the task's process descriptor into Cp
+	Cp = &(Process[NextP]);
+	CurrentSp = Cp->sp;
+	Cp->state = RUNNING;
+	
+	//Increment NextP so the next dispatch will not run the same process (unless everything else isn't ready)
+	NextP = (NextP + 1) % MAXTHREAD;
 }
 
 /**
@@ -291,7 +433,7 @@ static void Next_Kernel_Request()
 			
 			case TERMINATE:
 			Cp->state = DEAD;			//Mark the task as DEAD so its resources will be recycled later when new tasks are created
-			Dispatch();
+			Dispatch();					//Dispatch is only needed if the syscall requires running a different task  after it's done
 			break;
 		   
 			case SUSPEND:
@@ -305,6 +447,19 @@ static void Next_Kernel_Request()
 			case SLEEP:
 			Cp->state = SLEEPING;
 			Dispatch();					
+			break;
+			
+			case CREATE_E:
+			Kernel_Create_Event();
+			break;
+			
+			case WAIT_E:
+			Kernel_Wait_Event();
+			Dispatch();
+			break;
+			
+			case SIGNAL_E:
+			Kernel_Signal_Event();
 			break;
 		   
 			case YIELD:
