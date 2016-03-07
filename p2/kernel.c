@@ -1,6 +1,7 @@
 #include "kernel.h"
 
 volatile static PD Process[MAXTHREAD];			//Contains the process descriptor for all tasks, regardless of their current state.
+volatile static EVENT_TYPE Event[MAXEVENT];		//Contains all the event "counters" 
 volatile static unsigned int NextP;				//Which task in the process queue to dispatch next.
 volatile static unsigned int Tasks;				//Number of tasks created so far .
 
@@ -8,7 +9,8 @@ volatile static unsigned int Tasks;				//Number of tasks created so far .
 volatile  PD* Cp;		
 volatile unsigned char *KernelSp;				//Pointer to the Kernel's own stack location.
 volatile unsigned char *CurrentSp;				//Pointer to the stack location of the current running task. Used for saving into PD during ctxswitch.						//The process descriptor of the currently RUNNING task. CP is used to pass information from OS calls to the kernel telling it what to do.
-volatile unsigned int last_PID = 0;				//Highest PID value created so far.
+volatile unsigned int last_PID = 0;				//Last (also highest) PID value created so far.
+volatile unsigned int last_EVENT = 0;			//Last (also highest) EVENT value created so far.
 volatile ERROR_TYPE err = NO_ERR;				//Error code for the previous kernel operation (if any)
 volatile unsigned int KernelActive;				//Indicates if kernel has been initialzied by OS_Start().
 
@@ -56,12 +58,20 @@ ISR(TIMER1_COMPA_vect)
 	int i;
 	for(i=0; i<MAXTHREAD; i++)
 	{
-		//Ignore any processes that's not SLEEPING
+		//Process any active tasks that are sleeping
 		if(Process[i].state == SLEEPING)
 		{
 			//If the current sleeping task's tick count expires, put it back into its READY state
 			if(--Process[i].request_arg <= 0)
 				Process[i].state = READY;
+		}
+		
+		//Process any SUSPENDED tasks that were previously sleeping
+		else if(Process[i].last_state == SLEEPING)
+		{
+			//When task_resume is called again, the task will be back into its READY state instead if its sleep ticks expired.
+			if(--Process[i].request_arg <= 0)
+				Process[i].last_state = READY;
 		}
 	}
 }
@@ -175,16 +185,18 @@ static void Kernel_Suspend_Task()
 		return;
 	}
 	
-	//Ensure the task is currently in the READY state
-	if(p->state != READY)
+	//Ensure the task is not in a unsuspendable state
+	if(p->state == DEAD || p->state == SUSPENDED)
 	{
 		#ifdef DEBUG
-		printf("Kernel_Suspend_Task: Trying to suspend a task that's not READY!\n");
+		printf("Kernel_Suspend_Task: Trying to suspend a task that's in an unsuspendable state %d!\n", p->state);
 		#endif
 		err = SUSPEND_NONRUNNING_TASK_ERR;
 		return;
 	}
 	
+	//Save its current state and set it to SUSPENDED
+	p->last_state = p->state;
 	p->state = SUSPENDED;
 	err = NO_ERR;
 }
@@ -209,13 +221,38 @@ static void Kernel_Resume_Task()
 	{
 		#ifdef DEBUG
 		printf("Kernel_Resume_Task: Trying to resume a task that's not SUSPENDED!\n");
+		printf("CURRENT STATE: %d\n", p->state);
 		#endif
 		err = RESUME_NONSUSPENDED_TASK_ERR;
 		return;
 	}
 	
-	p->state = READY;
+	//Restore the previous state of the task
+	p->state = p->last_state;
+	p->last_state = SUSPENDED;			
 	err = NO_ERR;
+}
+
+static void Kernel_Create_Event(EVENT e)
+{
+	int i;
+	
+	//Make sure the system's events are not at max
+	if(last_EVENT >= MAXEVENT+1)
+	{
+		err = MAX_EVENT_ERR;
+		return;
+	}
+	
+	//Find an uninitialized Event slot
+	for(i=0; i<MAXEVENT; i++)
+		if(Event[i].id == 0) break;
+	
+	//Assign a new unique ID to the event. Note that the smallest valid Event ID is 1.
+	Event[i].id = ++last_EVENT;
+	
+	
+		
 }
 
 /**
@@ -311,21 +348,28 @@ void Timer_init()
 void OS_Init()
 {
 	int x;
+	
 	Tasks = 0;
 	KernelActive = 0;
 	NextP = 0;
 	
-	//Reminder: Clear the memory for the task on creation.
-	
+	//Clear and initialize the memory used for tasks
 	for (x = 0; x < MAXTHREAD; x++) {
 		memset(&(Process[x]), 0, sizeof(PD));
 		Process[x].state = DEAD;
 	}
 	
+	//Clear and initialize the memory used for Events
+	for (x = 0; x < MAXEVENT; x++) {
+		memset(&(Event[x]), 0, sizeof(EVENT_TYPE));
+		Event[x].id = 0;
+	}
+	
 	/*Initialize and start Timer needed for sleep*/
 	Timer_init();
 }
-	/* This function starts the RTOS after creating a few tasks.*/
+
+/* This function starts the RTOS after creating a few tasks.*/
 void OS_Start()
 {
 	if ( (! KernelActive) && (Tasks > 0))

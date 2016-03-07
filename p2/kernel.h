@@ -33,7 +33,8 @@ typedef enum error_codes
 	MAX_PROCESS_ERR,
 	PID_NOT_FOUND_ERR,
 	SUSPEND_NONRUNNING_TASK_ERR,
-	RESUME_NONSUSPENDED_TASK_ERR
+	RESUME_NONSUSPENDED_TASK_ERR,
+	MAX_EVENT_ERR
 } ERROR_TYPE;
   
 typedef enum process_states 
@@ -53,7 +54,8 @@ typedef enum kernel_request_type
    TERMINATE,
    SUSPEND,
    RESUME,
-   SLEEP
+   SLEEP,
+   CREATE_E									//Initialize an event object
 } KERNEL_REQUEST_TYPE;
 
 
@@ -63,6 +65,7 @@ typedef struct ProcessDescriptor
    PID pid;									//An unique process ID for this task.
    PRIORITY pri;							//The priority of this task, from 0 (highest) to 10 (lowest).
    PROCESS_STATES state;					//What's the current state of this task?
+   PROCESS_STATES last_state;				//What's the PREVIOUS state of this task? Used for task suspension/resume.
    KERNEL_REQUEST_TYPE request;				//What the task want the kernel to do (when needed).
    volatile int request_arg;				//What value is needed for the specified kernel request.
    int arg;									//Initial argument for the task (if specified).
@@ -70,6 +73,16 @@ typedef struct ProcessDescriptor
    unsigned char workSpace[WORKSPACE];		//Data memory allocated to this process.
    voidfuncptr  code;						//The function to be executed when this process is running.
 } PD;
+
+
+/*For the ease of manageability, we're making a new event data type.
+The old EVENT type defined in OS.h will simply serve as an identifier.*/
+typedef struct event_type
+{
+	EVENT id;								//An unique identifier for this event. 0 = uninitialized
+	PID owner;								//Who's currently waiting for this event this?
+	unsigned int count;						//How many unhandled events has been collected?
+} EVENT_TYPE;
 
 
 /*Context Switching functions defined in cswitch.c*/
@@ -90,6 +103,7 @@ extern volatile PD* Cp;
 extern volatile unsigned char *KernelSp;
 extern volatile unsigned char *CurrentSp;
 extern volatile unsigned int last_PID;
+extern volatile unsigned int last_EVENT;
 extern volatile ERROR_TYPE err;
 extern volatile unsigned int KernelActive;
 

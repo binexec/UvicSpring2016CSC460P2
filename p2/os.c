@@ -35,6 +35,10 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
 		return 0;
    }
    
+   #ifdef DEBUG
+	printf("Created PID: %d\n", last_PID);
+   #endif
+   
    return last_PID;
 }
 
@@ -108,11 +112,37 @@ void Task_Sleep(TICK t)
 	}
 	Disable_Interrupt();
 	
-	Cp->request_arg = t;
 	Cp->request = SLEEP;
+	Cp->request_arg = t;
 
-	//printf("%u ticks\n", Cp->request_arg);
 	Enter_Kernel();
+}
+
+EVENT Event_Init(void)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+	Disable_Interrupt();
+	
+	Cp->request = CREATE_E;
+	Enter_Kernel();
+	
+	//Return zero as PID if the task creation process gave errors. Note that the smallest valid PID is 1
+	if (err == MAX_EVENT_ERR)
+	{
+		#ifdef DEBUG
+		printf("Event_Init: Failed to create Event. The system is at its max event threshold.\n");
+		#endif
+		return 0;
+	}
+	
+	#ifdef DEBUG
+	printf("Created Event: %d\n", last_EVENT);
+	#endif
+	
+	return last_EVENT;
 }
 
 
@@ -134,7 +164,7 @@ void Ping()
 		PORTB |= LED_PIN_MASK;		//Turn on onboard LED
 		printf("PING!\n");
 		//_delay_ms(100);
-		Task_Sleep(10);
+		Task_Sleep(30);
 		Task_Yield();
 	}
 }
@@ -146,7 +176,7 @@ void Pong()
 		PORTB &= ~LED_PIN_MASK;		//Turn off onboard LED
 		printf("PONG!\n");
 		//_delay_ms(100);
-		Task_Sleep(50);
+		Task_Sleep(30);
 		Task_Yield();
 	}
 }
@@ -156,13 +186,13 @@ void suspend_pong()
 	for(;;)
 	{
 		//_delay_ms(1000);
-		Task_Sleep(10);
+		Task_Sleep(100);
 		printf("SUSPENDING PONG!\n");
 		Task_Suspend(findPIDByFuncPtr(Pong));
 		Task_Yield();
 		
 		//_delay_ms(1000);
-		Task_Sleep(10);
+		Task_Sleep(100);
 		printf("RESUMING PONG!\n");
 		Task_Resume(findPIDByFuncPtr(Pong));
 		Task_Yield();
