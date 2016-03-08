@@ -1,19 +1,29 @@
 #include "kernel.h"
 
-volatile static PD Process[MAXTHREAD];			//Contains the process descriptor for all tasks, regardless of their current state.
-volatile static EVENT_TYPE Event[MAXEVENT];		//Contains all the event "counters" 
-volatile static unsigned int NextP;				//Which task in the process queue to dispatch next.
-volatile static unsigned int Task_Count;		//Number of tasks created so far .
-volatile static unsigned int Event_Count;		//Number of events created so far .
+/*Context Switching functions defined in cswitch.s*/
+extern void CSwitch();
+extern void Exit_Kernel();
 
-/*Variables accessed by OS*/
-volatile  PD* Cp;		
+/*System variables used by the kernel only*/
+volatile static PD Process[MAXTHREAD];			//Contains the process descriptor for all tasks, regardless of their current state.
+volatile static EVENT_TYPE Event[MAXEVENT];		//Contains all the event objects 
+volatile static MUTEX_TYPE Mutex[MAXMUTEX];		//Contains all the mutex objects
+
+volatile static unsigned int NextP;				//Which task in the process queue to dispatch next.
+volatile static unsigned int Task_Count;		//Number of tasks created so far.
+volatile static unsigned int Event_Count;		//Number of events created so far.
+volatile static unsigned int Mutex_Count;		//Number of Mutexes created so far.
+
+/*Variables accessible by OS*/
+volatile PD* Cp;		
 volatile unsigned char *KernelSp;				//Pointer to the Kernel's own stack location.
 volatile unsigned char *CurrentSp;				//Pointer to the stack location of the current running task. Used for saving into PD during ctxswitch.						//The process descriptor of the currently RUNNING task. CP is used to pass information from OS calls to the kernel telling it what to do.
+volatile unsigned int KernelActive;				//Indicates if kernel has been initialzied by OS_Start().
 volatile unsigned int Last_PID;					//Last (also highest) PID value created so far.
 volatile unsigned int Last_EventID;				//Last (also highest) EVENT value created so far.
+volatile unsigned int Last_MutexID;				//Last (also highest) MUTEX value created so far.
 volatile ERROR_TYPE err;						//Error code for the previous kernel operation (if any)
-volatile unsigned int KernelActive;				//Indicates if kernel has been initialzied by OS_Start().
+
 
 /************************************************************************/
 /*						  KERNEL-ONLY HELPERS                           */
@@ -98,10 +108,11 @@ int getEventCount(EVENT e)
 }
 
 /************************************************************************/
-/*                    INTERNAL KERNEL ROUTINES                          */
+/*                  ISR FOR HANDLING SLEEP TICKS                        */
 /************************************************************************/
 
 //This ISR processes all tasks that are currently sleeping and waking them up when their tick expires
+//Maybe we should move most of the code here into a function and have it run in the kernel main loop?
 ISR(TIMER1_COMPA_vect)
 {
 	int i;
@@ -124,6 +135,10 @@ ISR(TIMER1_COMPA_vect)
 		}
 	}
 }
+
+/************************************************************************/
+/*                   TASK RELATED KERNEL FUNCTIONS                      */
+/************************************************************************/
 
 /* Handles all low level operations for creating a new task */
 void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
@@ -259,6 +274,10 @@ static void Kernel_Resume_Task()
 	err = NO_ERR;
 }
 
+/************************************************************************/
+/*                  EVENT RELATED KERNEL FUNCTIONS                      */
+/************************************************************************/
+
 static void Kernel_Create_Event(void)
 {
 	int i;
@@ -376,14 +395,33 @@ static void Kernel_Signal_Event(void)
 }
 
 /************************************************************************/
-/*                   CORE KERNEL SCHEDULING FUNCTIONS                   */
+/*                  MUTEX RELATED KERNEL FUNCTIONS                      */
+/************************************************************************/
+
+static void Kernel_Create_Mutex(void)
+{
+	
+}
+
+static void Kernel_Lock_Mutex(void)
+{
+	
+}
+
+static void Kernel_Unlock_Mutex(void)
+{
+	
+}
+
+/************************************************************************/
+/*                     KERNEL SCHEDULING FUNCTIONS                      */
 /************************************************************************/
 
 /* This internal kernel function is a part of the "scheduler". It chooses the next task to run, i.e., Cp. */
 static void Dispatch()
 {
 	unsigned int i = 0;
-	int highest_pri = LOWEST_PRIORITY+1;
+	int highest_pri = LOWEST_PRIORITY + 1;
 	int highest_pri_index = -1;
 	
 	//Find the next READY task with the highest priority by iterating through the process list ONCE
@@ -416,7 +454,7 @@ static void Dispatch()
 	else
 		NextP = highest_pri_index;
 
-	//Load the task's process descriptor into Cp
+	//Load the next selected task's process descriptor into Cp
 	Cp = &(Process[NextP]);
 	CurrentSp = Cp->sp;
 	Cp->state = RUNNING;
@@ -434,7 +472,7 @@ static void Next_Kernel_Request()
 {
 	Dispatch();	//Select an initial task to run
 
-	//After OS initialization, this will be kernel's main loop
+	//After OS initialization, THIS WILL BE KERNEL'S MAIN LOOP!
 	//NOTE: When another task makes a syscall and enters the loop, it's still in the RUNNING state!
 	while(1) 
 	{
@@ -453,7 +491,7 @@ static void Next_Kernel_Request()
 
 		switch(Cp->request)
 		{
-			case CREATE:
+			case CREATE_T:
 			Kernel_Create_Task(Cp->code, Cp->pri, Cp->arg);
 			break;
 			
@@ -482,12 +520,25 @@ static void Next_Kernel_Request()
 			
 			case WAIT_E:
 			Kernel_Wait_Event();	
-			//Don't dispatch to a different task if the event is already siganled
-			if(Cp->state != RUNNING) Dispatch();	
+			if(Cp->state != RUNNING) Dispatch();	//Don't dispatch to a different task if the event is already siganlled
 			break;
 			
 			case SIGNAL_E:
 			Kernel_Signal_Event();
+			break;
+			
+			case CREATE_M:
+			Kernel_Create_Mutex();
+			break;
+			
+			case LOCK_M:
+			Kernel_Lock_Mutex();
+			//Maybe add a dispatch() here if lock fails?
+			break;
+			
+			case UNLOCK_M:
+			Kernel_Unlock_Mutex();
+			//Does this need dispatch under any circumstances?
 			break;
 		   
 			case YIELD:

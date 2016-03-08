@@ -3,7 +3,8 @@
 
 #define DEBUG
 
-extern void a_main();							//External entry point for application once kernel and OS has initialized
+extern void Enter_Kernel();				//Subroutine for entering into the kernel defined in cswitch.s
+extern void a_main();					//External entry point for application once kernel and OS has initialized.
 
 
 /************************************************************************/
@@ -21,7 +22,7 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
 	 //Fill in the parameters for the new task into CP
 	 Cp->pri = py;
 	 Cp->arg = arg;
-     Cp->request = CREATE;
+     Cp->request = CREATE_T;
      Cp->code = f;
 
      Enter_Kernel();
@@ -129,7 +130,7 @@ EVENT Event_Init(void)
 	Cp->request = CREATE_E;
 	Enter_Kernel();
 	
-	//Return zero as PID if the event creation process gave errors. Note that the smallest valid event ID is 1
+	//Return zero as Event ID if the event creation process gave errors. Note that the smallest valid event ID is 1
 	if (err == MAX_EVENT_ERR)
 		return 0;
 	
@@ -167,8 +168,55 @@ void Event_Signal(EVENT e)
 	Enter_Kernel();	
 }
 
+MUTEX Mutex_Init(void)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return 0;
+	}
+	Disable_Interrupt();
+	
+	Cp->request = CREATE_M;
+	Enter_Kernel();
+	
+	//Return zero as Mutex ID if the mutex creation process gave errors. Note that the smallest valid mutex ID is 1
+	if (err == MAX_MUTEX_ERR)
+	return 0;
+	
+	#ifdef DEBUG
+	printf("Created Mutex: %d\n", Last_MutexID);
+	#endif
+	
+	return Last_MutexID;
+}
 
-/*main is used for kernel only! use a_main for application and testing!*/
+void Mutex_Lock(MUTEX m)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+	Disable_Interrupt();
+	
+	Cp->request = LOCK_M;
+	Cp->request_arg = m;
+	Enter_Kernel();
+}
+
+void Mutex_Unlock(MUTEX m)
+{
+	if(!KernelActive){
+		err = KERNEL_INACTIVE_ERR;
+		return;
+	}
+	Disable_Interrupt();
+	
+	Cp->request = UNLOCK_M;
+	Cp->request_arg = m;
+	Enter_Kernel();
+}
+
+/*Don't use main function for application code. Any mandatory kernel initialization should be done here*/
 void main() 
 {
    //Enable STDIN/OUT to UART redirection for debugging

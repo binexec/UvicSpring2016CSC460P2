@@ -24,6 +24,7 @@
 //Misc macros
 #define Disable_Interrupt()		asm volatile ("cli"::)
 #define Enable_Interrupt()		asm volatile ("sei"::)
+
   
 //Definitions for potential errors the RTOS may come across
 typedef enum error_codes
@@ -39,8 +40,10 @@ typedef enum error_codes
 	MAX_EVENT_ERR,
 	EVENT_NOT_FOUND_ERR,
 	EVENT_ALREADY_OWNED_ERR,
-	SIGNAL_UNOWNED_EVENT_ERR
+	SIGNAL_UNOWNED_EVENT_ERR,
+	MAX_MUTEX_ERR
 } ERROR_TYPE;
+
   
 typedef enum process_states 
 { 
@@ -49,21 +52,26 @@ typedef enum process_states
    RUNNING,
    SUSPENDED,
    SLEEPING,
-   WAIT_EVENT 
+   WAIT_EVENT,
+   WAIT_MUTEX 
 } PROCESS_STATES;
+
 
 typedef enum kernel_request_type 
 {
    NONE = 0,
-   CREATE,
+   CREATE_T,								//Create a task
    YIELD,
    TERMINATE,
    SUSPEND,
    RESUME,
    SLEEP,
-   CREATE_E,									//Initialize an event object
+   CREATE_E,							//Initialize an event object
    WAIT_E,
-   SIGNAL_E
+   SIGNAL_E,
+   CREATE_M,							//Initialize a mutex object
+   LOCK_M,
+   UNLOCK_M	
 } KERNEL_REQUEST_TYPE;
 
 
@@ -83,8 +91,7 @@ typedef struct ProcessDescriptor
 } PD;
 
 
-/*For the ease of manageability, we're making a new event data type.
-The old EVENT type defined in OS.h will simply serve as an identifier.*/
+//For the ease of manageability, we're making a new event data type. The old EVENT type defined in OS.h will simply serve as an identifier.
 typedef struct event_type
 {
 	EVENT id;								//An unique identifier for this event. 0 = uninitialized
@@ -92,28 +99,29 @@ typedef struct event_type
 	unsigned int count;						//How many unhandled events has been collected?
 } EVENT_TYPE;
 
+//For the ease of manageability, we're making a new mutex data type. The old MUTEX type defined in OS.h will simply serve as an identifier.
+typedef struct mutex_type
+{
+	
+} MUTEX_TYPE;
 
-/*Context Switching functions defined in cswitch.c*/
-extern void CSwitch();
-extern void Enter_Kernel();	
-extern void Exit_Kernel();
 
-
-/*Kernel functions accessed by the OS*/
+/*Kernel functions accessible by the OS*/
 void OS_Init();
 void OS_Start();
 void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg);
 int findPIDByFuncPtr(voidfuncptr f);
 int getEventCount(EVENT e);
 
-
-/*Kernel variables accessed by the OS*/
+/*Kernel variables accessible by the OS*/
 extern volatile PD* Cp;
 extern volatile unsigned char *KernelSp;
 extern volatile unsigned char *CurrentSp;
+extern volatile unsigned int KernelActive;
+extern volatile ERROR_TYPE err;
 extern volatile unsigned int Last_PID;
 extern volatile unsigned int Last_EventID;
-extern volatile ERROR_TYPE err;
-extern volatile unsigned int KernelActive;
+extern volatile unsigned int Last_MutexID;
+
 
 #endif /* KERNEL_H_ */
