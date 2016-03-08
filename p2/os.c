@@ -289,16 +289,16 @@ void main()
    testSetup();
    
    OS_Init();
-   //Task_Create(Ping, 6, 210);
-   //Task_Create(Pong, 6, 205);
-   //Task_Create(suspend_pong, 4, 0);
+   Task_Create(Ping, 6, 210);
+   Task_Create(Pong, 6, 205);
+   Task_Create(suspend_pong, 4, 0);
    
    //Task_Create(event_wait_test, 5, 0);
    //Task_Create(event_signal_test, 5, 0);
    
-   Task_Create(priority1, 1, 0);
-   Task_Create(priority2, 2, 0);
-   Task_Create(priority3, 3, 0);
+   //Task_Create(priority1, 1, 0);
+   //Task_Create(priority2, 2, 0);
+   //Task_Create(priority3, 3, 0);
    OS_Start();
    
 }

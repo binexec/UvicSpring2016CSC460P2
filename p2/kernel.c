@@ -297,8 +297,6 @@ static void Kernel_Wait_Event(void)
 		return;
 	}
 	
-	//printf("Kernel_Wait_Event: FOUND e  = %d\n", e->id);
-	
 	//Ensure no one else is waiting for this same event
 	if(e->owner > 0 && e->owner != Cp->pid)
 	{
@@ -309,7 +307,7 @@ static void Kernel_Wait_Event(void)
 		return;
 	}
 	
-	//Has this event been signaled already? If yes, "consume" event and keep executing.
+	//Has this event been signaled already? If yes, "consume" event and keep executing the same task
 	if(e->count > 0)
 	{
 		e->owner = 0;
@@ -337,8 +335,6 @@ static void Kernel_Signal_Event(void)
 		#endif
 		return;
 	}
-	
-	//printf("Kernel_Signal_Event: FOUND e  = %d\n", e->id);
 	
 	//Increment the event counter if needed 
 	if(MAX_EVENT_SIG_MISS == 0 || e->count < MAX_EVENT_SIG_MISS)
@@ -409,10 +405,7 @@ static void Dispatch()
 		
 		//Looping through the process list until any process becomes ready
 		while(Process[NextP].state != READY)
-		{
 			NextP = (NextP + 1) % MAXTHREAD;
-			i++;
-		}
 		
 		//Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
 		Disable_Interrupt();
