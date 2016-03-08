@@ -20,6 +20,7 @@
 //Global configurations
 #define TICK_LENG 157			//The length of a tick = 10ms, using 16Mhz clock and /8 prescsaler
 #define MAX_EVENT_SIG_MISS 1	//The maximum number of missed signals to record for an event. 0 = unlimited
+#define LOWEST_PRIORITY 10		//The largest number to represent the lowest task priority. 0 will always be the highest priority.
 
 //Misc macros
 #define Disable_Interrupt()		asm volatile ("cli"::)

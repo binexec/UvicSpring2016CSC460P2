@@ -383,28 +383,47 @@ static void Kernel_Signal_Event(void)
 /* This internal kernel function is a part of the "scheduler". It chooses the next task to run, i.e., Cp. */
 static void Dispatch()
 {
-	int i = 0;
+	unsigned int i = 0;
+	int highest_pri = LOWEST_PRIORITY+1;
+	int highest_pri_index = -1;
 	
-	//Find the next READY task by iterating through the process list
-	while(Process[NextP].state != READY)
+	//Find the next READY task with the highest priority by iterating through the process list ONCE
+	for(i=0; i<MAXTHREAD; i++)
 	{
+		//Increment process index
 		NextP = (NextP + 1) % MAXTHREAD;
-		i++;
 		
-		//Not a single task is ready. We'll temporarily re-enable interrupt in case if one or more task is waiting on events/interrupts or sleeping
-		if(i > MAXTHREAD) Enable_Interrupt();
+		//Select the READY process with the highest priority
+		if(Process[NextP].state == READY && Process[NextP].pri < highest_pri)
+		{
+			highest_pri = Process[NextP].pri;
+			highest_pri_index = NextP;
+		}
 	}
-	
-	//Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
-	Disable_Interrupt();
-	
+		
+	//When none of the tasks in the process list is ready
+	if(highest_pri_index == -1)
+	{
+		//We'll temporarily re-enable interrupt in case if one or more task is waiting on events/interrupts or sleeping
+		Enable_Interrupt();
+		
+		//Looping through the process list until any process becomes ready
+		while(Process[NextP].state != READY)
+		{
+			NextP = (NextP + 1) % MAXTHREAD;
+			i++;
+		}
+		
+		//Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
+		Disable_Interrupt();
+	}
+	else
+		NextP = highest_pri_index;
+
 	//Load the task's process descriptor into Cp
 	Cp = &(Process[NextP]);
 	CurrentSp = Cp->sp;
 	Cp->state = RUNNING;
-	
-	//Increment NextP so the next dispatch will not run the same process (unless everything else isn't ready)
-	NextP = (NextP + 1) % MAXTHREAD;
 }
 
 /**
@@ -510,6 +529,10 @@ void Timer_init()
 	OCR1A = TICK_LENG;			//Set timer top comparison value to ~10ms
 	TCNT1 = 0;					//Load initial value for timer
 	TIMSK1 |= (1<<OCIE1A);      //enable match for OCR1A interrupt
+	
+	#ifdef DEBUG
+	printf("Timer initialized!\n");
+	#endif
 }
 
 /*This function initializes the RTOS and must be called before any othersystem calls.*/
@@ -539,6 +562,10 @@ void OS_Init()
 	
 	/*Initialize and start Timer needed for sleep*/
 	Timer_init();
+	
+	#ifdef DEBUG
+	printf("OS initialized!\n");
+	#endif
 }
 
 /* This function starts the RTOS after creating a few tasks.*/
@@ -551,6 +578,11 @@ void OS_Start()
 		/* we may have to initialize the interrupt vector for Enter_Kernel() here. */
 			/* here we go...  */
 		KernelActive = 1;
+		
+		#ifdef DEBUG
+		printf("OS begins!\n");
+		#endif
+		
 		Next_Kernel_Request();
 		/* NEVER RETURNS!!! */
 	}

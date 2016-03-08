@@ -240,14 +240,41 @@ void event_signal_test()
 {
 		printf("Signalling event %d...\n", e1);
 		Event_Signal(e1);
-		printf("SIGNALED!\n", e1);
+		printf("SIGNALED!\n");
 		Task_Yield();
 		
 		printf("Signalling event %d...\n", e1);
 		Event_Signal(e1);
 		Event_Signal(e1);
-		printf("SIGNALED!\n", e1);
+		printf("SIGNALED!\n");
 		Task_Yield();
+}
+
+void priority1()
+{
+	for(;;)
+	{
+		printf("Hello from 1!\n");
+		Task_Sleep(300);
+	}
+}
+
+void priority2()
+{
+	for(;;)
+	{
+		printf("Hello from 2!\n");
+		Task_Sleep(200);
+	}
+}
+
+void priority3()
+{
+	for(;;)
+	{
+		printf("Hello from 3!\n");
+		Task_Sleep(100);
+	}
 }
 
 void main() 
@@ -266,8 +293,12 @@ void main()
    //Task_Create(Pong, 6, 205);
    //Task_Create(suspend_pong, 4, 0);
    
-   Task_Create(event_wait_test, 5, 0);
-   Task_Create(event_signal_test, 5, 0);
+   //Task_Create(event_wait_test, 5, 0);
+   //Task_Create(event_signal_test, 5, 0);
+   
+   Task_Create(priority1, 1, 0);
+   Task_Create(priority2, 2, 0);
+   Task_Create(priority3, 3, 0);
    OS_Start();
    
 }
