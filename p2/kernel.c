@@ -10,11 +10,10 @@ volatile static unsigned int Event_Count;		//Number of events created so far .
 volatile  PD* Cp;		
 volatile unsigned char *KernelSp;				//Pointer to the Kernel's own stack location.
 volatile unsigned char *CurrentSp;				//Pointer to the stack location of the current running task. Used for saving into PD during ctxswitch.						//The process descriptor of the currently RUNNING task. CP is used to pass information from OS calls to the kernel telling it what to do.
-volatile unsigned int Last_PID;				//Last (also highest) PID value created so far.
-volatile unsigned int Last_EventID;			//Last (also highest) EVENT value created so far.
-volatile ERROR_TYPE err;				//Error code for the previous kernel operation (if any)
+volatile unsigned int Last_PID;					//Last (also highest) PID value created so far.
+volatile unsigned int Last_EventID;				//Last (also highest) EVENT value created so far.
+volatile ERROR_TYPE err;						//Error code for the previous kernel operation (if any)
 volatile unsigned int KernelActive;				//Indicates if kernel has been initialzied by OS_Start().
-
 
 /************************************************************************/
 /*						  KERNEL-ONLY HELPERS                           */
@@ -283,6 +282,10 @@ static void Kernel_Create_Event(void)
 	Event[i].owner = 0;
 	++Event_Count;
 	err = NO_ERR;
+	
+	#ifdef DEBUG
+	printf("Event_Init: Created Event %d!\n", Last_EventID);
+	#endif
 }
 
 static void Kernel_Wait_Event(void)

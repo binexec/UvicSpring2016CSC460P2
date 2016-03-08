@@ -40,6 +40,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../kernel.c \
 ../os.c \
+../test1.c \
 ../uart/uart.c
 
 
@@ -54,24 +55,28 @@ OBJS +=  \
 cswitch.o \
 kernel.o \
 os.o \
+test1.o \
 uart/uart.o
 
 OBJS_AS_ARGS +=  \
 cswitch.o \
 kernel.o \
 os.o \
+test1.o \
 uart/uart.o
 
 C_DEPS +=  \
 cswitch.d \
 kernel.d \
 os.d \
+test1.d \
 uart/uart.d
 
 C_DEPS_AS_ARGS +=  \
 cswitch.d \
 kernel.d \
 os.d \
+test1.d \
 uart/uart.d
 
 OUTPUT_FILE_PATH +=p2.elf
@@ -88,6 +93,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

@@ -8,5 +8,7 @@ kernel.c
 
 os.c
 
+test1.c
+
 uart\uart.c
 
