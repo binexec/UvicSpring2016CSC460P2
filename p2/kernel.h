@@ -19,6 +19,7 @@
 
 //Global configurations
 #define TICK_LENG 157			//The length of a tick = 10ms, using 16Mhz clock and /8 prescsaler
+#define MAX_EVENT_SIG_MISS 1	//The maximum number of missed signals to record for an event. 0 = unlimited
 
 //Misc macros
 #define Disable_Interrupt()		asm volatile ("cli"::)
@@ -38,8 +39,7 @@ typedef enum error_codes
 	MAX_EVENT_ERR,
 	EVENT_NOT_FOUND_ERR,
 	EVENT_ALREADY_OWNED_ERR,
-	SIGNAL_UNOWNED_EVENT_ERR,
-	EVENT_OWNER_NO_LONGER_WAITING_ERR
+	SIGNAL_UNOWNED_EVENT_ERR
 } ERROR_TYPE;
   
 typedef enum process_states 
@@ -105,15 +105,14 @@ void OS_Start();
 void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg);
 int findPIDByFuncPtr(voidfuncptr f);
 int getEventCount(EVENT e);
-void clearEventCount(EVENT e);
 
 
 /*Kernel variables accessed by the OS*/
 extern volatile PD* Cp;
 extern volatile unsigned char *KernelSp;
 extern volatile unsigned char *CurrentSp;
-extern volatile unsigned int last_PID;
-extern volatile unsigned int last_EVENT;
+extern volatile unsigned int Last_PID;
+extern volatile unsigned int Last_EventID;
 extern volatile ERROR_TYPE err;
 extern volatile unsigned int KernelActive;
 

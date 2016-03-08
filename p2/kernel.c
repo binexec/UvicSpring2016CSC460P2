@@ -3,15 +3,16 @@
 volatile static PD Process[MAXTHREAD];			//Contains the process descriptor for all tasks, regardless of their current state.
 volatile static EVENT_TYPE Event[MAXEVENT];		//Contains all the event "counters" 
 volatile static unsigned int NextP;				//Which task in the process queue to dispatch next.
-volatile static unsigned int Tasks;				//Number of tasks created so far .
+volatile static unsigned int Task_Count;		//Number of tasks created so far .
+volatile static unsigned int Event_Count;		//Number of events created so far .
 
 /*Variables accessed by OS*/
 volatile  PD* Cp;		
 volatile unsigned char *KernelSp;				//Pointer to the Kernel's own stack location.
 volatile unsigned char *CurrentSp;				//Pointer to the stack location of the current running task. Used for saving into PD during ctxswitch.						//The process descriptor of the currently RUNNING task. CP is used to pass information from OS calls to the kernel telling it what to do.
-volatile unsigned int last_PID = 0;				//Last (also highest) PID value created so far.
-volatile unsigned int last_EVENT = 0;			//Last (also highest) EVENT value created so far.
-volatile ERROR_TYPE err = NO_ERR;				//Error code for the previous kernel operation (if any)
+volatile unsigned int Last_PID;				//Last (also highest) PID value created so far.
+volatile unsigned int Last_EventID;			//Last (also highest) EVENT value created so far.
+volatile ERROR_TYPE err;				//Error code for the previous kernel operation (if any)
 volatile unsigned int KernelActive;				//Indicates if kernel has been initialzied by OS_Start().
 
 
@@ -52,21 +53,19 @@ EVENT_TYPE* findEventByEventID(EVENT e)
 		return NULL;
 	}
 	
-	//Find the requested Event
+	//Find the requested Event and return its pointer if found
 	for(i=0; i<MAXEVENT; i++)
-	if(Event[i].id == e) break;
-	
-	//Ensure the event was actually found within the event list
-	if(i == MAXEVENT && Event[MAXEVENT].id != Cp->request_arg)
 	{
-		#ifdef DEBUG
-		printf("findEventByEventID: The requested event was not found!\n");
-		#endif
-		err = EVENT_NOT_FOUND_ERR;
-		return NULL;
+		if(Event[i].id == e) 
+			return &Event[i];
 	}
 	
-	return &Event[i];
+	//Event wasn't found
+	//#ifdef DEBUG
+	//printf("findEventByEventID: The requested event %d was not found!\n", e);
+	//#endif
+	err = EVENT_NOT_FOUND_ERR;
+	return NULL;
 }
 
 /************************************************************************/
@@ -88,6 +87,7 @@ int findPIDByFuncPtr(voidfuncptr f)
 	return -1;
 }
 
+/*Only useful if our RTOS allows more than one missed event signals to be recorded*/
 int getEventCount(EVENT e)
 {
 	EVENT_TYPE* e1 = findEventByEventID(e);
@@ -97,17 +97,6 @@ int getEventCount(EVENT e)
 		
 	return e1->count;	
 }
-
-void clearEventCount(EVENT e)
-{
-	EVENT_TYPE* e1 = findEventByEventID(e);
-	
-	if(e1 == NULL)
-		return;
-		
-	e1->count = 0;
-}
-
 
 /************************************************************************/
 /*                    INTERNAL KERNEL ROUTINES                          */
@@ -149,7 +138,7 @@ void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 	#endif
 	
 	//Make sure the system can still have enough resources to create more tasks
-	if (Tasks == MAXTHREAD)
+	if (Task_Count == MAXTHREAD)
 	{
 		#ifdef DEBUG
 		printf("Task_Create: Failed to create task. The system is at its process threshold.\n");
@@ -163,7 +152,7 @@ void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 	for (x = 0; x < MAXTHREAD; x++)
 	if (Process[x].state == DEAD) break;
 	
-	++Tasks;
+	++Task_Count;
 	p = &(Process[x]);
 	
 	/*The code below was agglomerated from Kernel_Create_Task_At;*/
@@ -195,7 +184,7 @@ void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
 	#endif
 	
 	//Build the process descriptor for the new task
-	p->pid = ++last_PID;
+	p->pid = ++Last_PID;
 	p->pri = py;
 	p->arg = arg;
 	p->request = NONE;
@@ -276,12 +265,11 @@ static void Kernel_Create_Event(void)
 	int i;
 	
 	//Make sure the system's events are not at max
-	if(last_EVENT >= MAXEVENT+1)
+	if(Event_Count >= MAXEVENT)
 	{
 		#ifdef DEBUG
 		printf("Event_Init: Failed to create Event. The system is at its max event threshold.\n");
 		#endif
-		
 		err = MAX_EVENT_ERR;
 		return;
 	}
@@ -291,8 +279,9 @@ static void Kernel_Create_Event(void)
 		if(Event[i].id == 0) break;
 	
 	//Assign a new unique ID to the event. Note that the smallest valid Event ID is 1.
-	Event[i].id = ++last_EVENT;
+	Event[i].id = ++Last_EventID;
 	Event[i].owner = 0;
+	++Event_Count;
 	err = NO_ERR;
 }
 
@@ -308,6 +297,8 @@ static void Kernel_Wait_Event(void)
 		return;
 	}
 	
+	//printf("Kernel_Wait_Event: FOUND e  = %d\n", e->id);
+	
 	//Ensure no one else is waiting for this same event
 	if(e->owner > 0 && e->owner != Cp->pid)
 	{
@@ -315,6 +306,16 @@ static void Kernel_Wait_Event(void)
 			printf("Kernel_Wait_Event: The requested event is already being waited by PID %d\n", e->owner);
 		#endif
 		err = EVENT_NOT_FOUND_ERR;
+		return;
+	}
+	
+	//Has this event been signaled already? If yes, "consume" event and keep executing.
+	if(e->count > 0)
+	{
+		e->owner = 0;
+		e->count = 0;
+		e->id = 0;
+		--Event_Count;	
 		return;
 	}
 	
@@ -332,37 +333,46 @@ static void Kernel_Signal_Event(void)
 	if(e == NULL)
 	{
 		#ifdef DEBUG
-		printf("Kernel_Wait_Event: Error finding requested event!\n");
+		printf("Kernel_Signal_Event: Error finding requested event!\n");
 		#endif
 		return;
 	}
 	
-	//Ensure the event is waited by someone
+	//printf("Kernel_Signal_Event: FOUND e  = %d\n", e->id);
+	
+	//Increment the event counter if needed 
+	if(MAX_EVENT_SIG_MISS == 0 || e->count < MAX_EVENT_SIG_MISS)
+		e->count++;
+	
+	//If the event is unowned, return
 	if(e->owner == 0)
 	{
 		#ifdef DEBUG
-		printf("Kernel_Signal_Event: The requested event is not being waited by anyone!\n");
+		printf("Kernel_Signal_Event: *WARNING* The requested event is not being waited by anyone!\n");
 		#endif
 		err = SIGNAL_UNOWNED_EVENT_ERR;
 		return;
 	}
 	
-	//Increment the event counter
-	e->count++;
-	
-	//Get the PD of the event owner
+	//Fetch the owner's PD and ensure it's still valid
 	e_owner = findProcessByPID(e->owner);
-	
-	//Signal the owner of the event by setting its state to READY if it's waiting actively
-	if(e_owner->state == WAIT_EVENT)
-		e_owner->state = READY;
-	//Only other possibility is if the owner that is waiting has been suspended. In this case, do nothing and just let the counter increment.
-	else if (!(e_owner->state == SUSPENDED && e_owner->last_state == WAIT_EVENT))
+	if(e_owner == NULL)
 	{
 		#ifdef DEBUG
-		printf("Kernel_Signal_Event: Event Owner doesn't' seem to be expecting this event! Current state: %d!\n", e_owner->state);
+		printf("Kernel_Signal_Event: Event owner's PID not found in global process list!\n");
 		#endif
-		err = EVENT_OWNER_NO_LONGER_WAITING_ERR;
+		err = PID_NOT_FOUND_ERR;
+		return;
+	}
+	
+	//Wake up the owner of the event by setting its state to READY if it's active. The event is "consumed"
+	if(e_owner->state == WAIT_EVENT)
+	{
+		e->owner = 0;
+		e->count = 0;
+		e->id = 0;
+		--Event_Count;
+		e_owner->state = READY;
 	}
 }
 
@@ -410,6 +420,7 @@ static void Next_Kernel_Request()
 	Dispatch();	//Select an initial task to run
 
 	//After OS initialization, this will be kernel's main loop
+	//NOTE: When another task makes a syscall and enters the loop, it's still in the RUNNING state!
 	while(1) 
 	{
 		//Clears the process' request fields
@@ -433,6 +444,7 @@ static void Next_Kernel_Request()
 			
 			case TERMINATE:
 			Cp->state = DEAD;			//Mark the task as DEAD so its resources will be recycled later when new tasks are created
+			--Task_Count;
 			Dispatch();					//Dispatch is only needed if the syscall requires running a different task  after it's done
 			break;
 		   
@@ -454,8 +466,9 @@ static void Next_Kernel_Request()
 			break;
 			
 			case WAIT_E:
-			Kernel_Wait_Event();
-			Dispatch();
+			Kernel_Wait_Event();	
+			//Don't dispatch to a different task if the event is already siganled
+			if(Cp->state != RUNNING) Dispatch();	
 			break;
 			
 			case SIGNAL_E:
@@ -504,19 +517,23 @@ void OS_Init()
 {
 	int x;
 	
-	Tasks = 0;
+	Task_Count = 0;
+	Event_Count = 0;
 	KernelActive = 0;
 	NextP = 0;
+	Last_PID = 0;
+	Last_EventID = 0;
+	err = NO_ERR;
 	
 	//Clear and initialize the memory used for tasks
+	memset(Process, 0, MAXTHREAD*sizeof(PD));
 	for (x = 0; x < MAXTHREAD; x++) {
-		memset(&(Process[x]), 0, sizeof(PD));
 		Process[x].state = DEAD;
 	}
 	
 	//Clear and initialize the memory used for Events
+	memset(Event, 0, MAXEVENT*sizeof(EVENT_TYPE));
 	for (x = 0; x < MAXEVENT; x++) {
-		memset(&(Event[x]), 0, sizeof(EVENT_TYPE));
 		Event[x].id = 0;
 	}
 	
@@ -527,7 +544,7 @@ void OS_Init()
 /* This function starts the RTOS after creating a few tasks.*/
 void OS_Start()
 {
-	if ( (! KernelActive) && (Tasks > 0))
+	if ( (! KernelActive) && (Task_Count > 0))
 	{
 		Disable_Interrupt();
 		

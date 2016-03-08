@@ -34,10 +34,10 @@ PID Task_Create(voidfuncptr f, PRIORITY py, int arg)
 		return 0;
    
    #ifdef DEBUG
-	printf("Created PID: %d\n", last_PID);
+	printf("Created PID: %d\n", Last_PID);
    #endif
    
-   return last_PID;
+   return Last_PID;
 }
 
 /* The calling task terminates itself. */
@@ -134,10 +134,10 @@ EVENT Event_Init(void)
 		return 0;
 	
 	#ifdef DEBUG
-	printf("Created Event: %d\n", last_EVENT);
+	printf("Created Event: %d\n", Last_EventID);
 	#endif
 	
-	return last_EVENT;
+	return Last_EventID;
 }
 
 void Event_Wait(EVENT e)
@@ -220,40 +220,34 @@ void suspend_pong()
 
 void event_wait_test()
 {
-	e1 = Event_Init();
-	
-	for(;;)
-	{
+
+		//Test normal signaling
+		e1 = Event_Init();
+		printf("Waiting for event %d...\n", e1);
 		Event_Wait(e1);
-		printf("Signal for e1 received! Total events: %d\n", getEventCount(e1));
+		printf("Signal for event %d received! Total events: %d\n", e1, getEventCount(e1));
+		e1 = Event_Init();
+		Task_Yield();
 		
-		//Clear the event counts after we've handled them
-		clearEventCount(e1);
-	}
+		//Test pre signaling
+		printf("Waiting for event %d...\n", e1);
+		Event_Wait(e1);
+		printf("Signal for event %d received! Total events: %d\n", e1, getEventCount(e1));
+		Task_Yield();
 }
 
 void event_signal_test()
 {
-	for(;;)
-	{
-		Task_Sleep(100);
+		printf("Signalling event %d...\n", e1);
 		Event_Signal(e1);
-		printf("Signalling e1...\n");
+		printf("SIGNALED!\n", e1);
 		Task_Yield();
 		
-		//Signal again but suspend event_wait_test first
-		printf("Signalling e1 SUSPENDED...\n");
-		Task_Suspend(findPIDByFuncPtr(event_wait_test));
+		printf("Signalling event %d...\n", e1);
 		Event_Signal(e1);
 		Event_Signal(e1);
-		Event_Signal(e1);
-		Event_Signal(e1);
-		Event_Signal(e1);
-		Task_Sleep(500);
-		printf("Resuming...\n");
-		Task_Resume(findPIDByFuncPtr(event_wait_test));
+		printf("SIGNALED!\n", e1);
 		Task_Yield();
-	}
 }
 
 void main() 
@@ -271,6 +265,7 @@ void main()
    //Task_Create(Ping, 6, 210);
    //Task_Create(Pong, 6, 205);
    //Task_Create(suspend_pong, 4, 0);
+   
    Task_Create(event_wait_test, 5, 0);
    Task_Create(event_signal_test, 5, 0);
    OS_Start();
