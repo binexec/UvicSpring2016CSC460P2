@@ -469,7 +469,7 @@ static void Dispatch();
 static void Kernel_Lock_Mutex(void)
 {
 	MUTEX_TYPE* m = findMutexByEventID(Cp->request_arg);
-	PD *m_owner;
+	PD *m_owner = findProcessByPID(m->owner);
 	
 	if(m == NULL)
 	{
@@ -484,6 +484,7 @@ static void Kernel_Lock_Mutex(void)
 	{
 		m->owner = Cp->pid;
 		m->count = 1;
+		m->own_pri = Cp->pri;				// keep track of the original priority of the owner
 		return;
 	} else if (m->owner == Cp->pid) {
 		// if it has locked by the current process
@@ -503,6 +504,11 @@ static void Kernel_Lock_Mutex(void)
 			}
 		}
 		// end of enqueue
+		
+		//if cp's priority is higher than the owner
+		if (Cp->pri < m_owner->pri) {
+			m_owner->pri = Cp->pri;				// the owner gets cp's priority
+		}
 		Dispatch();
 	}
 }
@@ -510,7 +516,7 @@ static void Kernel_Lock_Mutex(void)
 static void Kernel_Unlock_Mutex(void)
 {
 	MUTEX_TYPE* m = findMutexByEventID(Cp->request_arg);
-	PD *m_owner;
+	PD *m_owner = findProcessByPID(m->owner);
 	
 	if(m == NULL)
 	{
@@ -553,13 +559,16 @@ static void Kernel_Unlock_Mutex(void)
 		m->order[i] = 0;
 		--(m->num_of_process);
 		PD* target_p = findProcessByPID(p_dequeue);
+		m_owner->pri = m->own_pri;		//reset owner's priority
 		m->owner = p_dequeue;
+		m->own_pri = temp_pri;			//keep track of new owner's priority;
 		target_p->state = READY;
 		Dispatch();
 		return;
 	} else {
 		m->owner = 0;
 		m->count = 0;
+		m_owner->pri = m->own_pri;		//reset owner's priority
 		return;
 	}
 }
@@ -744,6 +753,7 @@ void OS_Init()
 	NextP = 0;
 	Last_PID = 0;
 	Last_EventID = 0;
+	Last_MutexID = 0;
 	err = NO_ERR;
 	
 	//Clear and initialize the memory used for tasks

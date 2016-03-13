@@ -3,6 +3,9 @@
 
 #define LED_PIN_MASK 0x80			//Pin 13 = PB7
 EVENT e1;
+MUTEX m1;
+EVENT evt;
+MUTEX mut;
 
 /************************************************************************/
 /*							CODE FOR TESTING                            */
@@ -46,6 +49,34 @@ void suspend_pong()
 	}
 	
 }
+
+void Task_P1(int parameter)
+{	
+	mut = Mutex_Init();
+	//evt = Event_Init();
+	printf("last mutex id is %d\n", Last_MutexID);
+	printf("task 1 started and gonna lock the mut\n");
+	Mutex_Lock(mut);
+	printf("task 1 will sleep\n");
+	Task_Sleep(100); // sleep 100ms
+	printf("task 1 is awake, and will unlock mut\n");
+	Mutex_Unlock(mut);
+	for(;;);
+}
+
+void Task_P2(int parameter)
+{	
+	printf("task 2 started and gonna lock the mut\n");
+	Mutex_Lock(mut);
+	printf("task 2 got into mutex");
+	for(;;);
+}
+
+void Task_P3(int parameter)
+{
+	for(;;);
+}
+
 
 void event_wait_test()
 {
@@ -110,7 +141,7 @@ void priority3()
 /*Entry point for application*/
 void a_main()
 {
-	int test_set = 0;				//Which set of tests to run?
+	int test_set = 3;				//Which set of tests to run?
 
 	OS_Init();
 	
@@ -134,8 +165,16 @@ void a_main()
 		Task_Create(priority1, 1, 0);
 		Task_Create(priority2, 2, 0);
 		Task_Create(priority3, 3, 0);
+	} else if (test_set == 3)
+	{
+		//mut = Mutex_Init();
+		//evt = Event_Init();
+		Task_Create(Task_P1, 1, 0);
+		Task_Create(Task_P2, 2, 0);
+		//Task_Create(Task_P3, 3, 0);
 	}
 	
-	
+	//mut = Mutex_Init();
+	//evt = Event_Init();
 	OS_Start();
 }

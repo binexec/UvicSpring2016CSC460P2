@@ -111,6 +111,7 @@ typedef struct mutex_type
 	unsigned int order[MAXTHREAD];			//order of task came into the stack
 	unsigned int num_of_process;			//number of processes waiting on the mutex
 	unsigned int total_num;					//total number of process has waitted on this mutex
+	PRIORITY own_pri;						//original priority of the owner
 } MUTEX_TYPE;
 
 
