@@ -41,7 +41,8 @@ typedef enum error_codes
 	EVENT_NOT_FOUND_ERR,
 	EVENT_ALREADY_OWNED_ERR,
 	SIGNAL_UNOWNED_EVENT_ERR,
-	MAX_MUTEX_ERR
+	MAX_MUTEX_ERR,
+	MUTEX_NOT_FOUND_ERR
 } ERROR_TYPE;
 
   
@@ -102,7 +103,14 @@ typedef struct event_type
 //For the ease of manageability, we're making a new mutex data type. The old MUTEX type defined in OS.h will simply serve as an identifier.
 typedef struct mutex_type
 {
-	
+	MUTEX id;								//unique id for this mutex, 0 = uninitialized
+	PID owner;								//the current owner of the event, 0 = free
+	unsigned int count;						//mutex can be recursively locked
+	PID blocked_stack [MAXTHREAD];			//stack for blocked
+	PRIORITY priority_stack [MAXTHREAD];	//priority of the processes
+	unsigned int order[MAXTHREAD];			//order of task came into the stack
+	unsigned int num_of_process;			//number of processes waiting on the mutex
+	unsigned int total_num;					//total number of process has waitted on this mutex
 } MUTEX_TYPE;
 
 

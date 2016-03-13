@@ -1,0 +1,3827 @@
+
+p2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000622  00800200  000017ac  00001840  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000017ac  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          000013fd  00800822  00800822  00001e62  2**0
+                  ALLOC
+  3 .comment      0000005c  00000000  00000000  00001e62  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00001ec0  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000001b0  00000000  00000000  00001f00  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001ca0  00000000  00000000  000020b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000007cf  00000000  00000000  00003d50  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000011c0  00000000  00000000  0000451f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  0000041c  00000000  00000000  000056e0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000802  00000000  00000000  00005afc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000116d  00000000  00000000  000062fe  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000001e0  00000000  00000000  0000746b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+       0:	7e c0       	rjmp	.+252    	; 0xfe <__ctors_end>
+       2:	00 00       	nop
+       4:	9c c0       	rjmp	.+312    	; 0x13e <__bad_interrupt>
+       6:	00 00       	nop
+       8:	9a c0       	rjmp	.+308    	; 0x13e <__bad_interrupt>
+       a:	00 00       	nop
+       c:	98 c0       	rjmp	.+304    	; 0x13e <__bad_interrupt>
+       e:	00 00       	nop
+      10:	96 c0       	rjmp	.+300    	; 0x13e <__bad_interrupt>
+      12:	00 00       	nop
+      14:	94 c0       	rjmp	.+296    	; 0x13e <__bad_interrupt>
+      16:	00 00       	nop
+      18:	92 c0       	rjmp	.+292    	; 0x13e <__bad_interrupt>
+      1a:	00 00       	nop
+      1c:	90 c0       	rjmp	.+288    	; 0x13e <__bad_interrupt>
+      1e:	00 00       	nop
+      20:	8e c0       	rjmp	.+284    	; 0x13e <__bad_interrupt>
+      22:	00 00       	nop
+      24:	8c c0       	rjmp	.+280    	; 0x13e <__bad_interrupt>
+      26:	00 00       	nop
+      28:	8a c0       	rjmp	.+276    	; 0x13e <__bad_interrupt>
+      2a:	00 00       	nop
+      2c:	88 c0       	rjmp	.+272    	; 0x13e <__bad_interrupt>
+      2e:	00 00       	nop
+      30:	86 c0       	rjmp	.+268    	; 0x13e <__bad_interrupt>
+      32:	00 00       	nop
+      34:	84 c0       	rjmp	.+264    	; 0x13e <__bad_interrupt>
+      36:	00 00       	nop
+      38:	82 c0       	rjmp	.+260    	; 0x13e <__bad_interrupt>
+      3a:	00 00       	nop
+      3c:	80 c0       	rjmp	.+256    	; 0x13e <__bad_interrupt>
+      3e:	00 00       	nop
+      40:	7e c0       	rjmp	.+252    	; 0x13e <__bad_interrupt>
+      42:	00 00       	nop
+      44:	94 c2       	rjmp	.+1320   	; 0x56e <__vector_17>
+      46:	00 00       	nop
+      48:	7a c0       	rjmp	.+244    	; 0x13e <__bad_interrupt>
+      4a:	00 00       	nop
+      4c:	78 c0       	rjmp	.+240    	; 0x13e <__bad_interrupt>
+      4e:	00 00       	nop
+      50:	76 c0       	rjmp	.+236    	; 0x13e <__bad_interrupt>
+      52:	00 00       	nop
+      54:	74 c0       	rjmp	.+232    	; 0x13e <__bad_interrupt>
+      56:	00 00       	nop
+      58:	72 c0       	rjmp	.+228    	; 0x13e <__bad_interrupt>
+      5a:	00 00       	nop
+      5c:	70 c0       	rjmp	.+224    	; 0x13e <__bad_interrupt>
+      5e:	00 00       	nop
+      60:	6e c0       	rjmp	.+220    	; 0x13e <__bad_interrupt>
+      62:	00 00       	nop
+      64:	6c c0       	rjmp	.+216    	; 0x13e <__bad_interrupt>
+      66:	00 00       	nop
+      68:	6a c0       	rjmp	.+212    	; 0x13e <__bad_interrupt>
+      6a:	00 00       	nop
+      6c:	68 c0       	rjmp	.+208    	; 0x13e <__bad_interrupt>
+      6e:	00 00       	nop
+      70:	66 c0       	rjmp	.+204    	; 0x13e <__bad_interrupt>
+      72:	00 00       	nop
+      74:	64 c0       	rjmp	.+200    	; 0x13e <__bad_interrupt>
+      76:	00 00       	nop
+      78:	62 c0       	rjmp	.+196    	; 0x13e <__bad_interrupt>
+      7a:	00 00       	nop
+      7c:	60 c0       	rjmp	.+192    	; 0x13e <__bad_interrupt>
+      7e:	00 00       	nop
+      80:	5e c0       	rjmp	.+188    	; 0x13e <__bad_interrupt>
+      82:	00 00       	nop
+      84:	5c c0       	rjmp	.+184    	; 0x13e <__bad_interrupt>
+      86:	00 00       	nop
+      88:	5a c0       	rjmp	.+180    	; 0x13e <__bad_interrupt>
+      8a:	00 00       	nop
+      8c:	58 c0       	rjmp	.+176    	; 0x13e <__bad_interrupt>
+      8e:	00 00       	nop
+      90:	56 c0       	rjmp	.+172    	; 0x13e <__bad_interrupt>
+      92:	00 00       	nop
+      94:	54 c0       	rjmp	.+168    	; 0x13e <__bad_interrupt>
+      96:	00 00       	nop
+      98:	52 c0       	rjmp	.+164    	; 0x13e <__bad_interrupt>
+      9a:	00 00       	nop
+      9c:	50 c0       	rjmp	.+160    	; 0x13e <__bad_interrupt>
+      9e:	00 00       	nop
+      a0:	4e c0       	rjmp	.+156    	; 0x13e <__bad_interrupt>
+      a2:	00 00       	nop
+      a4:	4c c0       	rjmp	.+152    	; 0x13e <__bad_interrupt>
+      a6:	00 00       	nop
+      a8:	4a c0       	rjmp	.+148    	; 0x13e <__bad_interrupt>
+      aa:	00 00       	nop
+      ac:	48 c0       	rjmp	.+144    	; 0x13e <__bad_interrupt>
+      ae:	00 00       	nop
+      b0:	46 c0       	rjmp	.+140    	; 0x13e <__bad_interrupt>
+      b2:	00 00       	nop
+      b4:	44 c0       	rjmp	.+136    	; 0x13e <__bad_interrupt>
+      b6:	00 00       	nop
+      b8:	42 c0       	rjmp	.+132    	; 0x13e <__bad_interrupt>
+      ba:	00 00       	nop
+      bc:	40 c0       	rjmp	.+128    	; 0x13e <__bad_interrupt>
+      be:	00 00       	nop
+      c0:	3e c0       	rjmp	.+124    	; 0x13e <__bad_interrupt>
+      c2:	00 00       	nop
+      c4:	3c c0       	rjmp	.+120    	; 0x13e <__bad_interrupt>
+      c6:	00 00       	nop
+      c8:	3a c0       	rjmp	.+116    	; 0x13e <__bad_interrupt>
+      ca:	00 00       	nop
+      cc:	38 c0       	rjmp	.+112    	; 0x13e <__bad_interrupt>
+      ce:	00 00       	nop
+      d0:	36 c0       	rjmp	.+108    	; 0x13e <__bad_interrupt>
+      d2:	00 00       	nop
+      d4:	34 c0       	rjmp	.+104    	; 0x13e <__bad_interrupt>
+      d6:	00 00       	nop
+      d8:	32 c0       	rjmp	.+100    	; 0x13e <__bad_interrupt>
+      da:	00 00       	nop
+      dc:	30 c0       	rjmp	.+96     	; 0x13e <__bad_interrupt>
+      de:	00 00       	nop
+      e0:	2e c0       	rjmp	.+92     	; 0x13e <__bad_interrupt>
+      e2:	00 00       	nop
+      e4:	bc 07       	cpc	r27, r28
+      e6:	ab 04       	cpc	r10, r11
+      e8:	bc 07       	cpc	r27, r28
+      ea:	b5 04       	cpc	r11, r5
+      ec:	c3 04       	cpc	r12, r3
+      ee:	eb 04       	cpc	r14, r11
+      f0:	1c 05       	cpc	r17, r12
+      f2:	22 05       	cpc	r18, r2
+      f4:	81 05       	cpc	r24, r1
+      f6:	d4 05       	cpc	r29, r4
+      f8:	1c 06       	cpc	r1, r28
+      fa:	a4 06       	cpc	r10, r20
+      fc:	19 07       	cpc	r17, r25
+
+000000fe <__ctors_end>:
+      fe:	11 24       	eor	r1, r1
+     100:	1f be       	out	0x3f, r1	; 63
+     102:	cf ef       	ldi	r28, 0xFF	; 255
+     104:	d1 e2       	ldi	r29, 0x21	; 33
+     106:	de bf       	out	0x3e, r29	; 62
+     108:	cd bf       	out	0x3d, r28	; 61
+     10a:	00 e0       	ldi	r16, 0x00	; 0
+     10c:	0c bf       	out	0x3c, r16	; 60
+
+0000010e <__do_copy_data>:
+     10e:	18 e0       	ldi	r17, 0x08	; 8
+     110:	a0 e0       	ldi	r26, 0x00	; 0
+     112:	b2 e0       	ldi	r27, 0x02	; 2
+     114:	ec ea       	ldi	r30, 0xAC	; 172
+     116:	f7 e1       	ldi	r31, 0x17	; 23
+     118:	00 e0       	ldi	r16, 0x00	; 0
+     11a:	0b bf       	out	0x3b, r16	; 59
+     11c:	02 c0       	rjmp	.+4      	; 0x122 <__do_copy_data+0x14>
+     11e:	07 90       	elpm	r0, Z+
+     120:	0d 92       	st	X+, r0
+     122:	a2 32       	cpi	r26, 0x22	; 34
+     124:	b1 07       	cpc	r27, r17
+     126:	d9 f7       	brne	.-10     	; 0x11e <__do_copy_data+0x10>
+
+00000128 <__do_clear_bss>:
+     128:	2c e1       	ldi	r18, 0x1C	; 28
+     12a:	a2 e2       	ldi	r26, 0x22	; 34
+     12c:	b8 e0       	ldi	r27, 0x08	; 8
+     12e:	01 c0       	rjmp	.+2      	; 0x132 <.do_clear_bss_start>
+
+00000130 <.do_clear_bss_loop>:
+     130:	1d 92       	st	X+, r1
+
+00000132 <.do_clear_bss_start>:
+     132:	af 31       	cpi	r26, 0x1F	; 31
+     134:	b2 07       	cpc	r27, r18
+     136:	e1 f7       	brne	.-8      	; 0x130 <.do_clear_bss_loop>
+     138:	d8 d7       	rcall	.+4016   	; 0x10ea <main>
+     13a:	0c 94 d4 0b 	jmp	0x17a8	; 0x17a8 <_exit>
+
+0000013e <__bad_interrupt>:
+     13e:	60 cf       	rjmp	.-320    	; 0x0 <__vectors>
+
+00000140 <CSwitch>:
+Exit_Kernel:
+        /* 
+          * This is the "top" half of CSwitch(), generally called by the kernel.
+          * Assume I = 0, i.e., all interrupts are disabled.
+          */
+        SAVECTX
+     140:	0f 92       	push	r0
+     142:	1f 92       	push	r1
+     144:	2f 92       	push	r2
+     146:	3f 92       	push	r3
+     148:	4f 92       	push	r4
+     14a:	5f 92       	push	r5
+     14c:	6f 92       	push	r6
+     14e:	7f 92       	push	r7
+     150:	8f 92       	push	r8
+     152:	9f 92       	push	r9
+     154:	af 92       	push	r10
+     156:	bf 92       	push	r11
+     158:	cf 92       	push	r12
+     15a:	df 92       	push	r13
+     15c:	ef 92       	push	r14
+     15e:	ff 92       	push	r15
+     160:	0f 93       	push	r16
+     162:	1f 93       	push	r17
+     164:	2f 93       	push	r18
+     166:	3f 93       	push	r19
+     168:	4f 93       	push	r20
+     16a:	5f 93       	push	r21
+     16c:	6f 93       	push	r22
+     16e:	7f 93       	push	r23
+     170:	8f 93       	push	r24
+     172:	9f 93       	push	r25
+     174:	af 93       	push	r26
+     176:	bf 93       	push	r27
+     178:	cf 93       	push	r28
+     17a:	df 93       	push	r29
+     17c:	ef 93       	push	r30
+     17e:	ff 93       	push	r31
+     180:	fc b7       	in	r31, 0x3c	; 60
+     182:	ff 93       	push	r31
+     184:	ff b7       	in	r31, 0x3f	; 63
+     186:	ff 93       	push	r31
+        /* 
+          * Now, we have saved the kernel's context.
+          * Save the current H/W stack pointer into KernelSp.
+          */
+        in   r30, SPL
+     188:	ed b7       	in	r30, 0x3d	; 61
+        in   r31, SPH
+     18a:	fe b7       	in	r31, 0x3e	; 62
+        sts  KernelSp, r30
+     18c:	e0 93 17 1c 	sts	0x1C17, r30
+        sts  KernelSp+1, r31
+     190:	f0 93 18 1c 	sts	0x1C18, r31
+        /*
+          * We are now ready to restore Cp's context, i.e.,
+          * switching the H/W stack pointer to CurrentSp.
+          */ 
+        lds  r30, CurrentSp
+     194:	e0 91 11 1c 	lds	r30, 0x1C11
+        lds  r31, CurrentSp+1
+     198:	f0 91 12 1c 	lds	r31, 0x1C12
+        out  SPL, r30
+     19c:	ed bf       	out	0x3d, r30	; 61
+        out  SPH, r31
+     19e:	fe bf       	out	0x3e, r31	; 62
+        /*
+          * We are now executing in Cp's stack.
+          * Note: at the bottom of the Cp's context is its return address.
+          */
+        RESTORECTX
+     1a0:	ff 91       	pop	r31
+     1a2:	ff bf       	out	0x3f, r31	; 63
+     1a4:	ff 91       	pop	r31
+     1a6:	fc bf       	out	0x3c, r31	; 60
+     1a8:	ff 91       	pop	r31
+     1aa:	ef 91       	pop	r30
+     1ac:	df 91       	pop	r29
+     1ae:	cf 91       	pop	r28
+     1b0:	bf 91       	pop	r27
+     1b2:	af 91       	pop	r26
+     1b4:	9f 91       	pop	r25
+     1b6:	8f 91       	pop	r24
+     1b8:	7f 91       	pop	r23
+     1ba:	6f 91       	pop	r22
+     1bc:	5f 91       	pop	r21
+     1be:	4f 91       	pop	r20
+     1c0:	3f 91       	pop	r19
+     1c2:	2f 91       	pop	r18
+     1c4:	1f 91       	pop	r17
+     1c6:	0f 91       	pop	r16
+     1c8:	ff 90       	pop	r15
+     1ca:	ef 90       	pop	r14
+     1cc:	df 90       	pop	r13
+     1ce:	cf 90       	pop	r12
+     1d0:	bf 90       	pop	r11
+     1d2:	af 90       	pop	r10
+     1d4:	9f 90       	pop	r9
+     1d6:	8f 90       	pop	r8
+     1d8:	7f 90       	pop	r7
+     1da:	6f 90       	pop	r6
+     1dc:	5f 90       	pop	r5
+     1de:	4f 90       	pop	r4
+     1e0:	3f 90       	pop	r3
+     1e2:	2f 90       	pop	r2
+     1e4:	1f 90       	pop	r1
+     1e6:	0f 90       	pop	r0
+        reti         /* re-enable all global interrupts */
+     1e8:	18 95       	reti
+
+000001ea <Enter_Kernel>:
+Enter_Kernel:   
+        /*
+          * This is the "bottom" half of CSwitch(). We are still executing in
+          * Cp's context.
+          */
+        SAVECTX
+     1ea:	0f 92       	push	r0
+     1ec:	1f 92       	push	r1
+     1ee:	2f 92       	push	r2
+     1f0:	3f 92       	push	r3
+     1f2:	4f 92       	push	r4
+     1f4:	5f 92       	push	r5
+     1f6:	6f 92       	push	r6
+     1f8:	7f 92       	push	r7
+     1fa:	8f 92       	push	r8
+     1fc:	9f 92       	push	r9
+     1fe:	af 92       	push	r10
+     200:	bf 92       	push	r11
+     202:	cf 92       	push	r12
+     204:	df 92       	push	r13
+     206:	ef 92       	push	r14
+     208:	ff 92       	push	r15
+     20a:	0f 93       	push	r16
+     20c:	1f 93       	push	r17
+     20e:	2f 93       	push	r18
+     210:	3f 93       	push	r19
+     212:	4f 93       	push	r20
+     214:	5f 93       	push	r21
+     216:	6f 93       	push	r22
+     218:	7f 93       	push	r23
+     21a:	8f 93       	push	r24
+     21c:	9f 93       	push	r25
+     21e:	af 93       	push	r26
+     220:	bf 93       	push	r27
+     222:	cf 93       	push	r28
+     224:	df 93       	push	r29
+     226:	ef 93       	push	r30
+     228:	ff 93       	push	r31
+     22a:	fc b7       	in	r31, 0x3c	; 60
+     22c:	ff 93       	push	r31
+     22e:	ff b7       	in	r31, 0x3f	; 63
+     230:	ff 93       	push	r31
+        /* 
+          * Now, we have saved the Cp's context.
+          * Save the current H/W stack pointer into CurrentSp.
+          */
+        in   r30, SPL
+     232:	ed b7       	in	r30, 0x3d	; 61
+        in   r31, SPH
+     234:	fe b7       	in	r31, 0x3e	; 62
+        sts  CurrentSp, r30
+     236:	e0 93 11 1c 	sts	0x1C11, r30
+        sts  CurrentSp+1, r31
+     23a:	f0 93 12 1c 	sts	0x1C12, r31
+        /*
+          * We are now ready to restore kernel's context, i.e.,
+          * switching the H/W stack pointer back to KernelSp.
+          */ 
+        lds  r30, KernelSp
+     23e:	e0 91 17 1c 	lds	r30, 0x1C17
+        lds  r31, KernelSp+1
+     242:	f0 91 18 1c 	lds	r31, 0x1C18
+        out  SPL, r30
+     246:	ed bf       	out	0x3d, r30	; 61
+        out  SPH, r31
+     248:	fe bf       	out	0x3e, r31	; 62
+        /*
+          * We are now executing in kernel's stack.
+          */
+       RESTORECTX
+     24a:	ff 91       	pop	r31
+     24c:	ff bf       	out	0x3f, r31	; 63
+     24e:	ff 91       	pop	r31
+     250:	fc bf       	out	0x3c, r31	; 60
+     252:	ff 91       	pop	r31
+     254:	ef 91       	pop	r30
+     256:	df 91       	pop	r29
+     258:	cf 91       	pop	r28
+     25a:	bf 91       	pop	r27
+     25c:	af 91       	pop	r26
+     25e:	9f 91       	pop	r25
+     260:	8f 91       	pop	r24
+     262:	7f 91       	pop	r23
+     264:	6f 91       	pop	r22
+     266:	5f 91       	pop	r21
+     268:	4f 91       	pop	r20
+     26a:	3f 91       	pop	r19
+     26c:	2f 91       	pop	r18
+     26e:	1f 91       	pop	r17
+     270:	0f 91       	pop	r16
+     272:	ff 90       	pop	r15
+     274:	ef 90       	pop	r14
+     276:	df 90       	pop	r13
+     278:	cf 90       	pop	r12
+     27a:	bf 90       	pop	r11
+     27c:	af 90       	pop	r10
+     27e:	9f 90       	pop	r9
+     280:	8f 90       	pop	r8
+     282:	7f 90       	pop	r7
+     284:	6f 90       	pop	r6
+     286:	5f 90       	pop	r5
+     288:	4f 90       	pop	r4
+     28a:	3f 90       	pop	r3
+     28c:	2f 90       	pop	r2
+     28e:	1f 90       	pop	r1
+     290:	0f 90       	pop	r0
+        /* 
+          * We are ready to return to the caller of CSwitch() (or Exit_Kernel()).
+          * Note: We should NOT re-enable interrupts while kernel is running.
+          *         Therefore, we use "ret", and not "reti".
+          */
+       ret
+     292:	08 95       	ret
+
+00000294 <Dispatch>:
+	
+	if(e1 == NULL) 
+		return 0;
+		
+	return e1->count;	
+}
+     294:	20 e1       	ldi	r18, 0x10	; 16
+     296:	30 e0       	ldi	r19, 0x00	; 0
+     298:	af ef       	ldi	r26, 0xFF	; 255
+     29a:	bf ef       	ldi	r27, 0xFF	; 255
+     29c:	6b e0       	ldi	r22, 0x0B	; 11
+     29e:	70 e0       	ldi	r23, 0x00	; 0
+     2a0:	4e e0       	ldi	r20, 0x0E	; 14
+     2a2:	51 e0       	ldi	r21, 0x01	; 1
+     2a4:	80 91 28 08 	lds	r24, 0x0828
+     2a8:	90 91 29 08 	lds	r25, 0x0829
+     2ac:	01 96       	adiw	r24, 0x01	; 1
+     2ae:	8f 70       	andi	r24, 0x0F	; 15
+     2b0:	99 27       	eor	r25, r25
+     2b2:	90 93 29 08 	sts	0x0829, r25
+     2b6:	80 93 28 08 	sts	0x0828, r24
+     2ba:	80 91 28 08 	lds	r24, 0x0828
+     2be:	90 91 29 08 	lds	r25, 0x0829
+     2c2:	84 9f       	mul	r24, r20
+     2c4:	f0 01       	movw	r30, r0
+     2c6:	85 9f       	mul	r24, r21
+     2c8:	f0 0d       	add	r31, r0
+     2ca:	94 9f       	mul	r25, r20
+     2cc:	f0 0d       	add	r31, r0
+     2ce:	11 24       	eor	r1, r1
+     2d0:	e6 5d       	subi	r30, 0xD6	; 214
+     2d2:	f4 4f       	sbci	r31, 0xF4	; 244
+     2d4:	83 81       	ldd	r24, Z+3	; 0x03
+     2d6:	81 30       	cpi	r24, 0x01	; 1
+     2d8:	29 f5       	brne	.+74     	; 0x324 <Dispatch+0x90>
+     2da:	80 91 28 08 	lds	r24, 0x0828
+     2de:	90 91 29 08 	lds	r25, 0x0829
+     2e2:	84 9f       	mul	r24, r20
+     2e4:	f0 01       	movw	r30, r0
+     2e6:	85 9f       	mul	r24, r21
+     2e8:	f0 0d       	add	r31, r0
+     2ea:	94 9f       	mul	r25, r20
+     2ec:	f0 0d       	add	r31, r0
+     2ee:	11 24       	eor	r1, r1
+     2f0:	e6 5d       	subi	r30, 0xD6	; 214
+     2f2:	f4 4f       	sbci	r31, 0xF4	; 244
+     2f4:	82 81       	ldd	r24, Z+2	; 0x02
+     2f6:	90 e0       	ldi	r25, 0x00	; 0
+     2f8:	86 17       	cp	r24, r22
+     2fa:	97 07       	cpc	r25, r23
+     2fc:	9c f4       	brge	.+38     	; 0x324 <Dispatch+0x90>
+     2fe:	80 91 28 08 	lds	r24, 0x0828
+     302:	90 91 29 08 	lds	r25, 0x0829
+     306:	84 9f       	mul	r24, r20
+     308:	f0 01       	movw	r30, r0
+     30a:	85 9f       	mul	r24, r21
+     30c:	f0 0d       	add	r31, r0
+     30e:	94 9f       	mul	r25, r20
+     310:	f0 0d       	add	r31, r0
+     312:	11 24       	eor	r1, r1
+     314:	e6 5d       	subi	r30, 0xD6	; 214
+     316:	f4 4f       	sbci	r31, 0xF4	; 244
+     318:	62 81       	ldd	r22, Z+2	; 0x02
+     31a:	70 e0       	ldi	r23, 0x00	; 0
+     31c:	a0 91 28 08 	lds	r26, 0x0828
+     320:	b0 91 29 08 	lds	r27, 0x0829
+     324:	21 50       	subi	r18, 0x01	; 1
+     326:	31 09       	sbc	r19, r1
+     328:	09 f0       	breq	.+2      	; 0x32c <Dispatch+0x98>
+     32a:	bc cf       	rjmp	.-136    	; 0x2a4 <Dispatch+0x10>
+     32c:	af 3f       	cpi	r26, 0xFF	; 255
+     32e:	8f ef       	ldi	r24, 0xFF	; 255
+     330:	b8 07       	cpc	r27, r24
+     332:	09 f5       	brne	.+66     	; 0x376 <Dispatch+0xe2>
+     334:	78 94       	sei
+     336:	2e e0       	ldi	r18, 0x0E	; 14
+     338:	31 e0       	ldi	r19, 0x01	; 1
+     33a:	0b c0       	rjmp	.+22     	; 0x352 <Dispatch+0xbe>
+     33c:	80 91 28 08 	lds	r24, 0x0828
+     340:	90 91 29 08 	lds	r25, 0x0829
+     344:	01 96       	adiw	r24, 0x01	; 1
+     346:	8f 70       	andi	r24, 0x0F	; 15
+     348:	99 27       	eor	r25, r25
+     34a:	90 93 29 08 	sts	0x0829, r25
+     34e:	80 93 28 08 	sts	0x0828, r24
+     352:	80 91 28 08 	lds	r24, 0x0828
+     356:	90 91 29 08 	lds	r25, 0x0829
+     35a:	82 9f       	mul	r24, r18
+     35c:	f0 01       	movw	r30, r0
+     35e:	83 9f       	mul	r24, r19
+     360:	f0 0d       	add	r31, r0
+     362:	92 9f       	mul	r25, r18
+     364:	f0 0d       	add	r31, r0
+     366:	11 24       	eor	r1, r1
+     368:	e6 5d       	subi	r30, 0xD6	; 214
+     36a:	f4 4f       	sbci	r31, 0xF4	; 244
+     36c:	83 81       	ldd	r24, Z+3	; 0x03
+     36e:	81 30       	cpi	r24, 0x01	; 1
+     370:	29 f7       	brne	.-54     	; 0x33c <Dispatch+0xa8>
+     372:	f8 94       	cli
+     374:	04 c0       	rjmp	.+8      	; 0x37e <Dispatch+0xea>
+     376:	b0 93 29 08 	sts	0x0829, r27
+     37a:	a0 93 28 08 	sts	0x0828, r26
+     37e:	20 91 28 08 	lds	r18, 0x0828
+     382:	30 91 29 08 	lds	r19, 0x0829
+     386:	8e e0       	ldi	r24, 0x0E	; 14
+     388:	91 e0       	ldi	r25, 0x01	; 1
+     38a:	28 9f       	mul	r18, r24
+     38c:	f0 01       	movw	r30, r0
+     38e:	29 9f       	mul	r18, r25
+     390:	f0 0d       	add	r31, r0
+     392:	38 9f       	mul	r19, r24
+     394:	f0 0d       	add	r31, r0
+     396:	11 24       	eor	r1, r1
+     398:	e6 5d       	subi	r30, 0xD6	; 214
+     39a:	f4 4f       	sbci	r31, 0xF4	; 244
+     39c:	f0 93 14 1c 	sts	0x1C14, r31
+     3a0:	e0 93 13 1c 	sts	0x1C13, r30
+     3a4:	82 85       	ldd	r24, Z+10	; 0x0a
+     3a6:	93 85       	ldd	r25, Z+11	; 0x0b
+     3a8:	90 93 12 1c 	sts	0x1C12, r25
+     3ac:	80 93 11 1c 	sts	0x1C11, r24
+     3b0:	82 e0       	ldi	r24, 0x02	; 2
+     3b2:	83 83       	std	Z+3, r24	; 0x03
+     3b4:	08 95       	ret
+
+000003b6 <findProcessByPID>:
+     3b6:	18 16       	cp	r1, r24
+     3b8:	19 06       	cpc	r1, r25
+     3ba:	84 f5       	brge	.+96     	; 0x41c <findProcessByPID+0x66>
+     3bc:	20 91 2a 0b 	lds	r18, 0x0B2A
+     3c0:	30 91 2b 0b 	lds	r19, 0x0B2B
+     3c4:	28 17       	cp	r18, r24
+     3c6:	39 07       	cpc	r19, r25
+     3c8:	99 f0       	breq	.+38     	; 0x3f0 <findProcessByPID+0x3a>
+     3ca:	21 e0       	ldi	r18, 0x01	; 1
+     3cc:	30 e0       	ldi	r19, 0x00	; 0
+     3ce:	6e e0       	ldi	r22, 0x0E	; 14
+     3d0:	71 e0       	ldi	r23, 0x01	; 1
+     3d2:	26 9f       	mul	r18, r22
+     3d4:	f0 01       	movw	r30, r0
+     3d6:	27 9f       	mul	r18, r23
+     3d8:	f0 0d       	add	r31, r0
+     3da:	36 9f       	mul	r19, r22
+     3dc:	f0 0d       	add	r31, r0
+     3de:	11 24       	eor	r1, r1
+     3e0:	e6 5d       	subi	r30, 0xD6	; 214
+     3e2:	f4 4f       	sbci	r31, 0xF4	; 244
+     3e4:	40 81       	ld	r20, Z
+     3e6:	51 81       	ldd	r21, Z+1	; 0x01
+     3e8:	48 17       	cp	r20, r24
+     3ea:	59 07       	cpc	r21, r25
+     3ec:	79 f4       	brne	.+30     	; 0x40c <findProcessByPID+0x56>
+     3ee:	02 c0       	rjmp	.+4      	; 0x3f4 <findProcessByPID+0x3e>
+     3f0:	20 e0       	ldi	r18, 0x00	; 0
+     3f2:	30 e0       	ldi	r19, 0x00	; 0
+     3f4:	4e e0       	ldi	r20, 0x0E	; 14
+     3f6:	51 e0       	ldi	r21, 0x01	; 1
+     3f8:	24 9f       	mul	r18, r20
+     3fa:	c0 01       	movw	r24, r0
+     3fc:	25 9f       	mul	r18, r21
+     3fe:	90 0d       	add	r25, r0
+     400:	34 9f       	mul	r19, r20
+     402:	90 0d       	add	r25, r0
+     404:	11 24       	eor	r1, r1
+     406:	86 5d       	subi	r24, 0xD6	; 214
+     408:	94 4f       	sbci	r25, 0xF4	; 244
+     40a:	08 95       	ret
+     40c:	2f 5f       	subi	r18, 0xFF	; 255
+     40e:	3f 4f       	sbci	r19, 0xFF	; 255
+     410:	20 31       	cpi	r18, 0x10	; 16
+     412:	31 05       	cpc	r19, r1
+     414:	f1 f6       	brne	.-68     	; 0x3d2 <findProcessByPID+0x1c>
+     416:	80 e0       	ldi	r24, 0x00	; 0
+     418:	90 e0       	ldi	r25, 0x00	; 0
+     41a:	08 95       	ret
+     41c:	80 e0       	ldi	r24, 0x00	; 0
+     41e:	90 e0       	ldi	r25, 0x00	; 0
+     420:	08 95       	ret
+
+00000422 <findEventByEventID>:
+     422:	00 97       	sbiw	r24, 0x00	; 0
+     424:	51 f0       	breq	.+20     	; 0x43a <findEventByEventID+0x18>
+     426:	20 91 fa 0a 	lds	r18, 0x0AFA
+     42a:	30 91 fb 0a 	lds	r19, 0x0AFB
+     42e:	28 17       	cp	r18, r24
+     430:	39 07       	cpc	r19, r25
+     432:	d9 f0       	breq	.+54     	; 0x46a <findEventByEventID+0x48>
+     434:	21 e0       	ldi	r18, 0x01	; 1
+     436:	30 e0       	ldi	r19, 0x00	; 0
+     438:	09 c0       	rjmp	.+18     	; 0x44c <findEventByEventID+0x2a>
+     43a:	8c e1       	ldi	r24, 0x1C	; 28
+     43c:	92 e0       	ldi	r25, 0x02	; 2
+     43e:	ea d6       	rcall	.+3540   	; 0x1214 <puts>
+     440:	81 e0       	ldi	r24, 0x01	; 1
+     442:	80 93 10 1c 	sts	0x1C10, r24
+     446:	80 e0       	ldi	r24, 0x00	; 0
+     448:	90 e0       	ldi	r25, 0x00	; 0
+     44a:	08 95       	ret
+     44c:	f9 01       	movw	r30, r18
+     44e:	ee 0f       	add	r30, r30
+     450:	ff 1f       	adc	r31, r31
+     452:	e2 0f       	add	r30, r18
+     454:	f3 1f       	adc	r31, r19
+     456:	ee 0f       	add	r30, r30
+     458:	ff 1f       	adc	r31, r31
+     45a:	e6 50       	subi	r30, 0x06	; 6
+     45c:	f5 4f       	sbci	r31, 0xF5	; 245
+     45e:	40 81       	ld	r20, Z
+     460:	51 81       	ldd	r21, Z+1	; 0x01
+     462:	48 17       	cp	r20, r24
+     464:	59 07       	cpc	r21, r25
+     466:	69 f4       	brne	.+26     	; 0x482 <findEventByEventID+0x60>
+     468:	02 c0       	rjmp	.+4      	; 0x46e <findEventByEventID+0x4c>
+     46a:	20 e0       	ldi	r18, 0x00	; 0
+     46c:	30 e0       	ldi	r19, 0x00	; 0
+     46e:	c9 01       	movw	r24, r18
+     470:	88 0f       	add	r24, r24
+     472:	99 1f       	adc	r25, r25
+     474:	82 0f       	add	r24, r18
+     476:	93 1f       	adc	r25, r19
+     478:	88 0f       	add	r24, r24
+     47a:	99 1f       	adc	r25, r25
+     47c:	86 50       	subi	r24, 0x06	; 6
+     47e:	95 4f       	sbci	r25, 0xF5	; 245
+     480:	08 95       	ret
+     482:	2f 5f       	subi	r18, 0xFF	; 255
+     484:	3f 4f       	sbci	r19, 0xFF	; 255
+     486:	28 30       	cpi	r18, 0x08	; 8
+     488:	31 05       	cpc	r19, r1
+     48a:	01 f7       	brne	.-64     	; 0x44c <findEventByEventID+0x2a>
+     48c:	89 e0       	ldi	r24, 0x09	; 9
+     48e:	80 93 10 1c 	sts	0x1C10, r24
+     492:	80 e0       	ldi	r24, 0x00	; 0
+     494:	90 e0       	ldi	r25, 0x00	; 0
+     496:	08 95       	ret
+
+00000498 <findMutexByEventID>:
+     498:	00 97       	sbiw	r24, 0x00	; 0
+     49a:	59 f0       	breq	.+22     	; 0x4b2 <findMutexByEventID+0x1a>
+     49c:	20 91 2a 08 	lds	r18, 0x082A
+     4a0:	30 91 2b 08 	lds	r19, 0x082B
+     4a4:	28 17       	cp	r18, r24
+     4a6:	39 07       	cpc	r19, r25
+     4a8:	d1 f0       	breq	.+52     	; 0x4de <findMutexByEventID+0x46>
+     4aa:	21 e0       	ldi	r18, 0x01	; 1
+     4ac:	30 e0       	ldi	r19, 0x00	; 0
+     4ae:	6a e5       	ldi	r22, 0x5A	; 90
+     4b0:	09 c0       	rjmp	.+18     	; 0x4c4 <findMutexByEventID+0x2c>
+     4b2:	8e e4       	ldi	r24, 0x4E	; 78
+     4b4:	92 e0       	ldi	r25, 0x02	; 2
+     4b6:	ae d6       	rcall	.+3420   	; 0x1214 <puts>
+     4b8:	81 e0       	ldi	r24, 0x01	; 1
+     4ba:	80 93 10 1c 	sts	0x1C10, r24
+     4be:	80 e0       	ldi	r24, 0x00	; 0
+     4c0:	90 e0       	ldi	r25, 0x00	; 0
+     4c2:	08 95       	ret
+     4c4:	62 9f       	mul	r22, r18
+     4c6:	f0 01       	movw	r30, r0
+     4c8:	63 9f       	mul	r22, r19
+     4ca:	f0 0d       	add	r31, r0
+     4cc:	11 24       	eor	r1, r1
+     4ce:	e6 5d       	subi	r30, 0xD6	; 214
+     4d0:	f7 4f       	sbci	r31, 0xF7	; 247
+     4d2:	40 81       	ld	r20, Z
+     4d4:	51 81       	ldd	r21, Z+1	; 0x01
+     4d6:	48 17       	cp	r20, r24
+     4d8:	59 07       	cpc	r21, r25
+     4da:	61 f4       	brne	.+24     	; 0x4f4 <findMutexByEventID+0x5c>
+     4dc:	02 c0       	rjmp	.+4      	; 0x4e2 <findMutexByEventID+0x4a>
+     4de:	20 e0       	ldi	r18, 0x00	; 0
+     4e0:	30 e0       	ldi	r19, 0x00	; 0
+     4e2:	4a e5       	ldi	r20, 0x5A	; 90
+     4e4:	42 9f       	mul	r20, r18
+     4e6:	c0 01       	movw	r24, r0
+     4e8:	43 9f       	mul	r20, r19
+     4ea:	90 0d       	add	r25, r0
+     4ec:	11 24       	eor	r1, r1
+     4ee:	86 5d       	subi	r24, 0xD6	; 214
+     4f0:	97 4f       	sbci	r25, 0xF7	; 247
+     4f2:	08 95       	ret
+     4f4:	2f 5f       	subi	r18, 0xFF	; 255
+     4f6:	3f 4f       	sbci	r19, 0xFF	; 255
+     4f8:	28 30       	cpi	r18, 0x08	; 8
+     4fa:	31 05       	cpc	r19, r1
+     4fc:	19 f7       	brne	.-58     	; 0x4c4 <findMutexByEventID+0x2c>
+     4fe:	8d e0       	ldi	r24, 0x0D	; 13
+     500:	80 93 10 1c 	sts	0x1C10, r24
+     504:	80 e0       	ldi	r24, 0x00	; 0
+     506:	90 e0       	ldi	r25, 0x00	; 0
+     508:	08 95       	ret
+
+0000050a <findPIDByFuncPtr>:
+     50a:	20 91 36 0c 	lds	r18, 0x0C36
+     50e:	30 91 37 0c 	lds	r19, 0x0C37
+     512:	28 17       	cp	r18, r24
+     514:	39 07       	cpc	r19, r25
+     516:	99 f0       	breq	.+38     	; 0x53e <findPIDByFuncPtr+0x34>
+     518:	21 e0       	ldi	r18, 0x01	; 1
+     51a:	30 e0       	ldi	r19, 0x00	; 0
+     51c:	6e e0       	ldi	r22, 0x0E	; 14
+     51e:	71 e0       	ldi	r23, 0x01	; 1
+     520:	26 9f       	mul	r18, r22
+     522:	f0 01       	movw	r30, r0
+     524:	27 9f       	mul	r18, r23
+     526:	f0 0d       	add	r31, r0
+     528:	36 9f       	mul	r19, r22
+     52a:	f0 0d       	add	r31, r0
+     52c:	11 24       	eor	r1, r1
+     52e:	ea 5c       	subi	r30, 0xCA	; 202
+     530:	f3 4f       	sbci	r31, 0xF3	; 243
+     532:	40 81       	ld	r20, Z
+     534:	51 81       	ldd	r21, Z+1	; 0x01
+     536:	48 17       	cp	r20, r24
+     538:	59 07       	cpc	r21, r25
+     53a:	89 f4       	brne	.+34     	; 0x55e <findPIDByFuncPtr+0x54>
+     53c:	02 c0       	rjmp	.+4      	; 0x542 <findPIDByFuncPtr+0x38>
+     53e:	20 e0       	ldi	r18, 0x00	; 0
+     540:	30 e0       	ldi	r19, 0x00	; 0
+     542:	8e e0       	ldi	r24, 0x0E	; 14
+     544:	91 e0       	ldi	r25, 0x01	; 1
+     546:	28 9f       	mul	r18, r24
+     548:	f0 01       	movw	r30, r0
+     54a:	29 9f       	mul	r18, r25
+     54c:	f0 0d       	add	r31, r0
+     54e:	38 9f       	mul	r19, r24
+     550:	f0 0d       	add	r31, r0
+     552:	11 24       	eor	r1, r1
+     554:	e6 5d       	subi	r30, 0xD6	; 214
+     556:	f4 4f       	sbci	r31, 0xF4	; 244
+     558:	80 81       	ld	r24, Z
+     55a:	91 81       	ldd	r25, Z+1	; 0x01
+     55c:	08 95       	ret
+     55e:	2f 5f       	subi	r18, 0xFF	; 255
+     560:	3f 4f       	sbci	r19, 0xFF	; 255
+     562:	20 31       	cpi	r18, 0x10	; 16
+     564:	31 05       	cpc	r19, r1
+     566:	e1 f6       	brne	.-72     	; 0x520 <findPIDByFuncPtr+0x16>
+     568:	8f ef       	ldi	r24, 0xFF	; 255
+     56a:	9f ef       	ldi	r25, 0xFF	; 255
+     56c:	08 95       	ret
+
+0000056e <__vector_17>:
+/************************************************************************/
+
+//This ISR processes all tasks that are currently sleeping and waking them up when their tick expires
+//Maybe we should move most of the code here into a function and have it run in the kernel main loop?
+ISR(TIMER1_COMPA_vect)
+{
+     56e:	1f 92       	push	r1
+     570:	0f 92       	push	r0
+     572:	0f b6       	in	r0, 0x3f	; 63
+     574:	0f 92       	push	r0
+     576:	11 24       	eor	r1, r1
+     578:	0b b6       	in	r0, 0x3b	; 59
+     57a:	0f 92       	push	r0
+     57c:	2f 93       	push	r18
+     57e:	3f 93       	push	r19
+     580:	4f 93       	push	r20
+     582:	5f 93       	push	r21
+     584:	6f 93       	push	r22
+     586:	8f 93       	push	r24
+     588:	9f 93       	push	r25
+     58a:	ef 93       	push	r30
+     58c:	ff 93       	push	r31
+	int i;
+	for(i=0; i<MAXTHREAD; i++)
+     58e:	80 e0       	ldi	r24, 0x00	; 0
+     590:	90 e0       	ldi	r25, 0x00	; 0
+	{
+		//Process any active tasks that are sleeping
+		if(Process[i].state == SLEEPING)
+     592:	2e e0       	ldi	r18, 0x0E	; 14
+     594:	31 e0       	ldi	r19, 0x01	; 1
+		//Process any SUSPENDED tasks that were previously sleeping
+		else if(Process[i].last_state == SLEEPING)
+		{
+			//When task_resume is called again, the task will be back into its READY state instead if its sleep ticks expired.
+			if(--Process[i].request_arg <= 0)
+				Process[i].last_state = READY;
+     596:	61 e0       	ldi	r22, 0x01	; 1
+{
+	int i;
+	for(i=0; i<MAXTHREAD; i++)
+	{
+		//Process any active tasks that are sleeping
+		if(Process[i].state == SLEEPING)
+     598:	82 9f       	mul	r24, r18
+     59a:	f0 01       	movw	r30, r0
+     59c:	83 9f       	mul	r24, r19
+     59e:	f0 0d       	add	r31, r0
+     5a0:	92 9f       	mul	r25, r18
+     5a2:	f0 0d       	add	r31, r0
+     5a4:	11 24       	eor	r1, r1
+     5a6:	e6 5d       	subi	r30, 0xD6	; 214
+     5a8:	f4 4f       	sbci	r31, 0xF4	; 244
+     5aa:	43 81       	ldd	r20, Z+3	; 0x03
+     5ac:	44 30       	cpi	r20, 0x04	; 4
+     5ae:	e9 f4       	brne	.+58     	; 0x5ea <__vector_17+0x7c>
+		{
+			//If the current sleeping task's tick count expires, put it back into its READY state
+			if(--Process[i].request_arg <= 0)
+     5b0:	82 9f       	mul	r24, r18
+     5b2:	f0 01       	movw	r30, r0
+     5b4:	83 9f       	mul	r24, r19
+     5b6:	f0 0d       	add	r31, r0
+     5b8:	92 9f       	mul	r25, r18
+     5ba:	f0 0d       	add	r31, r0
+     5bc:	11 24       	eor	r1, r1
+     5be:	e6 5d       	subi	r30, 0xD6	; 214
+     5c0:	f4 4f       	sbci	r31, 0xF4	; 244
+     5c2:	46 81       	ldd	r20, Z+6	; 0x06
+     5c4:	57 81       	ldd	r21, Z+7	; 0x07
+     5c6:	41 50       	subi	r20, 0x01	; 1
+     5c8:	51 09       	sbc	r21, r1
+     5ca:	57 83       	std	Z+7, r21	; 0x07
+     5cc:	46 83       	std	Z+6, r20	; 0x06
+     5ce:	14 16       	cp	r1, r20
+     5d0:	15 06       	cpc	r1, r21
+     5d2:	9c f1       	brlt	.+102    	; 0x63a <__vector_17+0xcc>
+				Process[i].state = READY;
+     5d4:	82 9f       	mul	r24, r18
+     5d6:	f0 01       	movw	r30, r0
+     5d8:	83 9f       	mul	r24, r19
+     5da:	f0 0d       	add	r31, r0
+     5dc:	92 9f       	mul	r25, r18
+     5de:	f0 0d       	add	r31, r0
+     5e0:	11 24       	eor	r1, r1
+     5e2:	e6 5d       	subi	r30, 0xD6	; 214
+     5e4:	f4 4f       	sbci	r31, 0xF4	; 244
+     5e6:	63 83       	std	Z+3, r22	; 0x03
+     5e8:	28 c0       	rjmp	.+80     	; 0x63a <__vector_17+0xcc>
+		}
+		
+		//Process any SUSPENDED tasks that were previously sleeping
+		else if(Process[i].last_state == SLEEPING)
+     5ea:	82 9f       	mul	r24, r18
+     5ec:	f0 01       	movw	r30, r0
+     5ee:	83 9f       	mul	r24, r19
+     5f0:	f0 0d       	add	r31, r0
+     5f2:	92 9f       	mul	r25, r18
+     5f4:	f0 0d       	add	r31, r0
+     5f6:	11 24       	eor	r1, r1
+     5f8:	e6 5d       	subi	r30, 0xD6	; 214
+     5fa:	f4 4f       	sbci	r31, 0xF4	; 244
+     5fc:	44 81       	ldd	r20, Z+4	; 0x04
+     5fe:	44 30       	cpi	r20, 0x04	; 4
+     600:	e1 f4       	brne	.+56     	; 0x63a <__vector_17+0xcc>
+		{
+			//When task_resume is called again, the task will be back into its READY state instead if its sleep ticks expired.
+			if(--Process[i].request_arg <= 0)
+     602:	82 9f       	mul	r24, r18
+     604:	f0 01       	movw	r30, r0
+     606:	83 9f       	mul	r24, r19
+     608:	f0 0d       	add	r31, r0
+     60a:	92 9f       	mul	r25, r18
+     60c:	f0 0d       	add	r31, r0
+     60e:	11 24       	eor	r1, r1
+     610:	e6 5d       	subi	r30, 0xD6	; 214
+     612:	f4 4f       	sbci	r31, 0xF4	; 244
+     614:	46 81       	ldd	r20, Z+6	; 0x06
+     616:	57 81       	ldd	r21, Z+7	; 0x07
+     618:	41 50       	subi	r20, 0x01	; 1
+     61a:	51 09       	sbc	r21, r1
+     61c:	57 83       	std	Z+7, r21	; 0x07
+     61e:	46 83       	std	Z+6, r20	; 0x06
+     620:	14 16       	cp	r1, r20
+     622:	15 06       	cpc	r1, r21
+     624:	54 f0       	brlt	.+20     	; 0x63a <__vector_17+0xcc>
+				Process[i].last_state = READY;
+     626:	82 9f       	mul	r24, r18
+     628:	f0 01       	movw	r30, r0
+     62a:	83 9f       	mul	r24, r19
+     62c:	f0 0d       	add	r31, r0
+     62e:	92 9f       	mul	r25, r18
+     630:	f0 0d       	add	r31, r0
+     632:	11 24       	eor	r1, r1
+     634:	e6 5d       	subi	r30, 0xD6	; 214
+     636:	f4 4f       	sbci	r31, 0xF4	; 244
+     638:	64 83       	std	Z+4, r22	; 0x04
+//This ISR processes all tasks that are currently sleeping and waking them up when their tick expires
+//Maybe we should move most of the code here into a function and have it run in the kernel main loop?
+ISR(TIMER1_COMPA_vect)
+{
+	int i;
+	for(i=0; i<MAXTHREAD; i++)
+     63a:	01 96       	adiw	r24, 0x01	; 1
+     63c:	80 31       	cpi	r24, 0x10	; 16
+     63e:	91 05       	cpc	r25, r1
+     640:	09 f0       	breq	.+2      	; 0x644 <__vector_17+0xd6>
+     642:	aa cf       	rjmp	.-172    	; 0x598 <__vector_17+0x2a>
+			//When task_resume is called again, the task will be back into its READY state instead if its sleep ticks expired.
+			if(--Process[i].request_arg <= 0)
+				Process[i].last_state = READY;
+		}
+	}
+}
+     644:	ff 91       	pop	r31
+     646:	ef 91       	pop	r30
+     648:	9f 91       	pop	r25
+     64a:	8f 91       	pop	r24
+     64c:	6f 91       	pop	r22
+     64e:	5f 91       	pop	r21
+     650:	4f 91       	pop	r20
+     652:	3f 91       	pop	r19
+     654:	2f 91       	pop	r18
+     656:	0f 90       	pop	r0
+     658:	0b be       	out	0x3b, r0	; 59
+     65a:	0f 90       	pop	r0
+     65c:	0f be       	out	0x3f, r0	; 63
+     65e:	0f 90       	pop	r0
+     660:	1f 90       	pop	r1
+     662:	18 95       	reti
+
+00000664 <Kernel_Create_Task>:
+/*                   TASK RELATED KERNEL FUNCTIONS                      */
+/************************************************************************/
+
+/* Handles all low level operations for creating a new task */
+void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg)
+{
+     664:	cf 92       	push	r12
+     666:	df 92       	push	r13
+     668:	ef 92       	push	r14
+     66a:	ff 92       	push	r15
+     66c:	0f 93       	push	r16
+     66e:	1f 93       	push	r17
+     670:	cf 93       	push	r28
+     672:	df 93       	push	r29
+     674:	dc 01       	movw	r26, r24
+	#ifdef DEBUG
+	int counter = 0;
+	#endif
+	
+	//Make sure the system can still have enough resources to create more tasks
+	if (Task_Count == MAXTHREAD)
+     676:	80 91 26 08 	lds	r24, 0x0826
+     67a:	90 91 27 08 	lds	r25, 0x0827
+     67e:	40 97       	sbiw	r24, 0x10	; 16
+     680:	49 f0       	breq	.+18     	; 0x694 <Kernel_Create_Task+0x30>
+		return;
+	}
+
+	//Find a dead or empty PD slot to allocate our new task
+	for (x = 0; x < MAXTHREAD; x++)
+	if (Process[x].state == DEAD) break;
+     682:	80 91 2d 0b 	lds	r24, 0x0B2D
+     686:	88 23       	and	r24, r24
+     688:	f1 f0       	breq	.+60     	; 0x6c6 <Kernel_Create_Task+0x62>
+     68a:	21 e0       	ldi	r18, 0x01	; 1
+     68c:	30 e0       	ldi	r19, 0x00	; 0
+     68e:	ce e0       	ldi	r28, 0x0E	; 14
+     690:	d1 e0       	ldi	r29, 0x01	; 1
+     692:	07 c0       	rjmp	.+14     	; 0x6a2 <Kernel_Create_Task+0x3e>
+	
+	//Make sure the system can still have enough resources to create more tasks
+	if (Task_Count == MAXTHREAD)
+	{
+		#ifdef DEBUG
+		printf("Task_Create: Failed to create task. The system is at its process threshold.\n");
+     694:	80 e8       	ldi	r24, 0x80	; 128
+     696:	92 e0       	ldi	r25, 0x02	; 2
+     698:	bd d5       	rcall	.+2938   	; 0x1214 <puts>
+		#endif
+		
+		err = MAX_PROCESS_ERR;
+     69a:	84 e0       	ldi	r24, 0x04	; 4
+     69c:	80 93 10 1c 	sts	0x1C10, r24
+		return;
+     6a0:	6e c0       	rjmp	.+220    	; 0x77e <Kernel_Create_Task+0x11a>
+	}
+
+	//Find a dead or empty PD slot to allocate our new task
+	for (x = 0; x < MAXTHREAD; x++)
+	if (Process[x].state == DEAD) break;
+     6a2:	2c 9f       	mul	r18, r28
+     6a4:	f0 01       	movw	r30, r0
+     6a6:	2d 9f       	mul	r18, r29
+     6a8:	f0 0d       	add	r31, r0
+     6aa:	3c 9f       	mul	r19, r28
+     6ac:	f0 0d       	add	r31, r0
+     6ae:	11 24       	eor	r1, r1
+     6b0:	e6 5d       	subi	r30, 0xD6	; 214
+     6b2:	f4 4f       	sbci	r31, 0xF4	; 244
+     6b4:	93 81       	ldd	r25, Z+3	; 0x03
+     6b6:	99 23       	and	r25, r25
+     6b8:	41 f0       	breq	.+16     	; 0x6ca <Kernel_Create_Task+0x66>
+		err = MAX_PROCESS_ERR;
+		return;
+	}
+
+	//Find a dead or empty PD slot to allocate our new task
+	for (x = 0; x < MAXTHREAD; x++)
+     6ba:	2f 5f       	subi	r18, 0xFF	; 255
+     6bc:	3f 4f       	sbci	r19, 0xFF	; 255
+     6be:	20 31       	cpi	r18, 0x10	; 16
+     6c0:	31 05       	cpc	r19, r1
+     6c2:	79 f7       	brne	.-34     	; 0x6a2 <Kernel_Create_Task+0x3e>
+     6c4:	02 c0       	rjmp	.+4      	; 0x6ca <Kernel_Create_Task+0x66>
+	if (Process[x].state == DEAD) break;
+     6c6:	20 e0       	ldi	r18, 0x00	; 0
+     6c8:	30 e0       	ldi	r19, 0x00	; 0
+	
+	++Task_Count;
+     6ca:	80 91 26 08 	lds	r24, 0x0826
+     6ce:	90 91 27 08 	lds	r25, 0x0827
+     6d2:	01 96       	adiw	r24, 0x01	; 1
+     6d4:	90 93 27 08 	sts	0x0827, r25
+     6d8:	80 93 26 08 	sts	0x0826, r24
+	p = &(Process[x]);
+	
+	/*The code below was agglomerated from Kernel_Create_Task_At;*/
+	
+	//Initializing the workspace memory for the new task
+	sp = (unsigned char *) &(p->workSpace[WORKSPACE-1]);
+     6dc:	ee e0       	ldi	r30, 0x0E	; 14
+     6de:	f1 e0       	ldi	r31, 0x01	; 1
+     6e0:	2e 9f       	mul	r18, r30
+     6e2:	c0 01       	movw	r24, r0
+     6e4:	2f 9f       	mul	r18, r31
+     6e6:	90 0d       	add	r25, r0
+     6e8:	3e 9f       	mul	r19, r30
+     6ea:	90 0d       	add	r25, r0
+     6ec:	11 24       	eor	r1, r1
+     6ee:	ec 01       	movw	r28, r24
+     6f0:	cb 5c       	subi	r28, 0xCB	; 203
+     6f2:	d3 4f       	sbci	r29, 0xF3	; 243
+	memset(&(p->workSpace),0,WORKSPACE);
+     6f4:	8c 01       	movw	r16, r24
+     6f6:	0a 5c       	subi	r16, 0xCA	; 202
+     6f8:	14 4f       	sbci	r17, 0xF4	; 244
+     6fa:	c1 2c       	mov	r12, r1
+     6fc:	dd 24       	eor	r13, r13
+     6fe:	d3 94       	inc	r13
+     700:	f8 01       	movw	r30, r16
+     702:	86 01       	movw	r16, r12
+     704:	11 92       	st	Z+, r1
+     706:	01 50       	subi	r16, 0x01	; 1
+     708:	10 40       	sbci	r17, 0x00	; 0
+     70a:	e1 f7       	brne	.-8      	; 0x704 <Kernel_Create_Task+0xa0>
+
+	//Store terminate at the bottom of stack to protect against stack underrun.
+	*(unsigned char *)sp-- = ((unsigned int)Task_Terminate) & 0xff;
+     70c:	ce 01       	movw	r24, r28
+     70e:	00 e1       	ldi	r16, 0x10	; 16
+     710:	18 e0       	ldi	r17, 0x08	; 8
+     712:	08 83       	st	Y, r16
+	*(unsigned char *)sp-- = (((unsigned int)Task_Terminate) >> 8) & 0xff;
+     714:	01 97       	sbiw	r24, 0x01	; 1
+     716:	fc 01       	movw	r30, r24
+     718:	10 83       	st	Z, r17
+	*(unsigned char *)sp-- = 0x00;
+     71a:	31 97       	sbiw	r30, 0x01	; 1
+     71c:	10 82       	st	Z, r1
+
+	//Place return address of function at bottom of stack
+	*(unsigned char *)sp-- = ((unsigned int)f) & 0xff;
+     71e:	31 97       	sbiw	r30, 0x01	; 1
+     720:	a0 83       	st	Z, r26
+	*(unsigned char *)sp-- = (((unsigned int)f) >> 8) & 0xff;
+     722:	31 97       	sbiw	r30, 0x01	; 1
+     724:	b0 83       	st	Z, r27
+	*(unsigned char *)sp-- = 0x00;
+     726:	31 97       	sbiw	r30, 0x01	; 1
+     728:	10 82       	st	Z, r1
+     72a:	90 e0       	ldi	r25, 0x00	; 0
+	//Allocate the stack with enough memory spaces to save the registers needed for ctxswitch
+	#ifdef DEBUG
+	 //Fill stack with initial values for development debugging
+	 for (counter = 0; counter < 34; counter++)
+	 {
+		 *(unsigned char *)sp-- = counter;
+     72c:	92 93       	st	-Z, r25
+     72e:	9f 5f       	subi	r25, 0xFF	; 255
+	*(unsigned char *)sp-- = 0x00;
+
+	//Allocate the stack with enough memory spaces to save the registers needed for ctxswitch
+	#ifdef DEBUG
+	 //Fill stack with initial values for development debugging
+	 for (counter = 0; counter < 34; counter++)
+     730:	92 32       	cpi	r25, 0x22	; 34
+     732:	e1 f7       	brne	.-8      	; 0x72c <Kernel_Create_Task+0xc8>
+	 //Place stack pointer at top of stack
+	 sp = sp - 34;
+	#endif
+	
+	//Build the process descriptor for the new task
+	p->pid = ++Last_PID;
+     734:	80 91 0a 1c 	lds	r24, 0x1C0A
+     738:	90 91 0b 1c 	lds	r25, 0x1C0B
+     73c:	01 96       	adiw	r24, 0x01	; 1
+     73e:	90 93 0b 1c 	sts	0x1C0B, r25
+     742:	80 93 0a 1c 	sts	0x1C0A, r24
+     746:	0e e0       	ldi	r16, 0x0E	; 14
+     748:	11 e0       	ldi	r17, 0x01	; 1
+     74a:	20 9f       	mul	r18, r16
+     74c:	f0 01       	movw	r30, r0
+     74e:	21 9f       	mul	r18, r17
+     750:	f0 0d       	add	r31, r0
+     752:	30 9f       	mul	r19, r16
+     754:	f0 0d       	add	r31, r0
+     756:	11 24       	eor	r1, r1
+     758:	e6 5d       	subi	r30, 0xD6	; 214
+     75a:	f4 4f       	sbci	r31, 0xF4	; 244
+     75c:	91 83       	std	Z+1, r25	; 0x01
+     75e:	80 83       	st	Z, r24
+	p->pri = py;
+     760:	62 83       	std	Z+2, r22	; 0x02
+	p->arg = arg;
+     762:	51 87       	std	Z+9, r21	; 0x09
+     764:	40 87       	std	Z+8, r20	; 0x08
+	p->request = NONE;
+     766:	15 82       	std	Z+5, r1	; 0x05
+	p->state = READY;
+     768:	81 e0       	ldi	r24, 0x01	; 1
+     76a:	83 83       	std	Z+3, r24	; 0x03
+     76c:	a8 97       	sbiw	r28, 0x28	; 40
+	p->sp = sp;					/* stack pointer into the "workSpace" */
+     76e:	d3 87       	std	Z+11, r29	; 0x0b
+     770:	c2 87       	std	Z+10, r28	; 0x0a
+	p->code = f;				/* function to be executed as a task */
+     772:	e4 5f       	subi	r30, 0xF4	; 244
+     774:	fe 4f       	sbci	r31, 0xFE	; 254
+     776:	b1 83       	std	Z+1, r27	; 0x01
+     778:	a0 83       	st	Z, r26
+	
+	//No errors occured
+	err = NO_ERR;
+     77a:	10 92 10 1c 	sts	0x1C10, r1
+}
+     77e:	df 91       	pop	r29
+     780:	cf 91       	pop	r28
+     782:	1f 91       	pop	r17
+     784:	0f 91       	pop	r16
+     786:	ff 90       	pop	r15
+     788:	ef 90       	pop	r14
+     78a:	df 90       	pop	r13
+     78c:	cf 90       	pop	r12
+     78e:	08 95       	ret
+
+00000790 <Timer_init>:
+void Timer_init()
+{
+	/*Timer1 is configured for the task*/
+	
+	//Use Prescaler = 1024
+	TCCR1B |= (1<<CS12)|(1<<CS10);
+     790:	e1 e8       	ldi	r30, 0x81	; 129
+     792:	f0 e0       	ldi	r31, 0x00	; 0
+     794:	80 81       	ld	r24, Z
+     796:	85 60       	ori	r24, 0x05	; 5
+     798:	80 83       	st	Z, r24
+	TCCR1B &= ~(1<<CS11);
+     79a:	80 81       	ld	r24, Z
+     79c:	8d 7f       	andi	r24, 0xFD	; 253
+     79e:	80 83       	st	Z, r24
+	
+	//Use CTC mode (mode 4)
+	TCCR1B |= (1<<WGM12);
+     7a0:	80 81       	ld	r24, Z
+     7a2:	88 60       	ori	r24, 0x08	; 8
+     7a4:	80 83       	st	Z, r24
+	TCCR1B &= ~((1<<WGM13)|(1<<WGM11)|(1<<WGM10));
+     7a6:	80 81       	ld	r24, Z
+     7a8:	8c 7e       	andi	r24, 0xEC	; 236
+     7aa:	80 83       	st	Z, r24
+	
+	OCR1A = TICK_LENG;			//Set timer top comparison value to ~10ms
+     7ac:	8d e9       	ldi	r24, 0x9D	; 157
+     7ae:	90 e0       	ldi	r25, 0x00	; 0
+     7b0:	90 93 89 00 	sts	0x0089, r25
+     7b4:	80 93 88 00 	sts	0x0088, r24
+	TCNT1 = 0;					//Load initial value for timer
+     7b8:	10 92 85 00 	sts	0x0085, r1
+     7bc:	10 92 84 00 	sts	0x0084, r1
+	TIMSK1 |= (1<<OCIE1A);      //enable match for OCR1A interrupt
+     7c0:	ef e6       	ldi	r30, 0x6F	; 111
+     7c2:	f0 e0       	ldi	r31, 0x00	; 0
+     7c4:	80 81       	ld	r24, Z
+     7c6:	82 60       	ori	r24, 0x02	; 2
+     7c8:	80 83       	st	Z, r24
+	
+	#ifdef DEBUG
+	printf("Timer initialized!\n");
+     7ca:	8c ec       	ldi	r24, 0xCC	; 204
+     7cc:	92 e0       	ldi	r25, 0x02	; 2
+     7ce:	22 c5       	rjmp	.+2628   	; 0x1214 <puts>
+     7d0:	08 95       	ret
+
+000007d2 <OS_Init>:
+/*This function initializes the RTOS and must be called before any othersystem calls.*/
+void OS_Init()
+{
+	int x;
+	
+	Task_Count = 0;
+     7d2:	10 92 27 08 	sts	0x0827, r1
+     7d6:	10 92 26 08 	sts	0x0826, r1
+	Event_Count = 0;
+     7da:	10 92 25 08 	sts	0x0825, r1
+     7de:	10 92 24 08 	sts	0x0824, r1
+	KernelActive = 0;
+     7e2:	10 92 0d 1c 	sts	0x1C0D, r1
+     7e6:	10 92 0c 1c 	sts	0x1C0C, r1
+	NextP = 0;
+     7ea:	10 92 29 08 	sts	0x0829, r1
+     7ee:	10 92 28 08 	sts	0x0828, r1
+	Last_PID = 0;
+     7f2:	10 92 0b 1c 	sts	0x1C0B, r1
+     7f6:	10 92 0a 1c 	sts	0x1C0A, r1
+	Last_EventID = 0;
+     7fa:	10 92 0f 1c 	sts	0x1C0F, r1
+     7fe:	10 92 0e 1c 	sts	0x1C0E, r1
+	err = NO_ERR;
+     802:	10 92 10 1c 	sts	0x1C10, r1
+	
+	//Clear and initialize the memory used for tasks
+	memset(Process, 0, MAXTHREAD*sizeof(PD));
+     806:	80 ee       	ldi	r24, 0xE0	; 224
+     808:	90 e1       	ldi	r25, 0x10	; 16
+     80a:	ea e2       	ldi	r30, 0x2A	; 42
+     80c:	fb e0       	ldi	r31, 0x0B	; 11
+     80e:	df 01       	movw	r26, r30
+     810:	9c 01       	movw	r18, r24
+     812:	1d 92       	st	X+, r1
+     814:	21 50       	subi	r18, 0x01	; 1
+     816:	30 40       	sbci	r19, 0x00	; 0
+     818:	e1 f7       	brne	.-8      	; 0x812 <OS_Init+0x40>
+	for (x = 0; x < MAXTHREAD; x++) {
+     81a:	80 e0       	ldi	r24, 0x00	; 0
+     81c:	90 e0       	ldi	r25, 0x00	; 0
+		Process[x].state = DEAD;
+     81e:	2e e0       	ldi	r18, 0x0E	; 14
+     820:	31 e0       	ldi	r19, 0x01	; 1
+     822:	82 9f       	mul	r24, r18
+     824:	f0 01       	movw	r30, r0
+     826:	83 9f       	mul	r24, r19
+     828:	f0 0d       	add	r31, r0
+     82a:	92 9f       	mul	r25, r18
+     82c:	f0 0d       	add	r31, r0
+     82e:	11 24       	eor	r1, r1
+     830:	e6 5d       	subi	r30, 0xD6	; 214
+     832:	f4 4f       	sbci	r31, 0xF4	; 244
+     834:	13 82       	std	Z+3, r1	; 0x03
+	Last_EventID = 0;
+	err = NO_ERR;
+	
+	//Clear and initialize the memory used for tasks
+	memset(Process, 0, MAXTHREAD*sizeof(PD));
+	for (x = 0; x < MAXTHREAD; x++) {
+     836:	01 96       	adiw	r24, 0x01	; 1
+     838:	80 31       	cpi	r24, 0x10	; 16
+     83a:	91 05       	cpc	r25, r1
+     83c:	91 f7       	brne	.-28     	; 0x822 <OS_Init+0x50>
+		Process[x].state = DEAD;
+	}
+	
+	//Clear and initialize the memory used for Events
+	memset(Event, 0, MAXEVENT*sizeof(EVENT_TYPE));
+     83e:	80 e3       	ldi	r24, 0x30	; 48
+     840:	ea ef       	ldi	r30, 0xFA	; 250
+     842:	fa e0       	ldi	r31, 0x0A	; 10
+     844:	df 01       	movw	r26, r30
+     846:	1d 92       	st	X+, r1
+     848:	8a 95       	dec	r24
+     84a:	e9 f7       	brne	.-6      	; 0x846 <OS_Init+0x74>
+	for (x = 0; x < MAXEVENT; x++) {
+     84c:	80 e0       	ldi	r24, 0x00	; 0
+     84e:	90 e0       	ldi	r25, 0x00	; 0
+		Event[x].id = 0;
+     850:	fc 01       	movw	r30, r24
+     852:	ee 0f       	add	r30, r30
+     854:	ff 1f       	adc	r31, r31
+     856:	e8 0f       	add	r30, r24
+     858:	f9 1f       	adc	r31, r25
+     85a:	ee 0f       	add	r30, r30
+     85c:	ff 1f       	adc	r31, r31
+     85e:	e6 50       	subi	r30, 0x06	; 6
+     860:	f5 4f       	sbci	r31, 0xF5	; 245
+     862:	11 82       	std	Z+1, r1	; 0x01
+     864:	10 82       	st	Z, r1
+		Process[x].state = DEAD;
+	}
+	
+	//Clear and initialize the memory used for Events
+	memset(Event, 0, MAXEVENT*sizeof(EVENT_TYPE));
+	for (x = 0; x < MAXEVENT; x++) {
+     866:	01 96       	adiw	r24, 0x01	; 1
+     868:	88 30       	cpi	r24, 0x08	; 8
+     86a:	91 05       	cpc	r25, r1
+     86c:	89 f7       	brne	.-30     	; 0x850 <OS_Init+0x7e>
+		Event[x].id = 0;
+	}
+	
+	/*Initialize and start Timer needed for sleep*/
+	Timer_init();
+     86e:	90 df       	rcall	.-224    	; 0x790 <Timer_init>
+	
+	#ifdef DEBUG
+	printf("OS initialized!\n");
+     870:	8f ed       	ldi	r24, 0xDF	; 223
+     872:	92 e0       	ldi	r25, 0x02	; 2
+     874:	cf c4       	rjmp	.+2462   	; 0x1214 <puts>
+     876:	08 95       	ret
+
+00000878 <OS_Start>:
+	#endif
+}
+
+/* This function starts the RTOS after creating a few tasks.*/
+void OS_Start()
+{
+     878:	2f 92       	push	r2
+     87a:	3f 92       	push	r3
+     87c:	4f 92       	push	r4
+     87e:	5f 92       	push	r5
+     880:	6f 92       	push	r6
+     882:	7f 92       	push	r7
+     884:	8f 92       	push	r8
+     886:	9f 92       	push	r9
+     888:	af 92       	push	r10
+     88a:	bf 92       	push	r11
+     88c:	cf 92       	push	r12
+     88e:	df 92       	push	r13
+     890:	ef 92       	push	r14
+     892:	ff 92       	push	r15
+     894:	0f 93       	push	r16
+     896:	1f 93       	push	r17
+     898:	cf 93       	push	r28
+     89a:	df 93       	push	r29
+     89c:	00 d0       	rcall	.+0      	; 0x89e <OS_Start+0x26>
+     89e:	00 d0       	rcall	.+0      	; 0x8a0 <OS_Start+0x28>
+     8a0:	cd b7       	in	r28, 0x3d	; 61
+     8a2:	de b7       	in	r29, 0x3e	; 62
+	if ( (! KernelActive) && (Task_Count > 0))
+     8a4:	80 91 0c 1c 	lds	r24, 0x1C0C
+     8a8:	90 91 0d 1c 	lds	r25, 0x1C0D
+     8ac:	89 2b       	or	r24, r25
+     8ae:	09 f0       	breq	.+2      	; 0x8b2 <OS_Start+0x3a>
+     8b0:	6c c3       	rjmp	.+1752   	; 0xf8a <OS_Start+0x712>
+     8b2:	80 91 26 08 	lds	r24, 0x0826
+     8b6:	90 91 27 08 	lds	r25, 0x0827
+     8ba:	89 2b       	or	r24, r25
+     8bc:	09 f4       	brne	.+2      	; 0x8c0 <OS_Start+0x48>
+     8be:	65 c3       	rjmp	.+1738   	; 0xf8a <OS_Start+0x712>
+	{
+		Disable_Interrupt();
+     8c0:	f8 94       	cli
+		
+		/* we may have to initialize the interrupt vector for Enter_Kernel() here. */
+			/* here we go...  */
+		KernelActive = 1;
+     8c2:	81 e0       	ldi	r24, 0x01	; 1
+     8c4:	90 e0       	ldi	r25, 0x00	; 0
+     8c6:	90 93 0d 1c 	sts	0x1C0D, r25
+     8ca:	80 93 0c 1c 	sts	0x1C0C, r24
+		
+		#ifdef DEBUG
+		printf("OS begins!\n");
+     8ce:	8f ee       	ldi	r24, 0xEF	; 239
+     8d0:	92 e0       	ldi	r25, 0x02	; 2
+     8d2:	a0 d4       	rcall	.+2368   	; 0x1214 <puts>
+  *
+  * This is the main loop of our kernel, called by OS_Start().
+  */
+static void Next_Kernel_Request() 
+{
+	Dispatch();	//Select an initial task to run
+     8d4:	df dc       	rcall	.-1602   	; 0x294 <Dispatch>
+		// M is locked more than once
+		--(m->count);
+	} else if (m->num_of_process > 0) {
+		// there are tasks waiting on the mutex
+		// deque the task with highest priority
+		PID p_dequeue = 0;
+     8d6:	61 2c       	mov	r6, r1
+     8d8:	51 2c       	mov	r5, r1
+				temp_order = m->order[i];
+				p_dequeue = m->blocked_stack[i];
+			}
+		}
+		//dequeue index i
+		m->blocked_stack[i] = -1;
+     8da:	aa 24       	eor	r10, r10
+     8dc:	aa 94       	dec	r10
+     8de:	ba 2c       	mov	r11, r10
+	} else {
+		Cp->state = WAIT_MUTEX;								//put cp into state wait mutex
+		//enqueue cp to stack
+		++(m->num_of_process);
+		++(m->total_num);
+		for (int i=0; i<MAXTHREAD; i++) {
+     8e0:	99 24       	eor	r9, r9
+     8e2:	93 94       	inc	r9
+     8e4:	81 2c       	mov	r8, r1
+	//Find an uninitialized Mutex slot
+	for(i=0; i<MAXMUTEX; i++)
+	if(Mutex[i].id == 0) break;
+	
+	//Assign a new unique ID to the mutex. Note that the smallest valid mutex ID is 1.
+	Mutex[i].id = ++Last_MutexID;
+     8e6:	0f 2e       	mov	r0, r31
+     8e8:	fa e5       	ldi	r31, 0x5A	; 90
+     8ea:	ef 2e       	mov	r14, r31
+     8ec:	f0 2d       	mov	r31, r0
+	Mutex[i].owner = 0;		// note when mutex's owner is 0, it is free
+	// init priority stack
+	for (int j=0; j<MAXTHREAD; j++) {
+		Mutex[i].priority_stack[j] = LOWEST_PRIORITY+1;
+		Mutex[i].blocked_stack[j] = -1;
+     8ee:	0f 2e       	mov	r0, r31
+     8f0:	fd e2       	ldi	r31, 0x2D	; 45
+     8f2:	7f 2e       	mov	r7, r31
+     8f4:	f0 2d       	mov	r31, r0
+	//Assign a new unique ID to the mutex. Note that the smallest valid mutex ID is 1.
+	Mutex[i].id = ++Last_MutexID;
+	Mutex[i].owner = 0;		// note when mutex's owner is 0, it is free
+	// init priority stack
+	for (int j=0; j<MAXTHREAD; j++) {
+		Mutex[i].priority_stack[j] = LOWEST_PRIORITY+1;
+     8f6:	0f 2e       	mov	r0, r31
+     8f8:	fb e0       	ldi	r31, 0x0B	; 11
+     8fa:	2f 2e       	mov	r2, r31
+     8fc:	f0 2d       	mov	r31, r0
+	Mutex[i].total_num = 0;
+	++Mutex_Count;
+	err = NO_ERR;
+	
+	#ifdef DEBUG
+	printf("Kernel_Create_Mutex: Created Mutex %d!\n", Last_MutexID);
+     8fe:	0f 2e       	mov	r0, r31
+     900:	f7 e2       	ldi	r31, 0x27	; 39
+     902:	cf 2e       	mov	r12, r31
+     904:	f6 e0       	ldi	r31, 0x06	; 6
+     906:	df 2e       	mov	r13, r31
+     908:	f0 2d       	mov	r31, r0
+	//After OS initialization, THIS WILL BE KERNEL'S MAIN LOOP!
+	//NOTE: When another task makes a syscall and enters the loop, it's still in the RUNNING state!
+	while(1) 
+	{
+		//Clears the process' request fields
+		Cp->request = NONE;
+     90a:	e0 91 13 1c 	lds	r30, 0x1C13
+     90e:	f0 91 14 1c 	lds	r31, 0x1C14
+     912:	15 82       	std	Z+5, r1	; 0x05
+		//Cp->request_arg is not reset, because task_sleep uses it to keep track of remaining ticks
+
+		//Load the current task's stack pointer and switch to its context
+		CurrentSp = Cp->sp;
+     914:	82 85       	ldd	r24, Z+10	; 0x0a
+     916:	93 85       	ldd	r25, Z+11	; 0x0b
+     918:	90 93 12 1c 	sts	0x1C12, r25
+     91c:	80 93 11 1c 	sts	0x1C11, r24
+		Exit_Kernel();
+     920:	0f dc       	rcall	.-2018   	; 0x140 <CSwitch>
+
+		/* if this task makes a system call, it will return to here! */
+
+		//Save the current task's stack pointer and proceed to handle its request
+		Cp->sp = CurrentSp;
+     922:	20 91 13 1c 	lds	r18, 0x1C13
+     926:	30 91 14 1c 	lds	r19, 0x1C14
+     92a:	80 91 11 1c 	lds	r24, 0x1C11
+     92e:	90 91 12 1c 	lds	r25, 0x1C12
+     932:	d9 01       	movw	r26, r18
+     934:	1b 96       	adiw	r26, 0x0b	; 11
+     936:	9c 93       	st	X, r25
+     938:	8e 93       	st	-X, r24
+     93a:	1a 97       	sbiw	r26, 0x0a	; 10
+
+		switch(Cp->request)
+     93c:	15 96       	adiw	r26, 0x05	; 5
+     93e:	8c 91       	ld	r24, X
+     940:	90 e0       	ldi	r25, 0x00	; 0
+     942:	8d 30       	cpi	r24, 0x0D	; 13
+     944:	91 05       	cpc	r25, r1
+     946:	08 f0       	brcs	.+2      	; 0x94a <OS_Start+0xd2>
+     948:	1c c3       	rjmp	.+1592   	; 0xf82 <OS_Start+0x70a>
+     94a:	fc 01       	movw	r30, r24
+     94c:	88 27       	eor	r24, r24
+     94e:	ee 58       	subi	r30, 0x8E	; 142
+     950:	ff 4f       	sbci	r31, 0xFF	; 255
+     952:	8f 4f       	sbci	r24, 0xFF	; 255
+     954:	44 c4       	rjmp	.+2184   	; 0x11de <__tablejump2__>
+		{
+			case CREATE_T:
+			Kernel_Create_Task(Cp->code, Cp->pri, Cp->arg);
+     956:	f9 01       	movw	r30, r18
+     958:	40 85       	ldd	r20, Z+8	; 0x08
+     95a:	51 85       	ldd	r21, Z+9	; 0x09
+     95c:	62 81       	ldd	r22, Z+2	; 0x02
+     95e:	e4 5f       	subi	r30, 0xF4	; 244
+     960:	fe 4f       	sbci	r31, 0xFE	; 254
+     962:	80 81       	ld	r24, Z
+     964:	91 81       	ldd	r25, Z+1	; 0x01
+     966:	7e de       	rcall	.-772    	; 0x664 <Kernel_Create_Task>
+     968:	d0 cf       	rjmp	.-96     	; 0x90a <OS_Start+0x92>
+			break;
+			
+			case TERMINATE:
+			Cp->state = DEAD;			//Mark the task as DEAD so its resources will be recycled later when new tasks are created
+     96a:	d9 01       	movw	r26, r18
+     96c:	13 96       	adiw	r26, 0x03	; 3
+     96e:	1c 92       	st	X, r1
+			--Task_Count;
+     970:	80 91 26 08 	lds	r24, 0x0826
+     974:	90 91 27 08 	lds	r25, 0x0827
+     978:	01 97       	sbiw	r24, 0x01	; 1
+     97a:	90 93 27 08 	sts	0x0827, r25
+     97e:	80 93 26 08 	sts	0x0826, r24
+			Dispatch();					//Dispatch is only needed if the syscall requires running a different task  after it's done
+     982:	88 dc       	rcall	.-1776   	; 0x294 <Dispatch>
+     984:	c2 cf       	rjmp	.-124    	; 0x90a <OS_Start+0x92>
+
+/*TODO: Check for mutex ownership. If PID owns any mutex, ignore this request*/
+static void Kernel_Suspend_Task() 
+{
+	//Finds the process descriptor for the specified PID
+	PD* p = findProcessByPID(Cp->request_arg);
+     986:	f9 01       	movw	r30, r18
+     988:	86 81       	ldd	r24, Z+6	; 0x06
+     98a:	97 81       	ldd	r25, Z+7	; 0x07
+     98c:	14 dd       	rcall	.-1496   	; 0x3b6 <findProcessByPID>
+     98e:	fc 01       	movw	r30, r24
+	
+	//Ensure the PID specified in the PD currently exists in the global process list
+	if(p == NULL)
+     990:	89 2b       	or	r24, r25
+     992:	39 f4       	brne	.+14     	; 0x9a2 <OS_Start+0x12a>
+	{
+		#ifdef DEBUG
+			printf("Kernel_Suspend_Task: PID not found in global process list!\n");
+     994:	8a ef       	ldi	r24, 0xFA	; 250
+     996:	92 e0       	ldi	r25, 0x02	; 2
+     998:	3d d4       	rcall	.+2170   	; 0x1214 <puts>
+		#endif
+		err = PID_NOT_FOUND_ERR;
+     99a:	85 e0       	ldi	r24, 0x05	; 5
+     99c:	80 93 10 1c 	sts	0x1C10, r24
+     9a0:	b4 cf       	rjmp	.-152    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Ensure the task is not in a unsuspendable state
+	if(p->state == DEAD || p->state == SUSPENDED)
+     9a2:	83 81       	ldd	r24, Z+3	; 0x03
+     9a4:	88 23       	and	r24, r24
+     9a6:	11 f0       	breq	.+4      	; 0x9ac <OS_Start+0x134>
+     9a8:	83 30       	cpi	r24, 0x03	; 3
+     9aa:	79 f4       	brne	.+30     	; 0x9ca <OS_Start+0x152>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Suspend_Task: Trying to suspend a task that's in an unsuspendable state %d!\n", p->state);
+     9ac:	1f 92       	push	r1
+     9ae:	8f 93       	push	r24
+     9b0:	85 e3       	ldi	r24, 0x35	; 53
+     9b2:	93 e0       	ldi	r25, 0x03	; 3
+     9b4:	9f 93       	push	r25
+     9b6:	8f 93       	push	r24
+     9b8:	1a d4       	rcall	.+2100   	; 0x11ee <printf>
+		#endif
+		err = SUSPEND_NONRUNNING_TASK_ERR;
+     9ba:	86 e0       	ldi	r24, 0x06	; 6
+     9bc:	80 93 10 1c 	sts	0x1C10, r24
+     9c0:	0f 90       	pop	r0
+     9c2:	0f 90       	pop	r0
+     9c4:	0f 90       	pop	r0
+     9c6:	0f 90       	pop	r0
+     9c8:	a0 cf       	rjmp	.-192    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Save its current state and set it to SUSPENDED
+	p->last_state = p->state;
+     9ca:	84 83       	std	Z+4, r24	; 0x04
+	p->state = SUSPENDED;
+     9cc:	83 e0       	ldi	r24, 0x03	; 3
+     9ce:	83 83       	std	Z+3, r24	; 0x03
+	err = NO_ERR;
+     9d0:	10 92 10 1c 	sts	0x1C10, r1
+     9d4:	9a cf       	rjmp	.-204    	; 0x90a <OS_Start+0x92>
+}
+
+static void Kernel_Resume_Task()
+{
+	//Finds the process descriptor for the specified PID
+	PD* p = findProcessByPID(Cp->request_arg);
+     9d6:	d9 01       	movw	r26, r18
+     9d8:	16 96       	adiw	r26, 0x06	; 6
+     9da:	8d 91       	ld	r24, X+
+     9dc:	9c 91       	ld	r25, X
+     9de:	17 97       	sbiw	r26, 0x07	; 7
+     9e0:	ea dc       	rcall	.-1580   	; 0x3b6 <findProcessByPID>
+     9e2:	8c 01       	movw	r16, r24
+	
+	//Ensure the PID specified in the PD currently exists in the global process list
+	if(p == NULL)
+     9e4:	00 97       	sbiw	r24, 0x00	; 0
+     9e6:	39 f4       	brne	.+14     	; 0x9f6 <OS_Start+0x17e>
+	{
+		#ifdef DEBUG
+			printf("Kernel_Resume_Task: PID not found in global process list!\n");
+     9e8:	89 e8       	ldi	r24, 0x89	; 137
+     9ea:	93 e0       	ldi	r25, 0x03	; 3
+     9ec:	13 d4       	rcall	.+2086   	; 0x1214 <puts>
+		#endif
+		err = PID_NOT_FOUND_ERR;
+     9ee:	85 e0       	ldi	r24, 0x05	; 5
+     9f0:	80 93 10 1c 	sts	0x1C10, r24
+     9f4:	8a cf       	rjmp	.-236    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Ensure the task is currently in the SUSPENDED state
+	if(p->state != SUSPENDED)
+     9f6:	fc 01       	movw	r30, r24
+     9f8:	83 81       	ldd	r24, Z+3	; 0x03
+     9fa:	83 30       	cpi	r24, 0x03	; 3
+     9fc:	a9 f0       	breq	.+42     	; 0xa28 <OS_Start+0x1b0>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Resume_Task: Trying to resume a task that's not SUSPENDED!\n");
+     9fe:	83 ec       	ldi	r24, 0xC3	; 195
+     a00:	93 e0       	ldi	r25, 0x03	; 3
+     a02:	08 d4       	rcall	.+2064   	; 0x1214 <puts>
+		printf("CURRENT STATE: %d\n", p->state);
+     a04:	d8 01       	movw	r26, r16
+     a06:	13 96       	adiw	r26, 0x03	; 3
+     a08:	8c 91       	ld	r24, X
+     a0a:	1f 92       	push	r1
+     a0c:	8f 93       	push	r24
+     a0e:	85 e0       	ldi	r24, 0x05	; 5
+     a10:	94 e0       	ldi	r25, 0x04	; 4
+     a12:	9f 93       	push	r25
+     a14:	8f 93       	push	r24
+     a16:	eb d3       	rcall	.+2006   	; 0x11ee <printf>
+		#endif
+		err = RESUME_NONSUSPENDED_TASK_ERR;
+     a18:	87 e0       	ldi	r24, 0x07	; 7
+     a1a:	80 93 10 1c 	sts	0x1C10, r24
+     a1e:	0f 90       	pop	r0
+     a20:	0f 90       	pop	r0
+     a22:	0f 90       	pop	r0
+     a24:	0f 90       	pop	r0
+     a26:	71 cf       	rjmp	.-286    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Restore the previous state of the task
+	p->state = p->last_state;
+     a28:	f8 01       	movw	r30, r16
+     a2a:	84 81       	ldd	r24, Z+4	; 0x04
+     a2c:	83 83       	std	Z+3, r24	; 0x03
+	p->last_state = SUSPENDED;			
+     a2e:	83 e0       	ldi	r24, 0x03	; 3
+     a30:	84 83       	std	Z+4, r24	; 0x04
+	err = NO_ERR;
+     a32:	10 92 10 1c 	sts	0x1C10, r1
+     a36:	69 cf       	rjmp	.-302    	; 0x90a <OS_Start+0x92>
+			case RESUME:
+			Kernel_Resume_Task();
+			break;
+			
+			case SLEEP:
+			Cp->state = SLEEPING;
+     a38:	84 e0       	ldi	r24, 0x04	; 4
+     a3a:	d9 01       	movw	r26, r18
+     a3c:	13 96       	adiw	r26, 0x03	; 3
+     a3e:	8c 93       	st	X, r24
+			Dispatch();					
+     a40:	29 dc       	rcall	.-1966   	; 0x294 <Dispatch>
+     a42:	63 cf       	rjmp	.-314    	; 0x90a <OS_Start+0x92>
+static void Kernel_Create_Event(void)
+{
+	int i;
+	
+	//Make sure the system's events are not at max
+	if(Event_Count >= MAXEVENT)
+     a44:	80 91 24 08 	lds	r24, 0x0824
+     a48:	90 91 25 08 	lds	r25, 0x0825
+     a4c:	08 97       	sbiw	r24, 0x08	; 8
+     a4e:	48 f4       	brcc	.+18     	; 0xa62 <OS_Start+0x1ea>
+		return;
+	}
+	
+	//Find an uninitialized Event slot
+	for(i=0; i<MAXEVENT; i++)
+		if(Event[i].id == 0) break;
+     a50:	80 91 fa 0a 	lds	r24, 0x0AFA
+     a54:	90 91 fb 0a 	lds	r25, 0x0AFB
+     a58:	89 2b       	or	r24, r25
+     a5a:	e1 f0       	breq	.+56     	; 0xa94 <OS_Start+0x21c>
+     a5c:	89 2d       	mov	r24, r9
+     a5e:	98 2d       	mov	r25, r8
+     a60:	07 c0       	rjmp	.+14     	; 0xa70 <OS_Start+0x1f8>
+	
+	//Make sure the system's events are not at max
+	if(Event_Count >= MAXEVENT)
+	{
+		#ifdef DEBUG
+		printf("Event_Init: Failed to create Event. The system is at its max event threshold.\n");
+     a62:	88 e1       	ldi	r24, 0x18	; 24
+     a64:	94 e0       	ldi	r25, 0x04	; 4
+     a66:	d6 d3       	rcall	.+1964   	; 0x1214 <puts>
+		#endif
+		err = MAX_EVENT_ERR;
+     a68:	88 e0       	ldi	r24, 0x08	; 8
+     a6a:	80 93 10 1c 	sts	0x1C10, r24
+     a6e:	4d cf       	rjmp	.-358    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Find an uninitialized Event slot
+	for(i=0; i<MAXEVENT; i++)
+		if(Event[i].id == 0) break;
+     a70:	fc 01       	movw	r30, r24
+     a72:	ee 0f       	add	r30, r30
+     a74:	ff 1f       	adc	r31, r31
+     a76:	e8 0f       	add	r30, r24
+     a78:	f9 1f       	adc	r31, r25
+     a7a:	ee 0f       	add	r30, r30
+     a7c:	ff 1f       	adc	r31, r31
+     a7e:	e6 50       	subi	r30, 0x06	; 6
+     a80:	f5 4f       	sbci	r31, 0xF5	; 245
+     a82:	20 81       	ld	r18, Z
+     a84:	31 81       	ldd	r19, Z+1	; 0x01
+     a86:	23 2b       	or	r18, r19
+     a88:	39 f0       	breq	.+14     	; 0xa98 <OS_Start+0x220>
+		err = MAX_EVENT_ERR;
+		return;
+	}
+	
+	//Find an uninitialized Event slot
+	for(i=0; i<MAXEVENT; i++)
+     a8a:	01 96       	adiw	r24, 0x01	; 1
+     a8c:	88 30       	cpi	r24, 0x08	; 8
+     a8e:	91 05       	cpc	r25, r1
+     a90:	79 f7       	brne	.-34     	; 0xa70 <OS_Start+0x1f8>
+     a92:	02 c0       	rjmp	.+4      	; 0xa98 <OS_Start+0x220>
+		if(Event[i].id == 0) break;
+     a94:	86 2d       	mov	r24, r6
+     a96:	95 2d       	mov	r25, r5
+	
+	//Assign a new unique ID to the event. Note that the smallest valid Event ID is 1.
+	Event[i].id = ++Last_EventID;
+     a98:	20 91 0e 1c 	lds	r18, 0x1C0E
+     a9c:	30 91 0f 1c 	lds	r19, 0x1C0F
+     aa0:	2f 5f       	subi	r18, 0xFF	; 255
+     aa2:	3f 4f       	sbci	r19, 0xFF	; 255
+     aa4:	30 93 0f 1c 	sts	0x1C0F, r19
+     aa8:	20 93 0e 1c 	sts	0x1C0E, r18
+     aac:	fc 01       	movw	r30, r24
+     aae:	ee 0f       	add	r30, r30
+     ab0:	ff 1f       	adc	r31, r31
+     ab2:	df 01       	movw	r26, r30
+     ab4:	a8 0f       	add	r26, r24
+     ab6:	b9 1f       	adc	r27, r25
+     ab8:	aa 0f       	add	r26, r26
+     aba:	bb 1f       	adc	r27, r27
+     abc:	a6 50       	subi	r26, 0x06	; 6
+     abe:	b5 4f       	sbci	r27, 0xF5	; 245
+     ac0:	11 96       	adiw	r26, 0x01	; 1
+     ac2:	3c 93       	st	X, r19
+     ac4:	2e 93       	st	-X, r18
+	Event[i].owner = 0;
+     ac6:	fd 01       	movw	r30, r26
+     ac8:	13 82       	std	Z+3, r1	; 0x03
+     aca:	12 82       	std	Z+2, r1	; 0x02
+	++Event_Count;
+     acc:	80 91 24 08 	lds	r24, 0x0824
+     ad0:	90 91 25 08 	lds	r25, 0x0825
+     ad4:	01 96       	adiw	r24, 0x01	; 1
+     ad6:	90 93 25 08 	sts	0x0825, r25
+     ada:	80 93 24 08 	sts	0x0824, r24
+	err = NO_ERR;
+     ade:	10 92 10 1c 	sts	0x1C10, r1
+	
+	#ifdef DEBUG
+	printf("Event_Init: Created Event %d!\n", Last_EventID);
+     ae2:	80 91 0e 1c 	lds	r24, 0x1C0E
+     ae6:	90 91 0f 1c 	lds	r25, 0x1C0F
+     aea:	9f 93       	push	r25
+     aec:	8f 93       	push	r24
+     aee:	86 e6       	ldi	r24, 0x66	; 102
+     af0:	94 e0       	ldi	r25, 0x04	; 4
+     af2:	9f 93       	push	r25
+     af4:	8f 93       	push	r24
+     af6:	7b d3       	rcall	.+1782   	; 0x11ee <printf>
+     af8:	0f 90       	pop	r0
+     afa:	0f 90       	pop	r0
+     afc:	0f 90       	pop	r0
+     afe:	0f 90       	pop	r0
+     b00:	04 cf       	rjmp	.-504    	; 0x90a <OS_Start+0x92>
+	#endif
+}
+
+static void Kernel_Wait_Event(void)
+{
+	EVENT_TYPE* e = findEventByEventID(Cp->request_arg);
+     b02:	f9 01       	movw	r30, r18
+     b04:	86 81       	ldd	r24, Z+6	; 0x06
+     b06:	97 81       	ldd	r25, Z+7	; 0x07
+     b08:	8c dc       	rcall	.-1768   	; 0x422 <findEventByEventID>
+     b0a:	fc 01       	movw	r30, r24
+	
+	if(e == NULL)
+     b0c:	89 2b       	or	r24, r25
+     b0e:	21 f4       	brne	.+8      	; 0xb18 <OS_Start+0x2a0>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Wait_Event: Error finding requested event!\n");
+     b10:	85 e8       	ldi	r24, 0x85	; 133
+     b12:	94 e0       	ldi	r25, 0x04	; 4
+     b14:	7f d3       	rcall	.+1790   	; 0x1214 <puts>
+     b16:	3e c0       	rjmp	.+124    	; 0xb94 <OS_Start+0x31c>
+		#endif
+		return;
+	}
+	
+	//Ensure no one else is waiting for this same event
+	if(e->owner > 0 && e->owner != Cp->pid)
+     b18:	82 81       	ldd	r24, Z+2	; 0x02
+     b1a:	93 81       	ldd	r25, Z+3	; 0x03
+     b1c:	00 97       	sbiw	r24, 0x00	; 0
+     b1e:	c1 f0       	breq	.+48     	; 0xb50 <OS_Start+0x2d8>
+     b20:	a0 91 13 1c 	lds	r26, 0x1C13
+     b24:	b0 91 14 1c 	lds	r27, 0x1C14
+     b28:	2d 91       	ld	r18, X+
+     b2a:	3c 91       	ld	r19, X
+     b2c:	82 17       	cp	r24, r18
+     b2e:	93 07       	cpc	r25, r19
+     b30:	79 f0       	breq	.+30     	; 0xb50 <OS_Start+0x2d8>
+	{
+		#ifdef DEBUG
+			printf("Kernel_Wait_Event: The requested event is already being waited by PID %d\n", e->owner);
+     b32:	9f 93       	push	r25
+     b34:	8f 93       	push	r24
+     b36:	a7 eb       	ldi	r26, 0xB7	; 183
+     b38:	b4 e0       	ldi	r27, 0x04	; 4
+     b3a:	bf 93       	push	r27
+     b3c:	af 93       	push	r26
+     b3e:	57 d3       	rcall	.+1710   	; 0x11ee <printf>
+		#endif
+		err = EVENT_NOT_FOUND_ERR;
+     b40:	89 e0       	ldi	r24, 0x09	; 9
+     b42:	80 93 10 1c 	sts	0x1C10, r24
+     b46:	0f 90       	pop	r0
+     b48:	0f 90       	pop	r0
+     b4a:	0f 90       	pop	r0
+     b4c:	0f 90       	pop	r0
+     b4e:	22 c0       	rjmp	.+68     	; 0xb94 <OS_Start+0x31c>
+		return;
+	}
+	
+	//Has this event been signaled already? If yes, "consume" event and keep executing the same task
+	if(e->count > 0)
+     b50:	84 81       	ldd	r24, Z+4	; 0x04
+     b52:	95 81       	ldd	r25, Z+5	; 0x05
+     b54:	89 2b       	or	r24, r25
+     b56:	81 f0       	breq	.+32     	; 0xb78 <OS_Start+0x300>
+	{
+		e->owner = 0;
+     b58:	13 82       	std	Z+3, r1	; 0x03
+     b5a:	12 82       	std	Z+2, r1	; 0x02
+		e->count = 0;
+     b5c:	15 82       	std	Z+5, r1	; 0x05
+     b5e:	14 82       	std	Z+4, r1	; 0x04
+		e->id = 0;
+     b60:	11 82       	std	Z+1, r1	; 0x01
+     b62:	10 82       	st	Z, r1
+		--Event_Count;	
+     b64:	80 91 24 08 	lds	r24, 0x0824
+     b68:	90 91 25 08 	lds	r25, 0x0825
+     b6c:	01 97       	sbiw	r24, 0x01	; 1
+     b6e:	90 93 25 08 	sts	0x0825, r25
+     b72:	80 93 24 08 	sts	0x0824, r24
+     b76:	0e c0       	rjmp	.+28     	; 0xb94 <OS_Start+0x31c>
+		return;
+	}
+	
+	//Set the owner of the requested event to the current task and put it into the WAIT EVENT state
+	e->owner = Cp->pid;
+     b78:	a0 91 13 1c 	lds	r26, 0x1C13
+     b7c:	b0 91 14 1c 	lds	r27, 0x1C14
+     b80:	8d 91       	ld	r24, X+
+     b82:	9c 91       	ld	r25, X
+     b84:	11 97       	sbiw	r26, 0x01	; 1
+     b86:	93 83       	std	Z+3, r25	; 0x03
+     b88:	82 83       	std	Z+2, r24	; 0x02
+	Cp->state = WAIT_EVENT;
+     b8a:	85 e0       	ldi	r24, 0x05	; 5
+     b8c:	13 96       	adiw	r26, 0x03	; 3
+     b8e:	8c 93       	st	X, r24
+	err = NO_ERR;
+     b90:	10 92 10 1c 	sts	0x1C10, r1
+			Kernel_Create_Event();
+			break;
+			
+			case WAIT_E:
+			Kernel_Wait_Event();	
+			if(Cp->state != RUNNING) Dispatch();	//Don't dispatch to a different task if the event is already siganlled
+     b94:	e0 91 13 1c 	lds	r30, 0x1C13
+     b98:	f0 91 14 1c 	lds	r31, 0x1C14
+     b9c:	83 81       	ldd	r24, Z+3	; 0x03
+     b9e:	82 30       	cpi	r24, 0x02	; 2
+     ba0:	09 f4       	brne	.+2      	; 0xba4 <OS_Start+0x32c>
+     ba2:	b3 ce       	rjmp	.-666    	; 0x90a <OS_Start+0x92>
+     ba4:	77 db       	rcall	.-2322   	; 0x294 <Dispatch>
+     ba6:	b1 ce       	rjmp	.-670    	; 0x90a <OS_Start+0x92>
+	err = NO_ERR;
+}
+
+static void Kernel_Signal_Event(void)
+{
+	EVENT_TYPE* e = findEventByEventID(Cp->request_arg);
+     ba8:	d9 01       	movw	r26, r18
+     baa:	16 96       	adiw	r26, 0x06	; 6
+     bac:	8d 91       	ld	r24, X+
+     bae:	9c 91       	ld	r25, X
+     bb0:	17 97       	sbiw	r26, 0x07	; 7
+     bb2:	37 dc       	rcall	.-1938   	; 0x422 <findEventByEventID>
+     bb4:	8c 01       	movw	r16, r24
+	PD *e_owner;
+	
+	if(e == NULL)
+     bb6:	00 97       	sbiw	r24, 0x00	; 0
+     bb8:	21 f4       	brne	.+8      	; 0xbc2 <OS_Start+0x34a>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Signal_Event: Error finding requested event!\n");
+     bba:	81 e0       	ldi	r24, 0x01	; 1
+     bbc:	95 e0       	ldi	r25, 0x05	; 5
+     bbe:	2a d3       	rcall	.+1620   	; 0x1214 <puts>
+     bc0:	a4 ce       	rjmp	.-696    	; 0x90a <OS_Start+0x92>
+		#endif
+		return;
+	}
+	
+	//Increment the event counter if needed 
+	if(MAX_EVENT_SIG_MISS == 0 || e->count < MAX_EVENT_SIG_MISS)
+     bc2:	fc 01       	movw	r30, r24
+     bc4:	84 81       	ldd	r24, Z+4	; 0x04
+     bc6:	95 81       	ldd	r25, Z+5	; 0x05
+     bc8:	89 2b       	or	r24, r25
+     bca:	11 f4       	brne	.+4      	; 0xbd0 <OS_Start+0x358>
+		e->count++;
+     bcc:	94 82       	std	Z+4, r9	; 0x04
+     bce:	85 82       	std	Z+5, r8	; 0x05
+	
+	//If the event is unowned, return
+	if(e->owner == 0)
+     bd0:	d8 01       	movw	r26, r16
+     bd2:	12 96       	adiw	r26, 0x02	; 2
+     bd4:	8d 91       	ld	r24, X+
+     bd6:	9c 91       	ld	r25, X
+     bd8:	13 97       	sbiw	r26, 0x03	; 3
+     bda:	00 97       	sbiw	r24, 0x00	; 0
+     bdc:	31 f4       	brne	.+12     	; 0xbea <OS_Start+0x372>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Signal_Event: *WARNING* The requested event is not being waited by anyone!\n");
+     bde:	85 e3       	ldi	r24, 0x35	; 53
+     be0:	95 e0       	ldi	r25, 0x05	; 5
+     be2:	18 d3       	rcall	.+1584   	; 0x1214 <puts>
+		#endif
+		err = SIGNAL_UNOWNED_EVENT_ERR;
+     be4:	20 92 10 1c 	sts	0x1C10, r2
+     be8:	90 ce       	rjmp	.-736    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Fetch the owner's PD and ensure it's still valid
+	e_owner = findProcessByPID(e->owner);
+     bea:	e5 db       	rcall	.-2102   	; 0x3b6 <findProcessByPID>
+	if(e_owner == NULL)
+     bec:	00 97       	sbiw	r24, 0x00	; 0
+     bee:	39 f4       	brne	.+14     	; 0xbfe <OS_Start+0x386>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Signal_Event: Event owner's PID not found in global process list!\n");
+     bf0:	87 e8       	ldi	r24, 0x87	; 135
+     bf2:	95 e0       	ldi	r25, 0x05	; 5
+     bf4:	0f d3       	rcall	.+1566   	; 0x1214 <puts>
+		#endif
+		err = PID_NOT_FOUND_ERR;
+     bf6:	85 e0       	ldi	r24, 0x05	; 5
+     bf8:	80 93 10 1c 	sts	0x1C10, r24
+     bfc:	86 ce       	rjmp	.-756    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Wake up the owner of the event by setting its state to READY if it's active. The event is "consumed"
+	if(e_owner->state == WAIT_EVENT)
+     bfe:	fc 01       	movw	r30, r24
+     c00:	23 81       	ldd	r18, Z+3	; 0x03
+     c02:	25 30       	cpi	r18, 0x05	; 5
+     c04:	09 f0       	breq	.+2      	; 0xc08 <OS_Start+0x390>
+     c06:	81 ce       	rjmp	.-766    	; 0x90a <OS_Start+0x92>
+	{
+		e->owner = 0;
+     c08:	d8 01       	movw	r26, r16
+     c0a:	13 96       	adiw	r26, 0x03	; 3
+     c0c:	1c 92       	st	X, r1
+     c0e:	1e 92       	st	-X, r1
+     c10:	12 97       	sbiw	r26, 0x02	; 2
+		e->count = 0;
+     c12:	15 96       	adiw	r26, 0x05	; 5
+     c14:	1c 92       	st	X, r1
+     c16:	1e 92       	st	-X, r1
+     c18:	14 97       	sbiw	r26, 0x04	; 4
+		e->id = 0;
+     c1a:	1d 92       	st	X+, r1
+     c1c:	1c 92       	st	X, r1
+		--Event_Count;
+     c1e:	20 91 24 08 	lds	r18, 0x0824
+     c22:	30 91 25 08 	lds	r19, 0x0825
+     c26:	21 50       	subi	r18, 0x01	; 1
+     c28:	31 09       	sbc	r19, r1
+     c2a:	30 93 25 08 	sts	0x0825, r19
+     c2e:	20 93 24 08 	sts	0x0824, r18
+		e_owner->state = READY;
+     c32:	21 e0       	ldi	r18, 0x01	; 1
+     c34:	23 83       	std	Z+3, r18	; 0x03
+     c36:	69 ce       	rjmp	.-814    	; 0x90a <OS_Start+0x92>
+static void Kernel_Create_Mutex(void)
+{
+	int i;
+	
+	//Make sure the system's mutexes are not at max
+	if(Mutex_Count >= MAXMUTEX)
+     c38:	80 91 22 08 	lds	r24, 0x0822
+     c3c:	90 91 23 08 	lds	r25, 0x0823
+     c40:	08 97       	sbiw	r24, 0x08	; 8
+     c42:	48 f4       	brcc	.+18     	; 0xc56 <OS_Start+0x3de>
+		return;
+	}
+	
+	//Find an uninitialized Mutex slot
+	for(i=0; i<MAXMUTEX; i++)
+	if(Mutex[i].id == 0) break;
+     c44:	ea e2       	ldi	r30, 0x2A	; 42
+     c46:	f8 e0       	ldi	r31, 0x08	; 8
+     c48:	80 81       	ld	r24, Z
+     c4a:	91 81       	ldd	r25, Z+1	; 0x01
+     c4c:	89 2b       	or	r24, r25
+     c4e:	d9 f0       	breq	.+54     	; 0xc86 <OS_Start+0x40e>
+     c50:	49 2d       	mov	r20, r9
+     c52:	58 2d       	mov	r21, r8
+     c54:	07 c0       	rjmp	.+14     	; 0xc64 <OS_Start+0x3ec>
+	
+	//Make sure the system's mutexes are not at max
+	if(Mutex_Count >= MAXMUTEX)
+	{
+		#ifdef DEBUG
+		printf("Kernel_Create_Mutex: Failed to create Mutex. The system is at its max mutex threshold.\n");
+     c56:	80 ed       	ldi	r24, 0xD0	; 208
+     c58:	95 e0       	ldi	r25, 0x05	; 5
+     c5a:	dc d2       	rcall	.+1464   	; 0x1214 <puts>
+		#endif
+		err = MAX_MUTEX_ERR;
+     c5c:	8c e0       	ldi	r24, 0x0C	; 12
+     c5e:	80 93 10 1c 	sts	0x1C10, r24
+     c62:	53 ce       	rjmp	.-858    	; 0x90a <OS_Start+0x92>
+		return;
+	}
+	
+	//Find an uninitialized Mutex slot
+	for(i=0; i<MAXMUTEX; i++)
+	if(Mutex[i].id == 0) break;
+     c64:	e4 9e       	mul	r14, r20
+     c66:	f0 01       	movw	r30, r0
+     c68:	e5 9e       	mul	r14, r21
+     c6a:	f0 0d       	add	r31, r0
+     c6c:	11 24       	eor	r1, r1
+     c6e:	e6 5d       	subi	r30, 0xD6	; 214
+     c70:	f7 4f       	sbci	r31, 0xF7	; 247
+     c72:	80 81       	ld	r24, Z
+     c74:	91 81       	ldd	r25, Z+1	; 0x01
+     c76:	89 2b       	or	r24, r25
+     c78:	41 f0       	breq	.+16     	; 0xc8a <OS_Start+0x412>
+		err = MAX_MUTEX_ERR;
+		return;
+	}
+	
+	//Find an uninitialized Mutex slot
+	for(i=0; i<MAXMUTEX; i++)
+     c7a:	4f 5f       	subi	r20, 0xFF	; 255
+     c7c:	5f 4f       	sbci	r21, 0xFF	; 255
+     c7e:	48 30       	cpi	r20, 0x08	; 8
+     c80:	51 05       	cpc	r21, r1
+     c82:	81 f7       	brne	.-32     	; 0xc64 <OS_Start+0x3ec>
+     c84:	02 c0       	rjmp	.+4      	; 0xc8a <OS_Start+0x412>
+	if(Mutex[i].id == 0) break;
+     c86:	46 2d       	mov	r20, r6
+     c88:	55 2d       	mov	r21, r5
+	
+	//Assign a new unique ID to the mutex. Note that the smallest valid mutex ID is 1.
+	Mutex[i].id = ++Last_MutexID;
+     c8a:	80 91 15 1c 	lds	r24, 0x1C15
+     c8e:	90 91 16 1c 	lds	r25, 0x1C16
+     c92:	01 96       	adiw	r24, 0x01	; 1
+     c94:	90 93 16 1c 	sts	0x1C16, r25
+     c98:	80 93 15 1c 	sts	0x1C15, r24
+     c9c:	e4 9e       	mul	r14, r20
+     c9e:	f0 01       	movw	r30, r0
+     ca0:	e5 9e       	mul	r14, r21
+     ca2:	f0 0d       	add	r31, r0
+     ca4:	11 24       	eor	r1, r1
+     ca6:	e6 5d       	subi	r30, 0xD6	; 214
+     ca8:	f7 4f       	sbci	r31, 0xF7	; 247
+     caa:	91 83       	std	Z+1, r25	; 0x01
+     cac:	80 83       	st	Z, r24
+	Mutex[i].owner = 0;		// note when mutex's owner is 0, it is free
+     cae:	13 82       	std	Z+3, r1	; 0x03
+     cb0:	12 82       	std	Z+2, r1	; 0x02
+	// init priority stack
+	for (int j=0; j<MAXTHREAD; j++) {
+     cb2:	26 2d       	mov	r18, r6
+     cb4:	35 2d       	mov	r19, r5
+		Mutex[i].priority_stack[j] = LOWEST_PRIORITY+1;
+     cb6:	bf 01       	movw	r22, r30
+		Mutex[i].blocked_stack[j] = -1;
+     cb8:	74 9e       	mul	r7, r20
+     cba:	d0 01       	movw	r26, r0
+     cbc:	75 9e       	mul	r7, r21
+     cbe:	b0 0d       	add	r27, r0
+     cc0:	11 24       	eor	r1, r1
+	//Assign a new unique ID to the mutex. Note that the smallest valid mutex ID is 1.
+	Mutex[i].id = ++Last_MutexID;
+	Mutex[i].owner = 0;		// note when mutex's owner is 0, it is free
+	// init priority stack
+	for (int j=0; j<MAXTHREAD; j++) {
+		Mutex[i].priority_stack[j] = LOWEST_PRIORITY+1;
+     cc2:	fb 01       	movw	r30, r22
+     cc4:	e2 0f       	add	r30, r18
+     cc6:	f3 1f       	adc	r31, r19
+     cc8:	1b e0       	ldi	r17, 0x0B	; 11
+     cca:	16 a3       	std	Z+38, r17	; 0x26
+		Mutex[i].blocked_stack[j] = -1;
+     ccc:	cd 01       	movw	r24, r26
+     cce:	82 0f       	add	r24, r18
+     cd0:	93 1f       	adc	r25, r19
+     cd2:	fc 01       	movw	r30, r24
+     cd4:	ee 0f       	add	r30, r30
+     cd6:	ff 1f       	adc	r31, r31
+     cd8:	e0 5d       	subi	r30, 0xD0	; 208
+     cda:	f7 4f       	sbci	r31, 0xF7	; 247
+     cdc:	b1 82       	std	Z+1, r11	; 0x01
+     cde:	a0 82       	st	Z, r10
+		Mutex[i].order[j] = 0;
+     ce0:	88 0f       	add	r24, r24
+     ce2:	99 1f       	adc	r25, r25
+     ce4:	fc 01       	movw	r30, r24
+     ce6:	e0 5a       	subi	r30, 0xA0	; 160
+     ce8:	f7 4f       	sbci	r31, 0xF7	; 247
+     cea:	11 82       	std	Z+1, r1	; 0x01
+     cec:	10 82       	st	Z, r1
+	
+	//Assign a new unique ID to the mutex. Note that the smallest valid mutex ID is 1.
+	Mutex[i].id = ++Last_MutexID;
+	Mutex[i].owner = 0;		// note when mutex's owner is 0, it is free
+	// init priority stack
+	for (int j=0; j<MAXTHREAD; j++) {
+     cee:	2f 5f       	subi	r18, 0xFF	; 255
+     cf0:	3f 4f       	sbci	r19, 0xFF	; 255
+     cf2:	20 31       	cpi	r18, 0x10	; 16
+     cf4:	31 05       	cpc	r19, r1
+     cf6:	29 f7       	brne	.-54     	; 0xcc2 <OS_Start+0x44a>
+		Mutex[i].priority_stack[j] = LOWEST_PRIORITY+1;
+		Mutex[i].blocked_stack[j] = -1;
+		Mutex[i].order[j] = 0;
+	}
+	Mutex[i].num_of_process = 0;
+     cf8:	e4 9e       	mul	r14, r20
+     cfa:	c0 01       	movw	r24, r0
+     cfc:	e5 9e       	mul	r14, r21
+     cfe:	90 0d       	add	r25, r0
+     d00:	11 24       	eor	r1, r1
+     d02:	86 5d       	subi	r24, 0xD6	; 214
+     d04:	97 4f       	sbci	r25, 0xF7	; 247
+     d06:	fc 01       	movw	r30, r24
+     d08:	ea 5a       	subi	r30, 0xAA	; 170
+     d0a:	ff 4f       	sbci	r31, 0xFF	; 255
+     d0c:	11 82       	std	Z+1, r1	; 0x01
+     d0e:	10 82       	st	Z, r1
+	Mutex[i].total_num = 0;
+     d10:	32 96       	adiw	r30, 0x02	; 2
+     d12:	11 82       	std	Z+1, r1	; 0x01
+     d14:	10 82       	st	Z, r1
+	++Mutex_Count;
+     d16:	80 91 22 08 	lds	r24, 0x0822
+     d1a:	90 91 23 08 	lds	r25, 0x0823
+     d1e:	01 96       	adiw	r24, 0x01	; 1
+     d20:	90 93 23 08 	sts	0x0823, r25
+     d24:	80 93 22 08 	sts	0x0822, r24
+	err = NO_ERR;
+     d28:	10 92 10 1c 	sts	0x1C10, r1
+	
+	#ifdef DEBUG
+	printf("Kernel_Create_Mutex: Created Mutex %d!\n", Last_MutexID);
+     d2c:	80 91 15 1c 	lds	r24, 0x1C15
+     d30:	90 91 16 1c 	lds	r25, 0x1C16
+     d34:	9f 93       	push	r25
+     d36:	8f 93       	push	r24
+     d38:	df 92       	push	r13
+     d3a:	cf 92       	push	r12
+     d3c:	58 d2       	rcall	.+1200   	; 0x11ee <printf>
+     d3e:	0f 90       	pop	r0
+     d40:	0f 90       	pop	r0
+     d42:	0f 90       	pop	r0
+     d44:	0f 90       	pop	r0
+     d46:	e1 cd       	rjmp	.-1086   	; 0x90a <OS_Start+0x92>
+
+static void Dispatch();
+
+static void Kernel_Lock_Mutex(void)
+{
+	MUTEX_TYPE* m = findMutexByEventID(Cp->request_arg);
+     d48:	d9 01       	movw	r26, r18
+     d4a:	16 96       	adiw	r26, 0x06	; 6
+     d4c:	8d 91       	ld	r24, X+
+     d4e:	9c 91       	ld	r25, X
+     d50:	17 97       	sbiw	r26, 0x07	; 7
+     d52:	a2 db       	rcall	.-2236   	; 0x498 <findMutexByEventID>
+     d54:	dc 01       	movw	r26, r24
+	PD *m_owner;
+	
+	if(m == NULL)
+     d56:	89 2b       	or	r24, r25
+     d58:	21 f4       	brne	.+8      	; 0xd62 <OS_Start+0x4ea>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Lock_Mutex: Error finding requested mutex!\n");
+     d5a:	8f e4       	ldi	r24, 0x4F	; 79
+     d5c:	96 e0       	ldi	r25, 0x06	; 6
+     d5e:	5a d2       	rcall	.+1204   	; 0x1214 <puts>
+     d60:	d4 cd       	rjmp	.-1112   	; 0x90a <OS_Start+0x92>
+		#endif
+		return;
+	}
+	
+	// if mutex is free
+	if(m->owner == 0)
+     d62:	12 96       	adiw	r26, 0x02	; 2
+     d64:	8d 91       	ld	r24, X+
+     d66:	9c 91       	ld	r25, X
+     d68:	13 97       	sbiw	r26, 0x03	; 3
+     d6a:	00 97       	sbiw	r24, 0x00	; 0
+     d6c:	81 f4       	brne	.+32     	; 0xd8e <OS_Start+0x516>
+	{
+		m->owner = Cp->pid;
+     d6e:	e0 91 13 1c 	lds	r30, 0x1C13
+     d72:	f0 91 14 1c 	lds	r31, 0x1C14
+     d76:	80 81       	ld	r24, Z
+     d78:	91 81       	ldd	r25, Z+1	; 0x01
+     d7a:	13 96       	adiw	r26, 0x03	; 3
+     d7c:	9c 93       	st	X, r25
+     d7e:	8e 93       	st	-X, r24
+     d80:	12 97       	sbiw	r26, 0x02	; 2
+		m->count = 1;
+     d82:	14 96       	adiw	r26, 0x04	; 4
+     d84:	9c 92       	st	X, r9
+     d86:	14 97       	sbiw	r26, 0x04	; 4
+     d88:	15 96       	adiw	r26, 0x05	; 5
+     d8a:	8c 92       	st	X, r8
+     d8c:	be cd       	rjmp	.-1156   	; 0x90a <OS_Start+0x92>
+		return;
+	} else if (m->owner == Cp->pid) {
+     d8e:	60 91 13 1c 	lds	r22, 0x1C13
+     d92:	70 91 14 1c 	lds	r23, 0x1C14
+     d96:	fb 01       	movw	r30, r22
+     d98:	20 81       	ld	r18, Z
+     d9a:	31 81       	ldd	r19, Z+1	; 0x01
+     d9c:	82 17       	cp	r24, r18
+     d9e:	93 07       	cpc	r25, r19
+     da0:	51 f4       	brne	.+20     	; 0xdb6 <OS_Start+0x53e>
+		// if it has locked by the current process
+		++(m->count);
+     da2:	14 96       	adiw	r26, 0x04	; 4
+     da4:	8d 91       	ld	r24, X+
+     da6:	9c 91       	ld	r25, X
+     da8:	15 97       	sbiw	r26, 0x05	; 5
+     daa:	01 96       	adiw	r24, 0x01	; 1
+     dac:	15 96       	adiw	r26, 0x05	; 5
+     dae:	9c 93       	st	X, r25
+     db0:	8e 93       	st	-X, r24
+     db2:	14 97       	sbiw	r26, 0x04	; 4
+     db4:	aa cd       	rjmp	.-1196   	; 0x90a <OS_Start+0x92>
+		return;
+	} else {
+		Cp->state = WAIT_MUTEX;								//put cp into state wait mutex
+     db6:	86 e0       	ldi	r24, 0x06	; 6
+     db8:	fb 01       	movw	r30, r22
+     dba:	83 83       	std	Z+3, r24	; 0x03
+		//enqueue cp to stack
+		++(m->num_of_process);
+     dbc:	fd 01       	movw	r30, r26
+     dbe:	ea 5a       	subi	r30, 0xAA	; 170
+     dc0:	ff 4f       	sbci	r31, 0xFF	; 255
+     dc2:	80 81       	ld	r24, Z
+     dc4:	91 81       	ldd	r25, Z+1	; 0x01
+     dc6:	01 96       	adiw	r24, 0x01	; 1
+     dc8:	91 83       	std	Z+1, r25	; 0x01
+     dca:	80 83       	st	Z, r24
+		++(m->total_num);
+     dcc:	32 96       	adiw	r30, 0x02	; 2
+     dce:	80 81       	ld	r24, Z
+     dd0:	91 81       	ldd	r25, Z+1	; 0x01
+     dd2:	01 96       	adiw	r24, 0x01	; 1
+     dd4:	91 83       	std	Z+1, r25	; 0x01
+     dd6:	80 83       	st	Z, r24
+		for (int i=0; i<MAXTHREAD; i++) {
+			if (m->blocked_stack[i] == -1){
+     dd8:	16 96       	adiw	r26, 0x06	; 6
+     dda:	2d 91       	ld	r18, X+
+     ddc:	3c 91       	ld	r19, X
+     dde:	17 97       	sbiw	r26, 0x07	; 7
+     de0:	2f 3f       	cpi	r18, 0xFF	; 255
+     de2:	3f 4f       	sbci	r19, 0xFF	; 255
+     de4:	51 f0       	breq	.+20     	; 0xdfa <OS_Start+0x582>
+     de6:	fd 01       	movw	r30, r26
+     de8:	38 96       	adiw	r30, 0x08	; 8
+	} else {
+		Cp->state = WAIT_MUTEX;								//put cp into state wait mutex
+		//enqueue cp to stack
+		++(m->num_of_process);
+		++(m->total_num);
+		for (int i=0; i<MAXTHREAD; i++) {
+     dea:	29 2d       	mov	r18, r9
+     dec:	38 2d       	mov	r19, r8
+			if (m->blocked_stack[i] == -1){
+     dee:	41 91       	ld	r20, Z+
+     df0:	51 91       	ld	r21, Z+
+     df2:	4f 3f       	cpi	r20, 0xFF	; 255
+     df4:	5f 4f       	sbci	r21, 0xFF	; 255
+     df6:	b1 f4       	brne	.+44     	; 0xe24 <OS_Start+0x5ac>
+     df8:	02 c0       	rjmp	.+4      	; 0xdfe <OS_Start+0x586>
+	} else {
+		Cp->state = WAIT_MUTEX;								//put cp into state wait mutex
+		//enqueue cp to stack
+		++(m->num_of_process);
+		++(m->total_num);
+		for (int i=0; i<MAXTHREAD; i++) {
+     dfa:	26 2d       	mov	r18, r6
+     dfc:	35 2d       	mov	r19, r5
+			if (m->blocked_stack[i] == -1){
+				m->blocked_stack[i] = Cp->pid;
+     dfe:	fb 01       	movw	r30, r22
+     e00:	40 81       	ld	r20, Z
+     e02:	51 81       	ldd	r21, Z+1	; 0x01
+     e04:	f9 01       	movw	r30, r18
+     e06:	ee 0f       	add	r30, r30
+     e08:	ff 1f       	adc	r31, r31
+     e0a:	ea 0f       	add	r30, r26
+     e0c:	fb 1f       	adc	r31, r27
+     e0e:	57 83       	std	Z+7, r21	; 0x07
+     e10:	46 83       	std	Z+6, r20	; 0x06
+				m->order[i] = m->total_num;
+     e12:	97 ab       	std	Z+55, r25	; 0x37
+     e14:	86 ab       	std	Z+54, r24	; 0x36
+				m->priority_stack[i] = Cp->pri;
+     e16:	fb 01       	movw	r30, r22
+     e18:	82 81       	ldd	r24, Z+2	; 0x02
+     e1a:	fd 01       	movw	r30, r26
+     e1c:	e2 0f       	add	r30, r18
+     e1e:	f3 1f       	adc	r31, r19
+     e20:	86 a3       	std	Z+38, r24	; 0x26
+     e22:	05 c0       	rjmp	.+10     	; 0xe2e <OS_Start+0x5b6>
+	} else {
+		Cp->state = WAIT_MUTEX;								//put cp into state wait mutex
+		//enqueue cp to stack
+		++(m->num_of_process);
+		++(m->total_num);
+		for (int i=0; i<MAXTHREAD; i++) {
+     e24:	2f 5f       	subi	r18, 0xFF	; 255
+     e26:	3f 4f       	sbci	r19, 0xFF	; 255
+     e28:	20 31       	cpi	r18, 0x10	; 16
+     e2a:	31 05       	cpc	r19, r1
+     e2c:	01 f7       	brne	.-64     	; 0xdee <OS_Start+0x576>
+				m->priority_stack[i] = Cp->pri;
+				break;	
+			}
+		}
+		// end of enqueue
+		Dispatch();
+     e2e:	32 da       	rcall	.-2972   	; 0x294 <Dispatch>
+     e30:	6c cd       	rjmp	.-1320   	; 0x90a <OS_Start+0x92>
+	}
+}
+
+static void Kernel_Unlock_Mutex(void)
+{
+	MUTEX_TYPE* m = findMutexByEventID(Cp->request_arg);
+     e32:	d9 01       	movw	r26, r18
+     e34:	16 96       	adiw	r26, 0x06	; 6
+     e36:	8d 91       	ld	r24, X+
+     e38:	9c 91       	ld	r25, X
+     e3a:	17 97       	sbiw	r26, 0x07	; 7
+     e3c:	2d db       	rcall	.-2470   	; 0x498 <findMutexByEventID>
+     e3e:	8c 01       	movw	r16, r24
+	PD *m_owner;
+	
+	if(m == NULL)
+     e40:	89 2b       	or	r24, r25
+     e42:	21 f4       	brne	.+8      	; 0xe4c <OS_Start+0x5d4>
+	{
+		#ifdef DEBUG
+		printf("Kernel_Unlock_Mutex: Error finding requested mutex!\n");
+     e44:	81 e8       	ldi	r24, 0x81	; 129
+     e46:	96 e0       	ldi	r25, 0x06	; 6
+     e48:	e5 d1       	rcall	.+970    	; 0x1214 <puts>
+     e4a:	5f cd       	rjmp	.-1346   	; 0x90a <OS_Start+0x92>
+		#endif
+		return;
+	}
+	
+	if(m->owner != Cp->pid){
+     e4c:	e0 91 13 1c 	lds	r30, 0x1C13
+     e50:	f0 91 14 1c 	lds	r31, 0x1C14
+     e54:	80 81       	ld	r24, Z
+     e56:	91 81       	ldd	r25, Z+1	; 0x01
+     e58:	f8 01       	movw	r30, r16
+     e5a:	22 81       	ldd	r18, Z+2	; 0x02
+     e5c:	33 81       	ldd	r19, Z+3	; 0x03
+     e5e:	28 17       	cp	r18, r24
+     e60:	39 07       	cpc	r19, r25
+     e62:	21 f0       	breq	.+8      	; 0xe6c <OS_Start+0x5f4>
+		#ifdef DEBUG
+		printf("Kernel_Unlock_Mutex: The owner is not the current process\n");
+     e64:	85 eb       	ldi	r24, 0xB5	; 181
+     e66:	96 e0       	ldi	r25, 0x06	; 6
+     e68:	d5 d1       	rcall	.+938    	; 0x1214 <puts>
+     e6a:	4f cd       	rjmp	.-1378   	; 0x90a <OS_Start+0x92>
+		#endif
+		return;
+	} else if (m->count > 1) {
+     e6c:	84 81       	ldd	r24, Z+4	; 0x04
+     e6e:	95 81       	ldd	r25, Z+5	; 0x05
+     e70:	82 30       	cpi	r24, 0x02	; 2
+     e72:	91 05       	cpc	r25, r1
+     e74:	20 f0       	brcs	.+8      	; 0xe7e <OS_Start+0x606>
+		// M is locked more than once
+		--(m->count);
+     e76:	01 97       	sbiw	r24, 0x01	; 1
+     e78:	95 83       	std	Z+5, r25	; 0x05
+     e7a:	84 83       	std	Z+4, r24	; 0x04
+     e7c:	46 cd       	rjmp	.-1396   	; 0x90a <OS_Start+0x92>
+	} else if (m->num_of_process > 0) {
+     e7e:	f8 01       	movw	r30, r16
+     e80:	ea 5a       	subi	r30, 0xAA	; 170
+     e82:	ff 4f       	sbci	r31, 0xFF	; 255
+     e84:	20 81       	ld	r18, Z
+     e86:	31 81       	ldd	r19, Z+1	; 0x01
+     e88:	21 15       	cp	r18, r1
+     e8a:	31 05       	cpc	r19, r1
+     e8c:	09 f4       	brne	.+2      	; 0xe90 <OS_Start+0x618>
+     e8e:	6a c0       	rjmp	.+212    	; 0xf64 <OS_Start+0x6ec>
+		// there are tasks waiting on the mutex
+		// deque the task with highest priority
+		PID p_dequeue = 0;
+		unsigned int temp_order = m->total_num + 1;
+     e90:	32 96       	adiw	r30, 0x02	; 2
+     e92:	60 81       	ld	r22, Z
+     e94:	71 81       	ldd	r23, Z+1	; 0x01
+     e96:	6f 5f       	subi	r22, 0xFF	; 255
+     e98:	7f 4f       	sbci	r23, 0xFF	; 255
+     e9a:	c8 01       	movw	r24, r16
+     e9c:	86 96       	adiw	r24, 0x26	; 38
+     e9e:	b2 97       	sbiw	r30, 0x22	; 34
+     ea0:	d8 01       	movw	r26, r16
+     ea2:	16 96       	adiw	r26, 0x06	; 6
+     ea4:	a8 01       	movw	r20, r16
+     ea6:	4a 5a       	subi	r20, 0xAA	; 170
+     ea8:	5f 4f       	sbci	r21, 0xFF	; 255
+		// M is locked more than once
+		--(m->count);
+	} else if (m->num_of_process > 0) {
+		// there are tasks waiting on the mutex
+		// deque the task with highest priority
+		PID p_dequeue = 0;
+     eaa:	f6 2c       	mov	r15, r6
+		unsigned int temp_order = m->total_num + 1;
+		PRIORITY temp_pri = LOWEST_PRIORITY + 1;
+     eac:	0f 2e       	mov	r0, r31
+     eae:	fb e0       	ldi	r31, 0x0B	; 11
+     eb0:	3f 2e       	mov	r3, r31
+     eb2:	f0 2d       	mov	r31, r0
+     eb4:	be 83       	std	Y+6, r27	; 0x06
+     eb6:	ad 83       	std	Y+5, r26	; 0x05
+     eb8:	ba 82       	std	Y+2, r11	; 0x02
+     eba:	a9 82       	std	Y+1, r10	; 0x01
+     ebc:	dc 82       	std	Y+4, r13	; 0x04
+     ebe:	cb 82       	std	Y+3, r12	; 0x03
+     ec0:	d2 2c       	mov	r13, r2
+     ec2:	b5 2c       	mov	r11, r5
+     ec4:	c3 2c       	mov	r12, r3
+     ec6:	18 01       	movw	r2, r16
+     ec8:	89 01       	movw	r16, r18
+		int i;
+		for (i=0; i<MAXTHREAD; i++) {
+			if (m->priority_stack[i] < temp_pri) {
+     eca:	dc 01       	movw	r26, r24
+     ecc:	4d 90       	ld	r4, X+
+     ece:	cd 01       	movw	r24, r26
+     ed0:	4c 14       	cp	r4, r12
+     ed2:	48 f4       	brcc	.+18     	; 0xee6 <OS_Start+0x66e>
+				// found a task with higher priority
+				temp_pri = m->priority_stack[i];
+				temp_order = m->order[i];
+     ed4:	60 81       	ld	r22, Z
+     ed6:	71 81       	ldd	r23, Z+1	; 0x01
+				p_dequeue = m->blocked_stack[i];
+     ed8:	ad 81       	ldd	r26, Y+5	; 0x05
+     eda:	be 81       	ldd	r27, Y+6	; 0x06
+     edc:	fc 90       	ld	r15, X
+     ede:	11 96       	adiw	r26, 0x01	; 1
+     ee0:	bc 90       	ld	r11, X
+		PRIORITY temp_pri = LOWEST_PRIORITY + 1;
+		int i;
+		for (i=0; i<MAXTHREAD; i++) {
+			if (m->priority_stack[i] < temp_pri) {
+				// found a task with higher priority
+				temp_pri = m->priority_stack[i];
+     ee2:	c4 2c       	mov	r12, r4
+     ee4:	10 c0       	rjmp	.+32     	; 0xf06 <OS_Start+0x68e>
+				temp_order = m->order[i];
+				p_dequeue = m->blocked_stack[i];
+			} else if (m->priority_stack[i] == temp_pri && temp_order < m->order[i]) {
+     ee6:	4c 10       	cpse	r4, r12
+     ee8:	0e c0       	rjmp	.+28     	; 0xf06 <OS_Start+0x68e>
+     eea:	20 81       	ld	r18, Z
+     eec:	31 81       	ldd	r19, Z+1	; 0x01
+     eee:	62 17       	cp	r22, r18
+     ef0:	73 07       	cpc	r23, r19
+     ef2:	40 f4       	brcc	.+16     	; 0xf04 <OS_Start+0x68c>
+				// same priority and came into the queue earlier
+				temp_order = m->order[i];
+				p_dequeue = m->blocked_stack[i];
+     ef4:	ad 81       	ldd	r26, Y+5	; 0x05
+     ef6:	be 81       	ldd	r27, Y+6	; 0x06
+     ef8:	fc 90       	ld	r15, X
+     efa:	11 96       	adiw	r26, 0x01	; 1
+     efc:	bc 90       	ld	r11, X
+     efe:	c4 2c       	mov	r12, r4
+				temp_pri = m->priority_stack[i];
+				temp_order = m->order[i];
+				p_dequeue = m->blocked_stack[i];
+			} else if (m->priority_stack[i] == temp_pri && temp_order < m->order[i]) {
+				// same priority and came into the queue earlier
+				temp_order = m->order[i];
+     f00:	b9 01       	movw	r22, r18
+     f02:	01 c0       	rjmp	.+2      	; 0xf06 <OS_Start+0x68e>
+			if (m->priority_stack[i] < temp_pri) {
+				// found a task with higher priority
+				temp_pri = m->priority_stack[i];
+				temp_order = m->order[i];
+				p_dequeue = m->blocked_stack[i];
+			} else if (m->priority_stack[i] == temp_pri && temp_order < m->order[i]) {
+     f04:	c4 2c       	mov	r12, r4
+     f06:	32 96       	adiw	r30, 0x02	; 2
+     f08:	2d 81       	ldd	r18, Y+5	; 0x05
+     f0a:	3e 81       	ldd	r19, Y+6	; 0x06
+     f0c:	2e 5f       	subi	r18, 0xFE	; 254
+     f0e:	3f 4f       	sbci	r19, 0xFF	; 255
+     f10:	3e 83       	std	Y+6, r19	; 0x06
+     f12:	2d 83       	std	Y+5, r18	; 0x05
+		// deque the task with highest priority
+		PID p_dequeue = 0;
+		unsigned int temp_order = m->total_num + 1;
+		PRIORITY temp_pri = LOWEST_PRIORITY + 1;
+		int i;
+		for (i=0; i<MAXTHREAD; i++) {
+     f14:	e4 17       	cp	r30, r20
+     f16:	f5 07       	cpc	r31, r21
+     f18:	c1 f6       	brne	.-80     	; 0xeca <OS_Start+0x652>
+     f1a:	98 01       	movw	r18, r16
+     f1c:	81 01       	movw	r16, r2
+     f1e:	2d 2c       	mov	r2, r13
+     f20:	cb 80       	ldd	r12, Y+3	; 0x03
+     f22:	dc 80       	ldd	r13, Y+4	; 0x04
+     f24:	4b 2c       	mov	r4, r11
+     f26:	a9 80       	ldd	r10, Y+1	; 0x01
+     f28:	ba 80       	ldd	r11, Y+2	; 0x02
+				temp_order = m->order[i];
+				p_dequeue = m->blocked_stack[i];
+			}
+		}
+		//dequeue index i
+		m->blocked_stack[i] = -1;
+     f2a:	d8 01       	movw	r26, r16
+     f2c:	97 96       	adiw	r26, 0x27	; 39
+     f2e:	bc 92       	st	X, r11
+     f30:	ae 92       	st	-X, r10
+     f32:	96 97       	sbiw	r26, 0x26	; 38
+		m->priority_stack[i] = LOWEST_PRIORITY+1;
+     f34:	eb e0       	ldi	r30, 0x0B	; 11
+     f36:	d6 96       	adiw	r26, 0x36	; 54
+     f38:	ec 93       	st	X, r30
+		m->order[i] = 0;
+		--(m->num_of_process);
+     f3a:	f8 01       	movw	r30, r16
+     f3c:	ea 5a       	subi	r30, 0xAA	; 170
+     f3e:	ff 4f       	sbci	r31, 0xFF	; 255
+     f40:	c9 01       	movw	r24, r18
+     f42:	01 97       	sbiw	r24, 0x01	; 1
+     f44:	91 83       	std	Z+1, r25	; 0x01
+     f46:	80 83       	st	Z, r24
+		PD* target_p = findProcessByPID(p_dequeue);
+     f48:	8f 2d       	mov	r24, r15
+     f4a:	94 2d       	mov	r25, r4
+     f4c:	34 da       	rcall	.-2968   	; 0x3b6 <findProcessByPID>
+		m->owner = p_dequeue;
+     f4e:	d8 01       	movw	r26, r16
+     f50:	12 96       	adiw	r26, 0x02	; 2
+     f52:	fc 92       	st	X, r15
+     f54:	12 97       	sbiw	r26, 0x02	; 2
+     f56:	13 96       	adiw	r26, 0x03	; 3
+     f58:	4c 92       	st	X, r4
+		target_p->state = READY;
+     f5a:	21 e0       	ldi	r18, 0x01	; 1
+     f5c:	fc 01       	movw	r30, r24
+     f5e:	23 83       	std	Z+3, r18	; 0x03
+		Dispatch();
+     f60:	99 d9       	rcall	.-3278   	; 0x294 <Dispatch>
+     f62:	d3 cc       	rjmp	.-1626   	; 0x90a <OS_Start+0x92>
+		return;
+	} else {
+		m->owner = 0;
+     f64:	d8 01       	movw	r26, r16
+     f66:	13 96       	adiw	r26, 0x03	; 3
+     f68:	1c 92       	st	X, r1
+     f6a:	1e 92       	st	-X, r1
+     f6c:	12 97       	sbiw	r26, 0x02	; 2
+		m->count = 0;
+     f6e:	15 96       	adiw	r26, 0x05	; 5
+     f70:	1c 92       	st	X, r1
+     f72:	1e 92       	st	-X, r1
+     f74:	14 97       	sbiw	r26, 0x04	; 4
+     f76:	c9 cc       	rjmp	.-1646   	; 0x90a <OS_Start+0x92>
+			//Does this need dispatch under any circumstances?
+			break;
+		   
+			case YIELD:
+			case NONE:					// NONE could be caused by a timer interrupt
+			Cp->state = READY;
+     f78:	81 e0       	ldi	r24, 0x01	; 1
+     f7a:	f9 01       	movw	r30, r18
+     f7c:	83 83       	std	Z+3, r24	; 0x03
+			Dispatch();
+     f7e:	8a d9       	rcall	.-3308   	; 0x294 <Dispatch>
+     f80:	c4 cc       	rjmp	.-1656   	; 0x90a <OS_Start+0x92>
+			break;
+       
+			//Invalid request code, just ignore
+			default:
+				err = INVALID_KERNET_REQUEST_ERR;
+     f82:	82 e0       	ldi	r24, 0x02	; 2
+     f84:	80 93 10 1c 	sts	0x1C10, r24
+     f88:	c0 cc       	rjmp	.-1664   	; 0x90a <OS_Start+0x92>
+		#endif
+		
+		Next_Kernel_Request();
+		/* NEVER RETURNS!!! */
+	}
+}
+     f8a:	26 96       	adiw	r28, 0x06	; 6
+     f8c:	0f b6       	in	r0, 0x3f	; 63
+     f8e:	f8 94       	cli
+     f90:	de bf       	out	0x3e, r29	; 62
+     f92:	0f be       	out	0x3f, r0	; 63
+     f94:	cd bf       	out	0x3d, r28	; 61
+     f96:	df 91       	pop	r29
+     f98:	cf 91       	pop	r28
+     f9a:	1f 91       	pop	r17
+     f9c:	0f 91       	pop	r16
+     f9e:	ff 90       	pop	r15
+     fa0:	ef 90       	pop	r14
+     fa2:	df 90       	pop	r13
+     fa4:	cf 90       	pop	r12
+     fa6:	bf 90       	pop	r11
+     fa8:	af 90       	pop	r10
+     faa:	9f 90       	pop	r9
+     fac:	8f 90       	pop	r8
+     fae:	7f 90       	pop	r7
+     fb0:	6f 90       	pop	r6
+     fb2:	5f 90       	pop	r5
+     fb4:	4f 90       	pop	r4
+     fb6:	3f 90       	pop	r3
+     fb8:	2f 90       	pop	r2
+     fba:	08 95       	ret
+
+00000fbc <Task_Create>:
+	}
+	Disable_Interrupt();
+	
+	Cp->request = UNLOCK_M;
+	Cp->request_arg = m;
+	Enter_Kernel();
+     fbc:	20 91 0c 1c 	lds	r18, 0x1C0C
+     fc0:	30 91 0d 1c 	lds	r19, 0x1C0D
+     fc4:	23 2b       	or	r18, r19
+     fc6:	81 f0       	breq	.+32     	; 0xfe8 <Task_Create+0x2c>
+     fc8:	f8 94       	cli
+     fca:	e0 91 13 1c 	lds	r30, 0x1C13
+     fce:	f0 91 14 1c 	lds	r31, 0x1C14
+     fd2:	62 83       	std	Z+2, r22	; 0x02
+     fd4:	51 87       	std	Z+9, r21	; 0x09
+     fd6:	40 87       	std	Z+8, r20	; 0x08
+     fd8:	21 e0       	ldi	r18, 0x01	; 1
+     fda:	25 83       	std	Z+5, r18	; 0x05
+     fdc:	e4 5f       	subi	r30, 0xF4	; 244
+     fde:	fe 4f       	sbci	r31, 0xFE	; 254
+     fe0:	91 83       	std	Z+1, r25	; 0x01
+     fe2:	80 83       	st	Z, r24
+     fe4:	02 d9       	rcall	.-3580   	; 0x1ea <Enter_Kernel>
+     fe6:	01 c0       	rjmp	.+2      	; 0xfea <Task_Create+0x2e>
+     fe8:	3d db       	rcall	.-2438   	; 0x664 <Kernel_Create_Task>
+     fea:	80 91 10 1c 	lds	r24, 0x1C10
+     fee:	84 30       	cpi	r24, 0x04	; 4
+     ff0:	a1 f0       	breq	.+40     	; 0x101a <Task_Create+0x5e>
+     ff2:	80 91 0a 1c 	lds	r24, 0x1C0A
+     ff6:	90 91 0b 1c 	lds	r25, 0x1C0B
+     ffa:	9f 93       	push	r25
+     ffc:	8f 93       	push	r24
+     ffe:	8f ee       	ldi	r24, 0xEF	; 239
+    1000:	96 e0       	ldi	r25, 0x06	; 6
+    1002:	9f 93       	push	r25
+    1004:	8f 93       	push	r24
+    1006:	f3 d0       	rcall	.+486    	; 0x11ee <printf>
+    1008:	80 91 0a 1c 	lds	r24, 0x1C0A
+    100c:	90 91 0b 1c 	lds	r25, 0x1C0B
+    1010:	0f 90       	pop	r0
+    1012:	0f 90       	pop	r0
+    1014:	0f 90       	pop	r0
+    1016:	0f 90       	pop	r0
+    1018:	08 95       	ret
+    101a:	80 e0       	ldi	r24, 0x00	; 0
+    101c:	90 e0       	ldi	r25, 0x00	; 0
+    101e:	08 95       	ret
+
+00001020 <Task_Terminate>:
+    1020:	80 91 0c 1c 	lds	r24, 0x1C0C
+    1024:	90 91 0d 1c 	lds	r25, 0x1C0D
+    1028:	89 2b       	or	r24, r25
+    102a:	21 f4       	brne	.+8      	; 0x1034 <Task_Terminate+0x14>
+    102c:	83 e0       	ldi	r24, 0x03	; 3
+    102e:	80 93 10 1c 	sts	0x1C10, r24
+    1032:	08 95       	ret
+    1034:	f8 94       	cli
+    1036:	e0 91 13 1c 	lds	r30, 0x1C13
+    103a:	f0 91 14 1c 	lds	r31, 0x1C14
+    103e:	83 e0       	ldi	r24, 0x03	; 3
+    1040:	85 83       	std	Z+5, r24	; 0x05
+    1042:	d3 c8       	rjmp	.-3674   	; 0x1ea <Enter_Kernel>
+    1044:	08 95       	ret
+
+00001046 <Task_Yield>:
+    1046:	80 91 0c 1c 	lds	r24, 0x1C0C
+    104a:	90 91 0d 1c 	lds	r25, 0x1C0D
+    104e:	89 2b       	or	r24, r25
+    1050:	21 f4       	brne	.+8      	; 0x105a <Task_Yield+0x14>
+    1052:	83 e0       	ldi	r24, 0x03	; 3
+    1054:	80 93 10 1c 	sts	0x1C10, r24
+    1058:	08 95       	ret
+    105a:	f8 94       	cli
+    105c:	e0 91 13 1c 	lds	r30, 0x1C13
+    1060:	f0 91 14 1c 	lds	r31, 0x1C14
+    1064:	82 e0       	ldi	r24, 0x02	; 2
+    1066:	85 83       	std	Z+5, r24	; 0x05
+    1068:	c0 c8       	rjmp	.-3712   	; 0x1ea <Enter_Kernel>
+    106a:	08 95       	ret
+
+0000106c <Task_Suspend>:
+    106c:	20 91 0c 1c 	lds	r18, 0x1C0C
+    1070:	30 91 0d 1c 	lds	r19, 0x1C0D
+    1074:	23 2b       	or	r18, r19
+    1076:	21 f4       	brne	.+8      	; 0x1080 <Task_Suspend+0x14>
+    1078:	83 e0       	ldi	r24, 0x03	; 3
+    107a:	80 93 10 1c 	sts	0x1C10, r24
+    107e:	08 95       	ret
+    1080:	f8 94       	cli
+    1082:	e0 91 13 1c 	lds	r30, 0x1C13
+    1086:	f0 91 14 1c 	lds	r31, 0x1C14
+    108a:	24 e0       	ldi	r18, 0x04	; 4
+    108c:	25 83       	std	Z+5, r18	; 0x05
+    108e:	97 83       	std	Z+7, r25	; 0x07
+    1090:	86 83       	std	Z+6, r24	; 0x06
+    1092:	ab c8       	rjmp	.-3754   	; 0x1ea <Enter_Kernel>
+    1094:	08 95       	ret
+
+00001096 <Task_Resume>:
+    1096:	20 91 0c 1c 	lds	r18, 0x1C0C
+    109a:	30 91 0d 1c 	lds	r19, 0x1C0D
+    109e:	23 2b       	or	r18, r19
+    10a0:	21 f4       	brne	.+8      	; 0x10aa <Task_Resume+0x14>
+    10a2:	83 e0       	ldi	r24, 0x03	; 3
+    10a4:	80 93 10 1c 	sts	0x1C10, r24
+    10a8:	08 95       	ret
+    10aa:	f8 94       	cli
+    10ac:	e0 91 13 1c 	lds	r30, 0x1C13
+    10b0:	f0 91 14 1c 	lds	r31, 0x1C14
+    10b4:	25 e0       	ldi	r18, 0x05	; 5
+    10b6:	25 83       	std	Z+5, r18	; 0x05
+    10b8:	97 83       	std	Z+7, r25	; 0x07
+    10ba:	86 83       	std	Z+6, r24	; 0x06
+    10bc:	96 c8       	rjmp	.-3796   	; 0x1ea <Enter_Kernel>
+    10be:	08 95       	ret
+
+000010c0 <Task_Sleep>:
+    10c0:	20 91 0c 1c 	lds	r18, 0x1C0C
+    10c4:	30 91 0d 1c 	lds	r19, 0x1C0D
+    10c8:	23 2b       	or	r18, r19
+    10ca:	21 f4       	brne	.+8      	; 0x10d4 <Task_Sleep+0x14>
+    10cc:	83 e0       	ldi	r24, 0x03	; 3
+    10ce:	80 93 10 1c 	sts	0x1C10, r24
+    10d2:	08 95       	ret
+    10d4:	f8 94       	cli
+    10d6:	e0 91 13 1c 	lds	r30, 0x1C13
+    10da:	f0 91 14 1c 	lds	r31, 0x1C14
+    10de:	26 e0       	ldi	r18, 0x06	; 6
+    10e0:	25 83       	std	Z+5, r18	; 0x05
+    10e2:	97 83       	std	Z+7, r25	; 0x07
+    10e4:	86 83       	std	Z+6, r24	; 0x06
+    10e6:	81 c8       	rjmp	.-3838   	; 0x1ea <Enter_Kernel>
+    10e8:	08 95       	ret
+
+000010ea <main>:
+/*Don't use main function for application code. Any mandatory kernel initialization should be done here*/
+void main() 
+{
+   //Enable STDIN/OUT to UART redirection for debugging
+   #ifdef DEBUG
+	uart_init();
+    10ea:	5d d0       	rcall	.+186    	; 0x11a6 <uart_init>
+	uart_setredir();
+    10ec:	6d d0       	rcall	.+218    	; 0x11c8 <uart_setredir>
+	printf("STDOUT->UART!\n");
+    10ee:	86 e2       	ldi	r24, 0x26	; 38
+    10f0:	97 e0       	ldi	r25, 0x07	; 7
+    10f2:	90 d0       	rcall	.+288    	; 0x1214 <puts>
+   #endif  
+   
+   a_main();
+    10f4:	2a c0       	rjmp	.+84     	; 0x114a <a_main>
+    10f6:	08 95       	ret
+
+000010f8 <Ping>:
+{
+	for(;;)
+	{
+		printf("Hello from 3!\n");
+		Task_Sleep(100);
+	}
+    10f8:	2f 9a       	sbi	0x05, 7	; 5
+    10fa:	84 e3       	ldi	r24, 0x34	; 52
+    10fc:	97 e0       	ldi	r25, 0x07	; 7
+    10fe:	8a d0       	rcall	.+276    	; 0x1214 <puts>
+    1100:	8e e1       	ldi	r24, 0x1E	; 30
+    1102:	90 e0       	ldi	r25, 0x00	; 0
+    1104:	dd df       	rcall	.-70     	; 0x10c0 <Task_Sleep>
+    1106:	9f df       	rcall	.-194    	; 0x1046 <Task_Yield>
+    1108:	f7 cf       	rjmp	.-18     	; 0x10f8 <Ping>
+
+0000110a <Pong>:
+    110a:	2f 98       	cbi	0x05, 7	; 5
+    110c:	85 e4       	ldi	r24, 0x45	; 69
+    110e:	97 e0       	ldi	r25, 0x07	; 7
+    1110:	81 d0       	rcall	.+258    	; 0x1214 <puts>
+    1112:	8e e1       	ldi	r24, 0x1E	; 30
+    1114:	90 e0       	ldi	r25, 0x00	; 0
+    1116:	d4 df       	rcall	.-88     	; 0x10c0 <Task_Sleep>
+    1118:	96 df       	rcall	.-212    	; 0x1046 <Task_Yield>
+    111a:	f7 cf       	rjmp	.-18     	; 0x110a <Pong>
+
+0000111c <suspend_pong>:
+    111c:	84 e6       	ldi	r24, 0x64	; 100
+    111e:	90 e0       	ldi	r25, 0x00	; 0
+    1120:	cf df       	rcall	.-98     	; 0x10c0 <Task_Sleep>
+    1122:	8a e3       	ldi	r24, 0x3A	; 58
+    1124:	97 e0       	ldi	r25, 0x07	; 7
+    1126:	76 d0       	rcall	.+236    	; 0x1214 <puts>
+    1128:	85 e8       	ldi	r24, 0x85	; 133
+    112a:	98 e0       	ldi	r25, 0x08	; 8
+    112c:	ee d9       	rcall	.-3108   	; 0x50a <findPIDByFuncPtr>
+    112e:	9e df       	rcall	.-196    	; 0x106c <Task_Suspend>
+    1130:	8a df       	rcall	.-236    	; 0x1046 <Task_Yield>
+    1132:	84 e6       	ldi	r24, 0x64	; 100
+    1134:	90 e0       	ldi	r25, 0x00	; 0
+    1136:	c4 df       	rcall	.-120    	; 0x10c0 <Task_Sleep>
+    1138:	8b e4       	ldi	r24, 0x4B	; 75
+    113a:	97 e0       	ldi	r25, 0x07	; 7
+    113c:	6b d0       	rcall	.+214    	; 0x1214 <puts>
+    113e:	85 e8       	ldi	r24, 0x85	; 133
+    1140:	98 e0       	ldi	r25, 0x08	; 8
+    1142:	e3 d9       	rcall	.-3130   	; 0x50a <findPIDByFuncPtr>
+    1144:	a8 df       	rcall	.-176    	; 0x1096 <Task_Resume>
+    1146:	7f df       	rcall	.-258    	; 0x1046 <Task_Yield>
+    1148:	e9 cf       	rjmp	.-46     	; 0x111c <suspend_pong>
+
+0000114a <a_main>:
+/*Entry point for application*/
+void a_main()
+{
+	int test_set = 0;				//Which set of tests to run?
+
+	OS_Init();
+    114a:	43 db       	rcall	.-2426   	; 0x7d2 <OS_Init>
+	
+	/*These tasks tests ctxswitching, suspension, resume, and sleep*/
+	if(test_set == 0)
+	{
+		DDRB = LED_PIN_MASK;			//Set pin 13 as output
+    114c:	80 e8       	ldi	r24, 0x80	; 128
+    114e:	84 b9       	out	0x04, r24	; 4
+		Task_Create(Ping, 6, 210);
+    1150:	42 ed       	ldi	r20, 0xD2	; 210
+    1152:	50 e0       	ldi	r21, 0x00	; 0
+    1154:	66 e0       	ldi	r22, 0x06	; 6
+    1156:	8c e7       	ldi	r24, 0x7C	; 124
+    1158:	98 e0       	ldi	r25, 0x08	; 8
+    115a:	30 df       	rcall	.-416    	; 0xfbc <Task_Create>
+		Task_Create(Pong, 6, 205);
+    115c:	4d ec       	ldi	r20, 0xCD	; 205
+    115e:	50 e0       	ldi	r21, 0x00	; 0
+    1160:	66 e0       	ldi	r22, 0x06	; 6
+    1162:	85 e8       	ldi	r24, 0x85	; 133
+    1164:	98 e0       	ldi	r25, 0x08	; 8
+    1166:	2a df       	rcall	.-428    	; 0xfbc <Task_Create>
+		Task_Create(suspend_pong, 4, 0);
+    1168:	40 e0       	ldi	r20, 0x00	; 0
+    116a:	50 e0       	ldi	r21, 0x00	; 0
+    116c:	64 e0       	ldi	r22, 0x04	; 4
+    116e:	8e e8       	ldi	r24, 0x8E	; 142
+    1170:	98 e0       	ldi	r25, 0x08	; 8
+    1172:	24 df       	rcall	.-440    	; 0xfbc <Task_Create>
+		Task_Create(priority2, 2, 0);
+		Task_Create(priority3, 3, 0);
+	}
+	
+	
+	OS_Start();
+    1174:	81 cb       	rjmp	.-2302   	; 0x878 <OS_Start>
+    1176:	08 95       	ret
+
+00001178 <uart_putchar>:
+
+	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); /* 8-bit data */
+	UCSR0B = _BV(RXEN0) | _BV(TXEN0);   /* Enable RX and TX */
+}
+
+void uart_putchar(char c, FILE *stream) {
+    1178:	cf 93       	push	r28
+    117a:	c8 2f       	mov	r28, r24
+	if (c == '\n') {
+    117c:	8a 30       	cpi	r24, 0x0A	; 10
+    117e:	11 f4       	brne	.+4      	; 0x1184 <uart_putchar+0xc>
+		uart_putchar('\r', stream);
+    1180:	8d e0       	ldi	r24, 0x0D	; 13
+    1182:	fa df       	rcall	.-12     	; 0x1178 <uart_putchar>
+	}
+	loop_until_bit_is_set(UCSR0A, UDRE0);
+    1184:	e0 ec       	ldi	r30, 0xC0	; 192
+    1186:	f0 e0       	ldi	r31, 0x00	; 0
+    1188:	90 81       	ld	r25, Z
+    118a:	95 ff       	sbrs	r25, 5
+    118c:	fd cf       	rjmp	.-6      	; 0x1188 <uart_putchar+0x10>
+	UDR0 = c;
+    118e:	c0 93 c6 00 	sts	0x00C6, r28
+}
+    1192:	cf 91       	pop	r28
+    1194:	08 95       	ret
+
+00001196 <uart_getchar>:
+
+char uart_getchar(FILE *stream) {
+	loop_until_bit_is_set(UCSR0A, RXC0);
+    1196:	e0 ec       	ldi	r30, 0xC0	; 192
+    1198:	f0 e0       	ldi	r31, 0x00	; 0
+    119a:	80 81       	ld	r24, Z
+    119c:	88 23       	and	r24, r24
+    119e:	ec f7       	brge	.-6      	; 0x119a <uart_getchar+0x4>
+	return UDR0;
+    11a0:	80 91 c6 00 	lds	r24, 0x00C6
+}
+    11a4:	08 95       	ret
+
+000011a6 <uart_init>:
+
+FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
+FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
+
+void uart_init(void) {
+	UBRR0H = UBRRH_VALUE;
+    11a6:	10 92 c5 00 	sts	0x00C5, r1
+	UBRR0L = UBRRL_VALUE;
+    11aa:	87 e6       	ldi	r24, 0x67	; 103
+    11ac:	80 93 c4 00 	sts	0x00C4, r24
+	
+	#if USE_2X
+	UCSR0A |= _BV(U2X0);
+	#else
+	UCSR0A &= ~(_BV(U2X0));
+    11b0:	e0 ec       	ldi	r30, 0xC0	; 192
+    11b2:	f0 e0       	ldi	r31, 0x00	; 0
+    11b4:	80 81       	ld	r24, Z
+    11b6:	8d 7f       	andi	r24, 0xFD	; 253
+    11b8:	80 83       	st	Z, r24
+	#endif
+
+	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); /* 8-bit data */
+    11ba:	86 e0       	ldi	r24, 0x06	; 6
+    11bc:	80 93 c2 00 	sts	0x00C2, r24
+	UCSR0B = _BV(RXEN0) | _BV(TXEN0);   /* Enable RX and TX */
+    11c0:	88 e1       	ldi	r24, 0x18	; 24
+    11c2:	80 93 c1 00 	sts	0x00C1, r24
+    11c6:	08 95       	ret
+
+000011c8 <uart_setredir>:
+	return UDR0;
+}
+
+void uart_setredir(void)
+{
+	stdout = &uart_output;
+    11c8:	e9 e1       	ldi	r30, 0x19	; 25
+    11ca:	fc e1       	ldi	r31, 0x1C	; 28
+    11cc:	8e e0       	ldi	r24, 0x0E	; 14
+    11ce:	92 e0       	ldi	r25, 0x02	; 2
+    11d0:	93 83       	std	Z+3, r25	; 0x03
+    11d2:	82 83       	std	Z+2, r24	; 0x02
+	stdin  = &uart_input;
+    11d4:	80 e0       	ldi	r24, 0x00	; 0
+    11d6:	92 e0       	ldi	r25, 0x02	; 2
+    11d8:	91 83       	std	Z+1, r25	; 0x01
+    11da:	80 83       	st	Z, r24
+    11dc:	08 95       	ret
+
+000011de <__tablejump2__>:
+    11de:	ee 0f       	add	r30, r30
+    11e0:	ff 1f       	adc	r31, r31
+    11e2:	88 1f       	adc	r24, r24
+    11e4:	8b bf       	out	0x3b, r24	; 59
+    11e6:	07 90       	elpm	r0, Z+
+    11e8:	f6 91       	elpm	r31, Z
+    11ea:	e0 2d       	mov	r30, r0
+    11ec:	19 94       	eijmp
+
+000011ee <printf>:
+    11ee:	cf 93       	push	r28
+    11f0:	df 93       	push	r29
+    11f2:	cd b7       	in	r28, 0x3d	; 61
+    11f4:	de b7       	in	r29, 0x3e	; 62
+    11f6:	ae 01       	movw	r20, r28
+    11f8:	4a 5f       	subi	r20, 0xFA	; 250
+    11fa:	5f 4f       	sbci	r21, 0xFF	; 255
+    11fc:	fa 01       	movw	r30, r20
+    11fe:	61 91       	ld	r22, Z+
+    1200:	71 91       	ld	r23, Z+
+    1202:	af 01       	movw	r20, r30
+    1204:	80 91 1b 1c 	lds	r24, 0x1C1B
+    1208:	90 91 1c 1c 	lds	r25, 0x1C1C
+    120c:	33 d0       	rcall	.+102    	; 0x1274 <vfprintf>
+    120e:	df 91       	pop	r29
+    1210:	cf 91       	pop	r28
+    1212:	08 95       	ret
+
+00001214 <puts>:
+    1214:	0f 93       	push	r16
+    1216:	1f 93       	push	r17
+    1218:	cf 93       	push	r28
+    121a:	df 93       	push	r29
+    121c:	e0 91 1b 1c 	lds	r30, 0x1C1B
+    1220:	f0 91 1c 1c 	lds	r31, 0x1C1C
+    1224:	23 81       	ldd	r18, Z+3	; 0x03
+    1226:	21 ff       	sbrs	r18, 1
+    1228:	1b c0       	rjmp	.+54     	; 0x1260 <puts+0x4c>
+    122a:	8c 01       	movw	r16, r24
+    122c:	d0 e0       	ldi	r29, 0x00	; 0
+    122e:	c0 e0       	ldi	r28, 0x00	; 0
+    1230:	f8 01       	movw	r30, r16
+    1232:	81 91       	ld	r24, Z+
+    1234:	8f 01       	movw	r16, r30
+    1236:	60 91 1b 1c 	lds	r22, 0x1C1B
+    123a:	70 91 1c 1c 	lds	r23, 0x1C1C
+    123e:	db 01       	movw	r26, r22
+    1240:	18 96       	adiw	r26, 0x08	; 8
+    1242:	ed 91       	ld	r30, X+
+    1244:	fc 91       	ld	r31, X
+    1246:	19 97       	sbiw	r26, 0x09	; 9
+    1248:	88 23       	and	r24, r24
+    124a:	31 f0       	breq	.+12     	; 0x1258 <puts+0x44>
+    124c:	19 95       	eicall
+    124e:	89 2b       	or	r24, r25
+    1250:	79 f3       	breq	.-34     	; 0x1230 <puts+0x1c>
+    1252:	df ef       	ldi	r29, 0xFF	; 255
+    1254:	cf ef       	ldi	r28, 0xFF	; 255
+    1256:	ec cf       	rjmp	.-40     	; 0x1230 <puts+0x1c>
+    1258:	8a e0       	ldi	r24, 0x0A	; 10
+    125a:	19 95       	eicall
+    125c:	89 2b       	or	r24, r25
+    125e:	19 f0       	breq	.+6      	; 0x1266 <puts+0x52>
+    1260:	8f ef       	ldi	r24, 0xFF	; 255
+    1262:	9f ef       	ldi	r25, 0xFF	; 255
+    1264:	02 c0       	rjmp	.+4      	; 0x126a <puts+0x56>
+    1266:	8d 2f       	mov	r24, r29
+    1268:	9c 2f       	mov	r25, r28
+    126a:	df 91       	pop	r29
+    126c:	cf 91       	pop	r28
+    126e:	1f 91       	pop	r17
+    1270:	0f 91       	pop	r16
+    1272:	08 95       	ret
+
+00001274 <vfprintf>:
+    1274:	2f 92       	push	r2
+    1276:	3f 92       	push	r3
+    1278:	4f 92       	push	r4
+    127a:	5f 92       	push	r5
+    127c:	6f 92       	push	r6
+    127e:	7f 92       	push	r7
+    1280:	8f 92       	push	r8
+    1282:	9f 92       	push	r9
+    1284:	af 92       	push	r10
+    1286:	bf 92       	push	r11
+    1288:	cf 92       	push	r12
+    128a:	df 92       	push	r13
+    128c:	ef 92       	push	r14
+    128e:	ff 92       	push	r15
+    1290:	0f 93       	push	r16
+    1292:	1f 93       	push	r17
+    1294:	cf 93       	push	r28
+    1296:	df 93       	push	r29
+    1298:	cd b7       	in	r28, 0x3d	; 61
+    129a:	de b7       	in	r29, 0x3e	; 62
+    129c:	2c 97       	sbiw	r28, 0x0c	; 12
+    129e:	0f b6       	in	r0, 0x3f	; 63
+    12a0:	f8 94       	cli
+    12a2:	de bf       	out	0x3e, r29	; 62
+    12a4:	0f be       	out	0x3f, r0	; 63
+    12a6:	cd bf       	out	0x3d, r28	; 61
+    12a8:	7c 01       	movw	r14, r24
+    12aa:	6b 01       	movw	r12, r22
+    12ac:	8a 01       	movw	r16, r20
+    12ae:	fc 01       	movw	r30, r24
+    12b0:	17 82       	std	Z+7, r1	; 0x07
+    12b2:	16 82       	std	Z+6, r1	; 0x06
+    12b4:	83 81       	ldd	r24, Z+3	; 0x03
+    12b6:	81 ff       	sbrs	r24, 1
+    12b8:	b0 c1       	rjmp	.+864    	; 0x161a <vfprintf+0x3a6>
+    12ba:	ce 01       	movw	r24, r28
+    12bc:	01 96       	adiw	r24, 0x01	; 1
+    12be:	4c 01       	movw	r8, r24
+    12c0:	f7 01       	movw	r30, r14
+    12c2:	93 81       	ldd	r25, Z+3	; 0x03
+    12c4:	f6 01       	movw	r30, r12
+    12c6:	93 fd       	sbrc	r25, 3
+    12c8:	85 91       	lpm	r24, Z+
+    12ca:	93 ff       	sbrs	r25, 3
+    12cc:	81 91       	ld	r24, Z+
+    12ce:	6f 01       	movw	r12, r30
+    12d0:	88 23       	and	r24, r24
+    12d2:	09 f4       	brne	.+2      	; 0x12d6 <vfprintf+0x62>
+    12d4:	9e c1       	rjmp	.+828    	; 0x1612 <vfprintf+0x39e>
+    12d6:	85 32       	cpi	r24, 0x25	; 37
+    12d8:	39 f4       	brne	.+14     	; 0x12e8 <vfprintf+0x74>
+    12da:	93 fd       	sbrc	r25, 3
+    12dc:	85 91       	lpm	r24, Z+
+    12de:	93 ff       	sbrs	r25, 3
+    12e0:	81 91       	ld	r24, Z+
+    12e2:	6f 01       	movw	r12, r30
+    12e4:	85 32       	cpi	r24, 0x25	; 37
+    12e6:	21 f4       	brne	.+8      	; 0x12f0 <vfprintf+0x7c>
+    12e8:	b7 01       	movw	r22, r14
+    12ea:	90 e0       	ldi	r25, 0x00	; 0
+    12ec:	c7 d1       	rcall	.+910    	; 0x167c <fputc>
+    12ee:	e8 cf       	rjmp	.-48     	; 0x12c0 <vfprintf+0x4c>
+    12f0:	51 2c       	mov	r5, r1
+    12f2:	31 2c       	mov	r3, r1
+    12f4:	20 e0       	ldi	r18, 0x00	; 0
+    12f6:	20 32       	cpi	r18, 0x20	; 32
+    12f8:	a0 f4       	brcc	.+40     	; 0x1322 <vfprintf+0xae>
+    12fa:	8b 32       	cpi	r24, 0x2B	; 43
+    12fc:	69 f0       	breq	.+26     	; 0x1318 <vfprintf+0xa4>
+    12fe:	30 f4       	brcc	.+12     	; 0x130c <vfprintf+0x98>
+    1300:	80 32       	cpi	r24, 0x20	; 32
+    1302:	59 f0       	breq	.+22     	; 0x131a <vfprintf+0xa6>
+    1304:	83 32       	cpi	r24, 0x23	; 35
+    1306:	69 f4       	brne	.+26     	; 0x1322 <vfprintf+0xae>
+    1308:	20 61       	ori	r18, 0x10	; 16
+    130a:	2c c0       	rjmp	.+88     	; 0x1364 <vfprintf+0xf0>
+    130c:	8d 32       	cpi	r24, 0x2D	; 45
+    130e:	39 f0       	breq	.+14     	; 0x131e <vfprintf+0xaa>
+    1310:	80 33       	cpi	r24, 0x30	; 48
+    1312:	39 f4       	brne	.+14     	; 0x1322 <vfprintf+0xae>
+    1314:	21 60       	ori	r18, 0x01	; 1
+    1316:	26 c0       	rjmp	.+76     	; 0x1364 <vfprintf+0xf0>
+    1318:	22 60       	ori	r18, 0x02	; 2
+    131a:	24 60       	ori	r18, 0x04	; 4
+    131c:	23 c0       	rjmp	.+70     	; 0x1364 <vfprintf+0xf0>
+    131e:	28 60       	ori	r18, 0x08	; 8
+    1320:	21 c0       	rjmp	.+66     	; 0x1364 <vfprintf+0xf0>
+    1322:	27 fd       	sbrc	r18, 7
+    1324:	27 c0       	rjmp	.+78     	; 0x1374 <vfprintf+0x100>
+    1326:	30 ed       	ldi	r19, 0xD0	; 208
+    1328:	38 0f       	add	r19, r24
+    132a:	3a 30       	cpi	r19, 0x0A	; 10
+    132c:	78 f4       	brcc	.+30     	; 0x134c <vfprintf+0xd8>
+    132e:	26 ff       	sbrs	r18, 6
+    1330:	06 c0       	rjmp	.+12     	; 0x133e <vfprintf+0xca>
+    1332:	fa e0       	ldi	r31, 0x0A	; 10
+    1334:	5f 9e       	mul	r5, r31
+    1336:	30 0d       	add	r19, r0
+    1338:	11 24       	eor	r1, r1
+    133a:	53 2e       	mov	r5, r19
+    133c:	13 c0       	rjmp	.+38     	; 0x1364 <vfprintf+0xf0>
+    133e:	8a e0       	ldi	r24, 0x0A	; 10
+    1340:	38 9e       	mul	r3, r24
+    1342:	30 0d       	add	r19, r0
+    1344:	11 24       	eor	r1, r1
+    1346:	33 2e       	mov	r3, r19
+    1348:	20 62       	ori	r18, 0x20	; 32
+    134a:	0c c0       	rjmp	.+24     	; 0x1364 <vfprintf+0xf0>
+    134c:	8e 32       	cpi	r24, 0x2E	; 46
+    134e:	21 f4       	brne	.+8      	; 0x1358 <vfprintf+0xe4>
+    1350:	26 fd       	sbrc	r18, 6
+    1352:	5f c1       	rjmp	.+702    	; 0x1612 <vfprintf+0x39e>
+    1354:	20 64       	ori	r18, 0x40	; 64
+    1356:	06 c0       	rjmp	.+12     	; 0x1364 <vfprintf+0xf0>
+    1358:	8c 36       	cpi	r24, 0x6C	; 108
+    135a:	11 f4       	brne	.+4      	; 0x1360 <vfprintf+0xec>
+    135c:	20 68       	ori	r18, 0x80	; 128
+    135e:	02 c0       	rjmp	.+4      	; 0x1364 <vfprintf+0xf0>
+    1360:	88 36       	cpi	r24, 0x68	; 104
+    1362:	41 f4       	brne	.+16     	; 0x1374 <vfprintf+0x100>
+    1364:	f6 01       	movw	r30, r12
+    1366:	93 fd       	sbrc	r25, 3
+    1368:	85 91       	lpm	r24, Z+
+    136a:	93 ff       	sbrs	r25, 3
+    136c:	81 91       	ld	r24, Z+
+    136e:	6f 01       	movw	r12, r30
+    1370:	81 11       	cpse	r24, r1
+    1372:	c1 cf       	rjmp	.-126    	; 0x12f6 <vfprintf+0x82>
+    1374:	98 2f       	mov	r25, r24
+    1376:	9f 7d       	andi	r25, 0xDF	; 223
+    1378:	95 54       	subi	r25, 0x45	; 69
+    137a:	93 30       	cpi	r25, 0x03	; 3
+    137c:	28 f4       	brcc	.+10     	; 0x1388 <vfprintf+0x114>
+    137e:	0c 5f       	subi	r16, 0xFC	; 252
+    1380:	1f 4f       	sbci	r17, 0xFF	; 255
+    1382:	ff e3       	ldi	r31, 0x3F	; 63
+    1384:	f9 83       	std	Y+1, r31	; 0x01
+    1386:	0d c0       	rjmp	.+26     	; 0x13a2 <vfprintf+0x12e>
+    1388:	83 36       	cpi	r24, 0x63	; 99
+    138a:	31 f0       	breq	.+12     	; 0x1398 <vfprintf+0x124>
+    138c:	83 37       	cpi	r24, 0x73	; 115
+    138e:	71 f0       	breq	.+28     	; 0x13ac <vfprintf+0x138>
+    1390:	83 35       	cpi	r24, 0x53	; 83
+    1392:	09 f0       	breq	.+2      	; 0x1396 <vfprintf+0x122>
+    1394:	57 c0       	rjmp	.+174    	; 0x1444 <vfprintf+0x1d0>
+    1396:	21 c0       	rjmp	.+66     	; 0x13da <vfprintf+0x166>
+    1398:	f8 01       	movw	r30, r16
+    139a:	80 81       	ld	r24, Z
+    139c:	89 83       	std	Y+1, r24	; 0x01
+    139e:	0e 5f       	subi	r16, 0xFE	; 254
+    13a0:	1f 4f       	sbci	r17, 0xFF	; 255
+    13a2:	44 24       	eor	r4, r4
+    13a4:	43 94       	inc	r4
+    13a6:	51 2c       	mov	r5, r1
+    13a8:	54 01       	movw	r10, r8
+    13aa:	14 c0       	rjmp	.+40     	; 0x13d4 <vfprintf+0x160>
+    13ac:	38 01       	movw	r6, r16
+    13ae:	f2 e0       	ldi	r31, 0x02	; 2
+    13b0:	6f 0e       	add	r6, r31
+    13b2:	71 1c       	adc	r7, r1
+    13b4:	f8 01       	movw	r30, r16
+    13b6:	a0 80       	ld	r10, Z
+    13b8:	b1 80       	ldd	r11, Z+1	; 0x01
+    13ba:	26 ff       	sbrs	r18, 6
+    13bc:	03 c0       	rjmp	.+6      	; 0x13c4 <vfprintf+0x150>
+    13be:	65 2d       	mov	r22, r5
+    13c0:	70 e0       	ldi	r23, 0x00	; 0
+    13c2:	02 c0       	rjmp	.+4      	; 0x13c8 <vfprintf+0x154>
+    13c4:	6f ef       	ldi	r22, 0xFF	; 255
+    13c6:	7f ef       	ldi	r23, 0xFF	; 255
+    13c8:	c5 01       	movw	r24, r10
+    13ca:	2c 87       	std	Y+12, r18	; 0x0c
+    13cc:	4c d1       	rcall	.+664    	; 0x1666 <strnlen>
+    13ce:	2c 01       	movw	r4, r24
+    13d0:	83 01       	movw	r16, r6
+    13d2:	2c 85       	ldd	r18, Y+12	; 0x0c
+    13d4:	2f 77       	andi	r18, 0x7F	; 127
+    13d6:	22 2e       	mov	r2, r18
+    13d8:	16 c0       	rjmp	.+44     	; 0x1406 <vfprintf+0x192>
+    13da:	38 01       	movw	r6, r16
+    13dc:	f2 e0       	ldi	r31, 0x02	; 2
+    13de:	6f 0e       	add	r6, r31
+    13e0:	71 1c       	adc	r7, r1
+    13e2:	f8 01       	movw	r30, r16
+    13e4:	a0 80       	ld	r10, Z
+    13e6:	b1 80       	ldd	r11, Z+1	; 0x01
+    13e8:	26 ff       	sbrs	r18, 6
+    13ea:	03 c0       	rjmp	.+6      	; 0x13f2 <vfprintf+0x17e>
+    13ec:	65 2d       	mov	r22, r5
+    13ee:	70 e0       	ldi	r23, 0x00	; 0
+    13f0:	02 c0       	rjmp	.+4      	; 0x13f6 <vfprintf+0x182>
+    13f2:	6f ef       	ldi	r22, 0xFF	; 255
+    13f4:	7f ef       	ldi	r23, 0xFF	; 255
+    13f6:	c5 01       	movw	r24, r10
+    13f8:	2c 87       	std	Y+12, r18	; 0x0c
+    13fa:	2a d1       	rcall	.+596    	; 0x1650 <strnlen_P>
+    13fc:	2c 01       	movw	r4, r24
+    13fe:	2c 85       	ldd	r18, Y+12	; 0x0c
+    1400:	20 68       	ori	r18, 0x80	; 128
+    1402:	22 2e       	mov	r2, r18
+    1404:	83 01       	movw	r16, r6
+    1406:	23 fc       	sbrc	r2, 3
+    1408:	19 c0       	rjmp	.+50     	; 0x143c <vfprintf+0x1c8>
+    140a:	83 2d       	mov	r24, r3
+    140c:	90 e0       	ldi	r25, 0x00	; 0
+    140e:	48 16       	cp	r4, r24
+    1410:	59 06       	cpc	r5, r25
+    1412:	a0 f4       	brcc	.+40     	; 0x143c <vfprintf+0x1c8>
+    1414:	b7 01       	movw	r22, r14
+    1416:	80 e2       	ldi	r24, 0x20	; 32
+    1418:	90 e0       	ldi	r25, 0x00	; 0
+    141a:	30 d1       	rcall	.+608    	; 0x167c <fputc>
+    141c:	3a 94       	dec	r3
+    141e:	f5 cf       	rjmp	.-22     	; 0x140a <vfprintf+0x196>
+    1420:	f5 01       	movw	r30, r10
+    1422:	27 fc       	sbrc	r2, 7
+    1424:	85 91       	lpm	r24, Z+
+    1426:	27 fe       	sbrs	r2, 7
+    1428:	81 91       	ld	r24, Z+
+    142a:	5f 01       	movw	r10, r30
+    142c:	b7 01       	movw	r22, r14
+    142e:	90 e0       	ldi	r25, 0x00	; 0
+    1430:	25 d1       	rcall	.+586    	; 0x167c <fputc>
+    1432:	31 10       	cpse	r3, r1
+    1434:	3a 94       	dec	r3
+    1436:	f1 e0       	ldi	r31, 0x01	; 1
+    1438:	4f 1a       	sub	r4, r31
+    143a:	51 08       	sbc	r5, r1
+    143c:	41 14       	cp	r4, r1
+    143e:	51 04       	cpc	r5, r1
+    1440:	79 f7       	brne	.-34     	; 0x1420 <vfprintf+0x1ac>
+    1442:	de c0       	rjmp	.+444    	; 0x1600 <vfprintf+0x38c>
+    1444:	84 36       	cpi	r24, 0x64	; 100
+    1446:	11 f0       	breq	.+4      	; 0x144c <vfprintf+0x1d8>
+    1448:	89 36       	cpi	r24, 0x69	; 105
+    144a:	31 f5       	brne	.+76     	; 0x1498 <vfprintf+0x224>
+    144c:	f8 01       	movw	r30, r16
+    144e:	27 ff       	sbrs	r18, 7
+    1450:	07 c0       	rjmp	.+14     	; 0x1460 <vfprintf+0x1ec>
+    1452:	60 81       	ld	r22, Z
+    1454:	71 81       	ldd	r23, Z+1	; 0x01
+    1456:	82 81       	ldd	r24, Z+2	; 0x02
+    1458:	93 81       	ldd	r25, Z+3	; 0x03
+    145a:	0c 5f       	subi	r16, 0xFC	; 252
+    145c:	1f 4f       	sbci	r17, 0xFF	; 255
+    145e:	08 c0       	rjmp	.+16     	; 0x1470 <vfprintf+0x1fc>
+    1460:	60 81       	ld	r22, Z
+    1462:	71 81       	ldd	r23, Z+1	; 0x01
+    1464:	07 2e       	mov	r0, r23
+    1466:	00 0c       	add	r0, r0
+    1468:	88 0b       	sbc	r24, r24
+    146a:	99 0b       	sbc	r25, r25
+    146c:	0e 5f       	subi	r16, 0xFE	; 254
+    146e:	1f 4f       	sbci	r17, 0xFF	; 255
+    1470:	2f 76       	andi	r18, 0x6F	; 111
+    1472:	72 2e       	mov	r7, r18
+    1474:	97 ff       	sbrs	r25, 7
+    1476:	09 c0       	rjmp	.+18     	; 0x148a <vfprintf+0x216>
+    1478:	90 95       	com	r25
+    147a:	80 95       	com	r24
+    147c:	70 95       	com	r23
+    147e:	61 95       	neg	r22
+    1480:	7f 4f       	sbci	r23, 0xFF	; 255
+    1482:	8f 4f       	sbci	r24, 0xFF	; 255
+    1484:	9f 4f       	sbci	r25, 0xFF	; 255
+    1486:	20 68       	ori	r18, 0x80	; 128
+    1488:	72 2e       	mov	r7, r18
+    148a:	2a e0       	ldi	r18, 0x0A	; 10
+    148c:	30 e0       	ldi	r19, 0x00	; 0
+    148e:	a4 01       	movw	r20, r8
+    1490:	2d d1       	rcall	.+602    	; 0x16ec <__ultoa_invert>
+    1492:	a8 2e       	mov	r10, r24
+    1494:	a8 18       	sub	r10, r8
+    1496:	43 c0       	rjmp	.+134    	; 0x151e <vfprintf+0x2aa>
+    1498:	85 37       	cpi	r24, 0x75	; 117
+    149a:	29 f4       	brne	.+10     	; 0x14a6 <vfprintf+0x232>
+    149c:	2f 7e       	andi	r18, 0xEF	; 239
+    149e:	b2 2e       	mov	r11, r18
+    14a0:	2a e0       	ldi	r18, 0x0A	; 10
+    14a2:	30 e0       	ldi	r19, 0x00	; 0
+    14a4:	25 c0       	rjmp	.+74     	; 0x14f0 <vfprintf+0x27c>
+    14a6:	f2 2f       	mov	r31, r18
+    14a8:	f9 7f       	andi	r31, 0xF9	; 249
+    14aa:	bf 2e       	mov	r11, r31
+    14ac:	8f 36       	cpi	r24, 0x6F	; 111
+    14ae:	c1 f0       	breq	.+48     	; 0x14e0 <vfprintf+0x26c>
+    14b0:	18 f4       	brcc	.+6      	; 0x14b8 <vfprintf+0x244>
+    14b2:	88 35       	cpi	r24, 0x58	; 88
+    14b4:	79 f0       	breq	.+30     	; 0x14d4 <vfprintf+0x260>
+    14b6:	ad c0       	rjmp	.+346    	; 0x1612 <vfprintf+0x39e>
+    14b8:	80 37       	cpi	r24, 0x70	; 112
+    14ba:	19 f0       	breq	.+6      	; 0x14c2 <vfprintf+0x24e>
+    14bc:	88 37       	cpi	r24, 0x78	; 120
+    14be:	21 f0       	breq	.+8      	; 0x14c8 <vfprintf+0x254>
+    14c0:	a8 c0       	rjmp	.+336    	; 0x1612 <vfprintf+0x39e>
+    14c2:	2f 2f       	mov	r18, r31
+    14c4:	20 61       	ori	r18, 0x10	; 16
+    14c6:	b2 2e       	mov	r11, r18
+    14c8:	b4 fe       	sbrs	r11, 4
+    14ca:	0d c0       	rjmp	.+26     	; 0x14e6 <vfprintf+0x272>
+    14cc:	8b 2d       	mov	r24, r11
+    14ce:	84 60       	ori	r24, 0x04	; 4
+    14d0:	b8 2e       	mov	r11, r24
+    14d2:	09 c0       	rjmp	.+18     	; 0x14e6 <vfprintf+0x272>
+    14d4:	24 ff       	sbrs	r18, 4
+    14d6:	0a c0       	rjmp	.+20     	; 0x14ec <vfprintf+0x278>
+    14d8:	9f 2f       	mov	r25, r31
+    14da:	96 60       	ori	r25, 0x06	; 6
+    14dc:	b9 2e       	mov	r11, r25
+    14de:	06 c0       	rjmp	.+12     	; 0x14ec <vfprintf+0x278>
+    14e0:	28 e0       	ldi	r18, 0x08	; 8
+    14e2:	30 e0       	ldi	r19, 0x00	; 0
+    14e4:	05 c0       	rjmp	.+10     	; 0x14f0 <vfprintf+0x27c>
+    14e6:	20 e1       	ldi	r18, 0x10	; 16
+    14e8:	30 e0       	ldi	r19, 0x00	; 0
+    14ea:	02 c0       	rjmp	.+4      	; 0x14f0 <vfprintf+0x27c>
+    14ec:	20 e1       	ldi	r18, 0x10	; 16
+    14ee:	32 e0       	ldi	r19, 0x02	; 2
+    14f0:	f8 01       	movw	r30, r16
+    14f2:	b7 fe       	sbrs	r11, 7
+    14f4:	07 c0       	rjmp	.+14     	; 0x1504 <vfprintf+0x290>
+    14f6:	60 81       	ld	r22, Z
+    14f8:	71 81       	ldd	r23, Z+1	; 0x01
+    14fa:	82 81       	ldd	r24, Z+2	; 0x02
+    14fc:	93 81       	ldd	r25, Z+3	; 0x03
+    14fe:	0c 5f       	subi	r16, 0xFC	; 252
+    1500:	1f 4f       	sbci	r17, 0xFF	; 255
+    1502:	06 c0       	rjmp	.+12     	; 0x1510 <vfprintf+0x29c>
+    1504:	60 81       	ld	r22, Z
+    1506:	71 81       	ldd	r23, Z+1	; 0x01
+    1508:	80 e0       	ldi	r24, 0x00	; 0
+    150a:	90 e0       	ldi	r25, 0x00	; 0
+    150c:	0e 5f       	subi	r16, 0xFE	; 254
+    150e:	1f 4f       	sbci	r17, 0xFF	; 255
+    1510:	a4 01       	movw	r20, r8
+    1512:	ec d0       	rcall	.+472    	; 0x16ec <__ultoa_invert>
+    1514:	a8 2e       	mov	r10, r24
+    1516:	a8 18       	sub	r10, r8
+    1518:	fb 2d       	mov	r31, r11
+    151a:	ff 77       	andi	r31, 0x7F	; 127
+    151c:	7f 2e       	mov	r7, r31
+    151e:	76 fe       	sbrs	r7, 6
+    1520:	0b c0       	rjmp	.+22     	; 0x1538 <vfprintf+0x2c4>
+    1522:	37 2d       	mov	r19, r7
+    1524:	3e 7f       	andi	r19, 0xFE	; 254
+    1526:	a5 14       	cp	r10, r5
+    1528:	50 f4       	brcc	.+20     	; 0x153e <vfprintf+0x2ca>
+    152a:	74 fe       	sbrs	r7, 4
+    152c:	0a c0       	rjmp	.+20     	; 0x1542 <vfprintf+0x2ce>
+    152e:	72 fc       	sbrc	r7, 2
+    1530:	08 c0       	rjmp	.+16     	; 0x1542 <vfprintf+0x2ce>
+    1532:	37 2d       	mov	r19, r7
+    1534:	3e 7e       	andi	r19, 0xEE	; 238
+    1536:	05 c0       	rjmp	.+10     	; 0x1542 <vfprintf+0x2ce>
+    1538:	ba 2c       	mov	r11, r10
+    153a:	37 2d       	mov	r19, r7
+    153c:	03 c0       	rjmp	.+6      	; 0x1544 <vfprintf+0x2d0>
+    153e:	ba 2c       	mov	r11, r10
+    1540:	01 c0       	rjmp	.+2      	; 0x1544 <vfprintf+0x2d0>
+    1542:	b5 2c       	mov	r11, r5
+    1544:	34 ff       	sbrs	r19, 4
+    1546:	0d c0       	rjmp	.+26     	; 0x1562 <vfprintf+0x2ee>
+    1548:	fe 01       	movw	r30, r28
+    154a:	ea 0d       	add	r30, r10
+    154c:	f1 1d       	adc	r31, r1
+    154e:	80 81       	ld	r24, Z
+    1550:	80 33       	cpi	r24, 0x30	; 48
+    1552:	11 f4       	brne	.+4      	; 0x1558 <vfprintf+0x2e4>
+    1554:	39 7e       	andi	r19, 0xE9	; 233
+    1556:	09 c0       	rjmp	.+18     	; 0x156a <vfprintf+0x2f6>
+    1558:	32 ff       	sbrs	r19, 2
+    155a:	06 c0       	rjmp	.+12     	; 0x1568 <vfprintf+0x2f4>
+    155c:	b3 94       	inc	r11
+    155e:	b3 94       	inc	r11
+    1560:	04 c0       	rjmp	.+8      	; 0x156a <vfprintf+0x2f6>
+    1562:	83 2f       	mov	r24, r19
+    1564:	86 78       	andi	r24, 0x86	; 134
+    1566:	09 f0       	breq	.+2      	; 0x156a <vfprintf+0x2f6>
+    1568:	b3 94       	inc	r11
+    156a:	33 fd       	sbrc	r19, 3
+    156c:	12 c0       	rjmp	.+36     	; 0x1592 <vfprintf+0x31e>
+    156e:	30 ff       	sbrs	r19, 0
+    1570:	06 c0       	rjmp	.+12     	; 0x157e <vfprintf+0x30a>
+    1572:	5a 2c       	mov	r5, r10
+    1574:	b3 14       	cp	r11, r3
+    1576:	18 f4       	brcc	.+6      	; 0x157e <vfprintf+0x30a>
+    1578:	53 0c       	add	r5, r3
+    157a:	5b 18       	sub	r5, r11
+    157c:	b3 2c       	mov	r11, r3
+    157e:	b3 14       	cp	r11, r3
+    1580:	60 f4       	brcc	.+24     	; 0x159a <vfprintf+0x326>
+    1582:	b7 01       	movw	r22, r14
+    1584:	80 e2       	ldi	r24, 0x20	; 32
+    1586:	90 e0       	ldi	r25, 0x00	; 0
+    1588:	3c 87       	std	Y+12, r19	; 0x0c
+    158a:	78 d0       	rcall	.+240    	; 0x167c <fputc>
+    158c:	b3 94       	inc	r11
+    158e:	3c 85       	ldd	r19, Y+12	; 0x0c
+    1590:	f6 cf       	rjmp	.-20     	; 0x157e <vfprintf+0x30a>
+    1592:	b3 14       	cp	r11, r3
+    1594:	10 f4       	brcc	.+4      	; 0x159a <vfprintf+0x326>
+    1596:	3b 18       	sub	r3, r11
+    1598:	01 c0       	rjmp	.+2      	; 0x159c <vfprintf+0x328>
+    159a:	31 2c       	mov	r3, r1
+    159c:	34 ff       	sbrs	r19, 4
+    159e:	11 c0       	rjmp	.+34     	; 0x15c2 <vfprintf+0x34e>
+    15a0:	b7 01       	movw	r22, r14
+    15a2:	80 e3       	ldi	r24, 0x30	; 48
+    15a4:	90 e0       	ldi	r25, 0x00	; 0
+    15a6:	3c 87       	std	Y+12, r19	; 0x0c
+    15a8:	69 d0       	rcall	.+210    	; 0x167c <fputc>
+    15aa:	3c 85       	ldd	r19, Y+12	; 0x0c
+    15ac:	32 ff       	sbrs	r19, 2
+    15ae:	16 c0       	rjmp	.+44     	; 0x15dc <vfprintf+0x368>
+    15b0:	31 fd       	sbrc	r19, 1
+    15b2:	03 c0       	rjmp	.+6      	; 0x15ba <vfprintf+0x346>
+    15b4:	88 e7       	ldi	r24, 0x78	; 120
+    15b6:	90 e0       	ldi	r25, 0x00	; 0
+    15b8:	02 c0       	rjmp	.+4      	; 0x15be <vfprintf+0x34a>
+    15ba:	88 e5       	ldi	r24, 0x58	; 88
+    15bc:	90 e0       	ldi	r25, 0x00	; 0
+    15be:	b7 01       	movw	r22, r14
+    15c0:	0c c0       	rjmp	.+24     	; 0x15da <vfprintf+0x366>
+    15c2:	83 2f       	mov	r24, r19
+    15c4:	86 78       	andi	r24, 0x86	; 134
+    15c6:	51 f0       	breq	.+20     	; 0x15dc <vfprintf+0x368>
+    15c8:	31 ff       	sbrs	r19, 1
+    15ca:	02 c0       	rjmp	.+4      	; 0x15d0 <vfprintf+0x35c>
+    15cc:	8b e2       	ldi	r24, 0x2B	; 43
+    15ce:	01 c0       	rjmp	.+2      	; 0x15d2 <vfprintf+0x35e>
+    15d0:	80 e2       	ldi	r24, 0x20	; 32
+    15d2:	37 fd       	sbrc	r19, 7
+    15d4:	8d e2       	ldi	r24, 0x2D	; 45
+    15d6:	b7 01       	movw	r22, r14
+    15d8:	90 e0       	ldi	r25, 0x00	; 0
+    15da:	50 d0       	rcall	.+160    	; 0x167c <fputc>
+    15dc:	a5 14       	cp	r10, r5
+    15de:	30 f4       	brcc	.+12     	; 0x15ec <vfprintf+0x378>
+    15e0:	b7 01       	movw	r22, r14
+    15e2:	80 e3       	ldi	r24, 0x30	; 48
+    15e4:	90 e0       	ldi	r25, 0x00	; 0
+    15e6:	4a d0       	rcall	.+148    	; 0x167c <fputc>
+    15e8:	5a 94       	dec	r5
+    15ea:	f8 cf       	rjmp	.-16     	; 0x15dc <vfprintf+0x368>
+    15ec:	aa 94       	dec	r10
+    15ee:	f4 01       	movw	r30, r8
+    15f0:	ea 0d       	add	r30, r10
+    15f2:	f1 1d       	adc	r31, r1
+    15f4:	80 81       	ld	r24, Z
+    15f6:	b7 01       	movw	r22, r14
+    15f8:	90 e0       	ldi	r25, 0x00	; 0
+    15fa:	40 d0       	rcall	.+128    	; 0x167c <fputc>
+    15fc:	a1 10       	cpse	r10, r1
+    15fe:	f6 cf       	rjmp	.-20     	; 0x15ec <vfprintf+0x378>
+    1600:	33 20       	and	r3, r3
+    1602:	09 f4       	brne	.+2      	; 0x1606 <vfprintf+0x392>
+    1604:	5d ce       	rjmp	.-838    	; 0x12c0 <vfprintf+0x4c>
+    1606:	b7 01       	movw	r22, r14
+    1608:	80 e2       	ldi	r24, 0x20	; 32
+    160a:	90 e0       	ldi	r25, 0x00	; 0
+    160c:	37 d0       	rcall	.+110    	; 0x167c <fputc>
+    160e:	3a 94       	dec	r3
+    1610:	f7 cf       	rjmp	.-18     	; 0x1600 <vfprintf+0x38c>
+    1612:	f7 01       	movw	r30, r14
+    1614:	86 81       	ldd	r24, Z+6	; 0x06
+    1616:	97 81       	ldd	r25, Z+7	; 0x07
+    1618:	02 c0       	rjmp	.+4      	; 0x161e <vfprintf+0x3aa>
+    161a:	8f ef       	ldi	r24, 0xFF	; 255
+    161c:	9f ef       	ldi	r25, 0xFF	; 255
+    161e:	2c 96       	adiw	r28, 0x0c	; 12
+    1620:	0f b6       	in	r0, 0x3f	; 63
+    1622:	f8 94       	cli
+    1624:	de bf       	out	0x3e, r29	; 62
+    1626:	0f be       	out	0x3f, r0	; 63
+    1628:	cd bf       	out	0x3d, r28	; 61
+    162a:	df 91       	pop	r29
+    162c:	cf 91       	pop	r28
+    162e:	1f 91       	pop	r17
+    1630:	0f 91       	pop	r16
+    1632:	ff 90       	pop	r15
+    1634:	ef 90       	pop	r14
+    1636:	df 90       	pop	r13
+    1638:	cf 90       	pop	r12
+    163a:	bf 90       	pop	r11
+    163c:	af 90       	pop	r10
+    163e:	9f 90       	pop	r9
+    1640:	8f 90       	pop	r8
+    1642:	7f 90       	pop	r7
+    1644:	6f 90       	pop	r6
+    1646:	5f 90       	pop	r5
+    1648:	4f 90       	pop	r4
+    164a:	3f 90       	pop	r3
+    164c:	2f 90       	pop	r2
+    164e:	08 95       	ret
+
+00001650 <strnlen_P>:
+    1650:	fc 01       	movw	r30, r24
+    1652:	05 90       	lpm	r0, Z+
+    1654:	61 50       	subi	r22, 0x01	; 1
+    1656:	70 40       	sbci	r23, 0x00	; 0
+    1658:	01 10       	cpse	r0, r1
+    165a:	d8 f7       	brcc	.-10     	; 0x1652 <strnlen_P+0x2>
+    165c:	80 95       	com	r24
+    165e:	90 95       	com	r25
+    1660:	8e 0f       	add	r24, r30
+    1662:	9f 1f       	adc	r25, r31
+    1664:	08 95       	ret
+
+00001666 <strnlen>:
+    1666:	fc 01       	movw	r30, r24
+    1668:	61 50       	subi	r22, 0x01	; 1
+    166a:	70 40       	sbci	r23, 0x00	; 0
+    166c:	01 90       	ld	r0, Z+
+    166e:	01 10       	cpse	r0, r1
+    1670:	d8 f7       	brcc	.-10     	; 0x1668 <strnlen+0x2>
+    1672:	80 95       	com	r24
+    1674:	90 95       	com	r25
+    1676:	8e 0f       	add	r24, r30
+    1678:	9f 1f       	adc	r25, r31
+    167a:	08 95       	ret
+
+0000167c <fputc>:
+    167c:	0f 93       	push	r16
+    167e:	1f 93       	push	r17
+    1680:	cf 93       	push	r28
+    1682:	df 93       	push	r29
+    1684:	fb 01       	movw	r30, r22
+    1686:	23 81       	ldd	r18, Z+3	; 0x03
+    1688:	21 fd       	sbrc	r18, 1
+    168a:	03 c0       	rjmp	.+6      	; 0x1692 <fputc+0x16>
+    168c:	8f ef       	ldi	r24, 0xFF	; 255
+    168e:	9f ef       	ldi	r25, 0xFF	; 255
+    1690:	28 c0       	rjmp	.+80     	; 0x16e2 <fputc+0x66>
+    1692:	22 ff       	sbrs	r18, 2
+    1694:	16 c0       	rjmp	.+44     	; 0x16c2 <fputc+0x46>
+    1696:	46 81       	ldd	r20, Z+6	; 0x06
+    1698:	57 81       	ldd	r21, Z+7	; 0x07
+    169a:	24 81       	ldd	r18, Z+4	; 0x04
+    169c:	35 81       	ldd	r19, Z+5	; 0x05
+    169e:	42 17       	cp	r20, r18
+    16a0:	53 07       	cpc	r21, r19
+    16a2:	44 f4       	brge	.+16     	; 0x16b4 <fputc+0x38>
+    16a4:	a0 81       	ld	r26, Z
+    16a6:	b1 81       	ldd	r27, Z+1	; 0x01
+    16a8:	9d 01       	movw	r18, r26
+    16aa:	2f 5f       	subi	r18, 0xFF	; 255
+    16ac:	3f 4f       	sbci	r19, 0xFF	; 255
+    16ae:	31 83       	std	Z+1, r19	; 0x01
+    16b0:	20 83       	st	Z, r18
+    16b2:	8c 93       	st	X, r24
+    16b4:	26 81       	ldd	r18, Z+6	; 0x06
+    16b6:	37 81       	ldd	r19, Z+7	; 0x07
+    16b8:	2f 5f       	subi	r18, 0xFF	; 255
+    16ba:	3f 4f       	sbci	r19, 0xFF	; 255
+    16bc:	37 83       	std	Z+7, r19	; 0x07
+    16be:	26 83       	std	Z+6, r18	; 0x06
+    16c0:	10 c0       	rjmp	.+32     	; 0x16e2 <fputc+0x66>
+    16c2:	eb 01       	movw	r28, r22
+    16c4:	09 2f       	mov	r16, r25
+    16c6:	18 2f       	mov	r17, r24
+    16c8:	00 84       	ldd	r0, Z+8	; 0x08
+    16ca:	f1 85       	ldd	r31, Z+9	; 0x09
+    16cc:	e0 2d       	mov	r30, r0
+    16ce:	19 95       	eicall
+    16d0:	89 2b       	or	r24, r25
+    16d2:	e1 f6       	brne	.-72     	; 0x168c <fputc+0x10>
+    16d4:	8e 81       	ldd	r24, Y+6	; 0x06
+    16d6:	9f 81       	ldd	r25, Y+7	; 0x07
+    16d8:	01 96       	adiw	r24, 0x01	; 1
+    16da:	9f 83       	std	Y+7, r25	; 0x07
+    16dc:	8e 83       	std	Y+6, r24	; 0x06
+    16de:	81 2f       	mov	r24, r17
+    16e0:	90 2f       	mov	r25, r16
+    16e2:	df 91       	pop	r29
+    16e4:	cf 91       	pop	r28
+    16e6:	1f 91       	pop	r17
+    16e8:	0f 91       	pop	r16
+    16ea:	08 95       	ret
+
+000016ec <__ultoa_invert>:
+    16ec:	fa 01       	movw	r30, r20
+    16ee:	aa 27       	eor	r26, r26
+    16f0:	28 30       	cpi	r18, 0x08	; 8
+    16f2:	51 f1       	breq	.+84     	; 0x1748 <__ultoa_invert+0x5c>
+    16f4:	20 31       	cpi	r18, 0x10	; 16
+    16f6:	81 f1       	breq	.+96     	; 0x1758 <__ultoa_invert+0x6c>
+    16f8:	e8 94       	clt
+    16fa:	6f 93       	push	r22
+    16fc:	6e 7f       	andi	r22, 0xFE	; 254
+    16fe:	6e 5f       	subi	r22, 0xFE	; 254
+    1700:	7f 4f       	sbci	r23, 0xFF	; 255
+    1702:	8f 4f       	sbci	r24, 0xFF	; 255
+    1704:	9f 4f       	sbci	r25, 0xFF	; 255
+    1706:	af 4f       	sbci	r26, 0xFF	; 255
+    1708:	b1 e0       	ldi	r27, 0x01	; 1
+    170a:	3e d0       	rcall	.+124    	; 0x1788 <__ultoa_invert+0x9c>
+    170c:	b4 e0       	ldi	r27, 0x04	; 4
+    170e:	3c d0       	rcall	.+120    	; 0x1788 <__ultoa_invert+0x9c>
+    1710:	67 0f       	add	r22, r23
+    1712:	78 1f       	adc	r23, r24
+    1714:	89 1f       	adc	r24, r25
+    1716:	9a 1f       	adc	r25, r26
+    1718:	a1 1d       	adc	r26, r1
+    171a:	68 0f       	add	r22, r24
+    171c:	79 1f       	adc	r23, r25
+    171e:	8a 1f       	adc	r24, r26
+    1720:	91 1d       	adc	r25, r1
+    1722:	a1 1d       	adc	r26, r1
+    1724:	6a 0f       	add	r22, r26
+    1726:	71 1d       	adc	r23, r1
+    1728:	81 1d       	adc	r24, r1
+    172a:	91 1d       	adc	r25, r1
+    172c:	a1 1d       	adc	r26, r1
+    172e:	20 d0       	rcall	.+64     	; 0x1770 <__ultoa_invert+0x84>
+    1730:	09 f4       	brne	.+2      	; 0x1734 <__ultoa_invert+0x48>
+    1732:	68 94       	set
+    1734:	3f 91       	pop	r19
+    1736:	2a e0       	ldi	r18, 0x0A	; 10
+    1738:	26 9f       	mul	r18, r22
+    173a:	11 24       	eor	r1, r1
+    173c:	30 19       	sub	r19, r0
+    173e:	30 5d       	subi	r19, 0xD0	; 208
+    1740:	31 93       	st	Z+, r19
+    1742:	de f6       	brtc	.-74     	; 0x16fa <__ultoa_invert+0xe>
+    1744:	cf 01       	movw	r24, r30
+    1746:	08 95       	ret
+    1748:	46 2f       	mov	r20, r22
+    174a:	47 70       	andi	r20, 0x07	; 7
+    174c:	40 5d       	subi	r20, 0xD0	; 208
+    174e:	41 93       	st	Z+, r20
+    1750:	b3 e0       	ldi	r27, 0x03	; 3
+    1752:	0f d0       	rcall	.+30     	; 0x1772 <__ultoa_invert+0x86>
+    1754:	c9 f7       	brne	.-14     	; 0x1748 <__ultoa_invert+0x5c>
+    1756:	f6 cf       	rjmp	.-20     	; 0x1744 <__ultoa_invert+0x58>
+    1758:	46 2f       	mov	r20, r22
+    175a:	4f 70       	andi	r20, 0x0F	; 15
+    175c:	40 5d       	subi	r20, 0xD0	; 208
+    175e:	4a 33       	cpi	r20, 0x3A	; 58
+    1760:	18 f0       	brcs	.+6      	; 0x1768 <__ultoa_invert+0x7c>
+    1762:	49 5d       	subi	r20, 0xD9	; 217
+    1764:	31 fd       	sbrc	r19, 1
+    1766:	40 52       	subi	r20, 0x20	; 32
+    1768:	41 93       	st	Z+, r20
+    176a:	02 d0       	rcall	.+4      	; 0x1770 <__ultoa_invert+0x84>
+    176c:	a9 f7       	brne	.-22     	; 0x1758 <__ultoa_invert+0x6c>
+    176e:	ea cf       	rjmp	.-44     	; 0x1744 <__ultoa_invert+0x58>
+    1770:	b4 e0       	ldi	r27, 0x04	; 4
+    1772:	a6 95       	lsr	r26
+    1774:	97 95       	ror	r25
+    1776:	87 95       	ror	r24
+    1778:	77 95       	ror	r23
+    177a:	67 95       	ror	r22
+    177c:	ba 95       	dec	r27
+    177e:	c9 f7       	brne	.-14     	; 0x1772 <__ultoa_invert+0x86>
+    1780:	00 97       	sbiw	r24, 0x00	; 0
+    1782:	61 05       	cpc	r22, r1
+    1784:	71 05       	cpc	r23, r1
+    1786:	08 95       	ret
+    1788:	9b 01       	movw	r18, r22
+    178a:	ac 01       	movw	r20, r24
+    178c:	0a 2e       	mov	r0, r26
+    178e:	06 94       	lsr	r0
+    1790:	57 95       	ror	r21
+    1792:	47 95       	ror	r20
+    1794:	37 95       	ror	r19
+    1796:	27 95       	ror	r18
+    1798:	ba 95       	dec	r27
+    179a:	c9 f7       	brne	.-14     	; 0x178e <__ultoa_invert+0xa2>
+    179c:	62 0f       	add	r22, r18
+    179e:	73 1f       	adc	r23, r19
+    17a0:	84 1f       	adc	r24, r20
+    17a2:	95 1f       	adc	r25, r21
+    17a4:	a0 1d       	adc	r26, r0
+    17a6:	08 95       	ret
+
+000017a8 <_exit>:
+    17a8:	f8 94       	cli
+
+000017aa <__stop_program>:
+    17aa:	ff cf       	rjmp	.-2      	; 0x17aa <__stop_program>
