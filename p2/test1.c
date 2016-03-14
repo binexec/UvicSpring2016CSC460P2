@@ -51,29 +51,32 @@ void suspend_pong()
 }
 
 void Task_P1(int parameter)
-{	
-	//mut = Mutex_Init();
-	//evt = Event_Init();
-	printf("last mutex id is %d\n", Last_MutexID);
-	printf("task 1 started and gonna lock the mut\n");
-	Mutex_Lock(mut);
-	printf("task 1 will sleep\n");
+{
+	printf("p1: started, gonna sleep\n");
 	Task_Sleep(100); // sleep 100ms
-	printf("task 1 is awake, and will unlock mut\n");
-	Mutex_Unlock(mut);
+	printf("p1: awake, gonna lock mutex\n");
+	Mutex_Lock(mut);
+	printf("p1: mutex locked\n");
 	for(;;);
 }
 
 void Task_P2(int parameter)
-{	
-	printf("task 2 started and gonna lock the mut\n");
-	Mutex_Lock(mut);
-	printf("task 2 got into mutex");
+{
+	printf("p2: started, gonna sleep\n");
+	Task_Sleep(200); // sleep 200ms
+	printf("p2: awake, gonna signal event\n");
+	Event_Signal(evt);
 	for(;;);
 }
 
 void Task_P3(int parameter)
 {
+	printf("p3: started, gonna lock mutex\n");
+	Mutex_Lock(mut);
+	printf("p3: locked mutex, wait on evt\n");
+	Event_Wait(evt);
+	printf("p3: gonna unlock mutex\n");
+	Mutex_Unlock(mut);
 	for(;;);
 }
 
@@ -174,7 +177,7 @@ void task_p()
 /*Entry point for application*/
 void a_main()
 {
-	int test_set = 0;				//Which set of tests to run?
+	int test_set = 3;				//Which set of tests to run?
 
 	OS_Init();
 	
@@ -204,7 +207,7 @@ void a_main()
 		evt = Event_Init();
 		Task_Create(Task_P1, 1, 0);
 		Task_Create(Task_P2, 2, 0);
-		//Task_Create(Task_P3, 3, 0);
+		Task_Create(Task_P3, 3, 0);
 	} else if (test_set == 4)
 	{
 		Task_Create(task_p, 3, 0);
