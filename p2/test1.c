@@ -50,36 +50,6 @@ void suspend_pong()
 	
 }
 
-void Task_P1(int parameter)
-{
-	printf("p1: started, gonna sleep\n");
-	Task_Sleep(100); // sleep 100ms
-	printf("p1: awake, gonna lock mutex\n");
-	Mutex_Lock(mut);
-	printf("p1: mutex locked\n");
-	for(;;);
-}
-
-void Task_P2(int parameter)
-{
-	printf("p2: started, gonna sleep\n");
-	Task_Sleep(200); // sleep 200ms
-	printf("p2: awake, gonna signal event\n");
-	Event_Signal(evt);
-	for(;;);
-}
-
-void Task_P3(int parameter)
-{
-	printf("p3: started, gonna lock mutex\n");
-	Mutex_Lock(mut);
-	printf("p3: locked mutex, wait on evt\n");
-	Event_Wait(evt);
-	printf("p3: gonna unlock mutex\n");
-	Mutex_Unlock(mut);
-	for(;;);
-}
-
 
 void event_wait_test()
 {
@@ -141,47 +111,15 @@ void priority3()
 	}
 }
 
-void task_r()
-{
-	for(;;)
-	{
-		printf("Hello from R!\n");
-	}
-}
-
-void task_q()
-{
-	printf("q: hello, gonna create R\n");
-	Task_Create(task_r, 2, 0);
-	printf("q: gonna try to lock mut\n");
-	Mutex_Lock(mut);
-	for(;;) {
-		printf("hello from q\n");
-	}
-}
-
-void task_p()
-{
-	mut = Mutex_Init();
-	printf("p:hello, gonna lock mut\n");
-	Mutex_Lock(mut);
-	printf("p: gonna create q\n");
-	Task_Create(task_q, 1, 0);
-	Task_Yield();
-	for(;;){
-		printf("hello from p\n");
-	}
-}
-
-
 /*Entry point for application*/
+/*
 void a_main()
 {
 	int test_set = 4;				//Which set of tests to run?
 
 	OS_Init();
 	
-	/*These tasks tests ctxswitching, suspension, resume, and sleep*/
+	//These tasks tests ctxswitching, suspension, resume, and sleep
 	if(test_set == 0)
 	{
 		DDRB = LED_PIN_MASK;			//Set pin 13 as output
@@ -191,29 +129,17 @@ void a_main()
 	}
 	else if(test_set == 1)
 	{
-		/*These tasks tests events*/
+		//These tasks tests events
 		Task_Create(event_wait_test, 4, 0);
 		Task_Create(event_signal_test, 5, 0);
 	}
 	else if(test_set == 2)
 	{
-		/*These tasks tests priority scheduling*/
+		//These tasks tests priority scheduling
 		Task_Create(priority1, 1, 0);
 		Task_Create(priority2, 2, 0);
 		Task_Create(priority3, 3, 0);
-	} else if (test_set == 3)
-	{
-		mut = Mutex_Init();
-		evt = Event_Init();
-		Task_Create(Task_P1, 1, 0);
-		Task_Create(Task_P2, 2, 0);
-		Task_Create(Task_P3, 3, 0);
-	} else if (test_set == 4)
-	{
-		Task_Create(task_p, 3, 0);
 	}
-	
-	//mut = Mutex_Init();
-	//evt = Event_Init();
 	OS_Start();
 }
+*/
