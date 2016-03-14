@@ -70,7 +70,7 @@ void Task_Yield()
 
 int Task_GetArg()
 {
-	return 0;
+	return Cp->arg;
 }
 
 void Task_Suspend(PID p)
