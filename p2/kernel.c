@@ -285,6 +285,17 @@ static void Kernel_Suspend_Task()
 		return;
 	}
 	
+	//Ensure the task is not currently owning a mutex
+	for(int i=0; i<MAXMUTEX; i++) {
+		if (Mutex[i].owner == p->pid) {
+			#ifdef DEBUG
+			printf("Kernel_Suspend_Task: Trying to suspend a task that's in an unsuspendable state %d!\n", p->state);
+			#endif
+			err = SUSPEND_NONRUNNING_TASK_ERR;
+			return;
+		}
+	}
+	
 	//Save its current state and set it to SUSPENDED
 	p->last_state = p->state;
 	p->state = SUSPENDED;

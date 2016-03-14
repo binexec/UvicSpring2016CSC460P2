@@ -130,12 +130,6 @@
     <Compile Include="test1.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="test1_provided.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="test_priority_inheritance.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="uart\uart.c">
       <SubType>compile</SubType>
     </Compile>

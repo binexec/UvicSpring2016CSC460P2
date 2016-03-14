@@ -57,7 +57,7 @@ void Task_P3(int parameter)
 }
 
 /*Entry point for application*/
-/*
+
 void a_main()
 {
 	OS_Init();						//init os	
@@ -67,4 +67,4 @@ void a_main()
 	Task_Create(Task_P2, 2, 0);
 	Task_Create(Task_P3, 3, 0);
 	OS_Start();						//start os
-}*/
+}

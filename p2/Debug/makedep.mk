@@ -10,9 +10,5 @@ os.c
 
 test1.c
 
-test1_provided.c
-
-test_priority_inheritance.c
-
 uart\uart.c
 
