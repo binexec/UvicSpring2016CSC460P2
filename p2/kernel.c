@@ -463,7 +463,7 @@ void Kernel_Create_Mutex(void)
 	
 	//Find an uninitialized Mutex slot
 	for(i=0; i<MAXMUTEX; i++)
-	if(Mutex[i].id == 0) break;
+		if(Mutex[i].id == 0) break;
 	
 	//Assign a new unique ID to the mutex. Note that the smallest valid mutex ID is 1.
 	Mutex[i].id = ++Last_MutexID;
@@ -595,6 +595,55 @@ static void Kernel_Unlock_Mutex(void)
 }
 
 /************************************************************************/
+/*                     TASK TERMINATE FUNCTION                         */
+/************************************************************************/
+
+static void Kernel_Terminate_Task(void)
+{
+	MUTEX_TYPE* m;
+	// go through all mutex check if it owns a mutex
+	int index;
+	for (index=0; index<MAXMUTEX; index++) {
+		if (Mutex[index].owner == Cp->pid) {
+			// it owns a mutex unlock the mutex
+			if (Mutex[index].num_of_process > 0) {
+				// if there are other process waiting on the mutex
+				PID p_dequeue = 0;
+				unsigned int temp_order = Mutex[index].total_num + 1;
+				PRIORITY temp_pri = LOWEST_PRIORITY + 1;
+				int i;
+				for (i=0; i<MAXTHREAD; i++) {
+					if (Mutex[index].priority_stack[i] < temp_pri) {
+						// found a task with higher priority
+						temp_pri = Mutex[index].priority_stack[i];
+						temp_order = Mutex[index].order[i];
+						p_dequeue = Mutex[index].blocked_stack[i];
+						} else if (Mutex[index].priority_stack[i] == temp_pri && temp_order < Mutex[index].order[i]) {
+						// same priority and came into the queue earlier
+						temp_order = Mutex[index].order[i];
+						p_dequeue = Mutex[index].blocked_stack[i];
+					}
+				}
+				//dequeue index i
+				Mutex[index].blocked_stack[i] = -1;
+				Mutex[index].priority_stack[i] = LOWEST_PRIORITY+1;
+				Mutex[index].order[i] = 0;
+				--(Mutex[index].num_of_process);
+				PD* target_p = findProcessByPID(p_dequeue);
+				Mutex[index].owner = p_dequeue;
+				Mutex[index].own_pri = temp_pri;			//keep track of new owner's priority;
+				target_p->state = READY;
+			} else {
+				Mutex[index].owner = 0;
+				Mutex[index].count = 0;
+			}
+		}
+	}
+	Cp->state = DEAD;			//Mark the task as DEAD so its resources will be recycled later when new tasks are created
+	--Task_Count;
+}
+
+/************************************************************************/
 /*                     KERNEL SCHEDULING FUNCTIONS                      */
 /************************************************************************/
 
@@ -686,8 +735,7 @@ static void Next_Kernel_Request()
 			break;
 			
 			case TERMINATE:
-			Cp->state = DEAD;			//Mark the task as DEAD so its resources will be recycled later when new tasks are created
-			--Task_Count;
+			Kernel_Terminate_Task();
 			Dispatch();					//Dispatch is only needed if the syscall requires running a different task  after it's done
 			break;
 		   
