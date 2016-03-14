@@ -13,6 +13,7 @@ volatile static unsigned int NextP;				//Which task in the process queue to disp
 volatile static unsigned int Task_Count;		//Number of tasks created so far.
 volatile static unsigned int Event_Count;		//Number of events created so far.
 volatile static unsigned int Mutex_Count;		//Number of Mutexes created so far.
+volatile static unsigned int Tick_Count;		//Number of timer ticks missed
 
 /*Variables accessible by OS*/
 volatile PD* Cp;		
@@ -140,29 +141,48 @@ int getEventCount(EVENT e)
 /*                  ISR FOR HANDLING SLEEP TICKS                        */
 /************************************************************************/
 
-//This ISR processes all tasks that are currently sleeping and waking them up when their tick expires
-//Maybe we should move most of the code here into a function and have it run in the kernel main loop?
+//Timer tick ISR
 ISR(TIMER1_COMPA_vect)
 {
+	++Tick_Count;
+}
+
+//Processes all tasks that are currently sleeping and decrement their sleep ticks when called. Expired sleep tasks are placed back into their old state
+void Kernel_Tick_Handler()
+{
 	int i;
+	
+	//No ticks has been issued yet, skipping...
+	if(Tick_Count == 0)
+		return;
+	
 	for(i=0; i<MAXTHREAD; i++)
 	{
 		//Process any active tasks that are sleeping
 		if(Process[i].state == SLEEPING)
 		{
 			//If the current sleeping task's tick count expires, put it back into its READY state
-			if(--Process[i].request_arg <= 0)
+			Process[i].request_arg -= Tick_Count;
+			if(Process[i].request_arg <= 0)
+			{
 				Process[i].state = READY;
+				Process[i].request_arg = 0;
+			}
 		}
 		
 		//Process any SUSPENDED tasks that were previously sleeping
 		else if(Process[i].last_state == SLEEPING)
 		{
 			//When task_resume is called again, the task will be back into its READY state instead if its sleep ticks expired.
-			if(--Process[i].request_arg <= 0)
+			Process[i].request_arg -= Tick_Count;
+			if(Process[i].request_arg <= 0)
+			{
 				Process[i].last_state = READY;
+				Process[i].request_arg = 0;
+			}
 		}
 	}
+	Tick_Count = 0;
 }
 
 /************************************************************************/
@@ -606,7 +626,13 @@ static void Dispatch()
 		
 		//Looping through the process list until any process becomes ready
 		while(Process[NextP].state != READY)
+		{
+			//Increment process index
 			NextP = (NextP + 1) % MAXTHREAD;
+			
+			//Check if any timer ticks came in
+			Kernel_Tick_Handler();	
+		}
 		
 		//Now that we have a ready task, interrupts must be disabled for the kernel to function properly again.
 		Disable_Interrupt();
@@ -648,6 +674,9 @@ static void Next_Kernel_Request()
 
 		//Save the current task's stack pointer and proceed to handle its request
 		Cp->sp = CurrentSp;
+		
+		//Check if any timer ticks came in
+		Kernel_Tick_Handler();
 
 		switch(Cp->request)
 		{

@@ -17,7 +17,7 @@ void Ping()
 	{
 		PORTB |= LED_PIN_MASK;		//Turn on onboard LED
 		printf("PING!\n");
-		Task_Sleep(30);
+		Task_Sleep(50);
 		Task_Yield();
 	}
 }
@@ -28,7 +28,7 @@ void Pong()
 	{
 		PORTB &= ~LED_PIN_MASK;		//Turn off onboard LED
 		printf("PONG!\n");
-		Task_Sleep(30);
+		Task_Sleep(50);
 		Task_Yield();
 	}
 }
@@ -37,12 +37,12 @@ void suspend_pong()
 {
 	for(;;)
 	{
-		Task_Sleep(100);
+		Task_Sleep(300);
 		printf("SUSPENDING PONG!\n");
 		Task_Suspend(findPIDByFuncPtr(Pong));
 		Task_Yield();
 		
-		Task_Sleep(100);
+		Task_Sleep(300);
 		printf("RESUMING PONG!\n");
 		Task_Resume(findPIDByFuncPtr(Pong));
 		Task_Yield();
@@ -174,7 +174,7 @@ void task_p()
 /*Entry point for application*/
 void a_main()
 {
-	int test_set = 4;				//Which set of tests to run?
+	int test_set = 0;				//Which set of tests to run?
 
 	OS_Init();
 	
