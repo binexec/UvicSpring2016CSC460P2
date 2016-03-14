@@ -583,6 +583,7 @@ static void Kernel_Unlock_Mutex(void)
 		m->owner = p_dequeue;
 		m->own_pri = temp_pri;			//keep track of new owner's priority;
 		target_p->state = READY;
+		Cp->state = READY;
 		Dispatch();
 		return;
 	} else {

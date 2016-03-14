@@ -11,7 +11,7 @@ MUTEX mut;
 
 void task_r()
 {
-	for(;;)
+	for(int i=0;i<3;i++)
 	{
 		printf("Hello from R!\n");
 	}
@@ -23,9 +23,9 @@ void task_q()
 	Task_Create(task_r, 2, 0);
 	printf("q: gonna try to lock mut\n");
 	Mutex_Lock(mut);
-	for(;;) {
-		printf("hello from q\n");
-	}
+	printf("q: I got into the mutex yeah! But I will let it go\n");
+	Mutex_Lock(mut);
+	printf("q: I am gonna die, good bye world\n");
 }
 
 void task_p()
@@ -36,9 +36,13 @@ void task_p()
 	printf("p: gonna create q\n");
 	Task_Create(task_q, 1, 0);
 	Task_Yield();
-	for(;;){
-		printf("hello from p\n");
+	for(int i=0;i<10;i++){
+		printf("p: yeah I got the priority of q, gonna pray for %d times before unlock mutex\n", (10-i));
 	}
+	Mutex_Unlock(mut);
+	Task_Yield();
+	for(;;)
+		printf("p: if r runs before me, I lost the priority :(\n");
 }
 
 void a_main() {
