@@ -119,6 +119,8 @@ typedef struct mutex_type
 void OS_Init();
 void OS_Start();
 void Kernel_Create_Task(voidfuncptr f, PRIORITY py, int arg);
+void Kernel_Create_Event();
+void Kernel_Create_Mutex();
 int findPIDByFuncPtr(voidfuncptr f);
 int getEventCount(EVENT e);
 

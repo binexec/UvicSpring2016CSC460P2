@@ -307,7 +307,7 @@ static void Kernel_Resume_Task()
 /*                  EVENT RELATED KERNEL FUNCTIONS                      */
 /************************************************************************/
 
-static void Kernel_Create_Event(void)
+void Kernel_Create_Event(void)
 {
 	int i;
 	
@@ -427,7 +427,7 @@ static void Kernel_Signal_Event(void)
 /*                  MUTEX RELATED KERNEL FUNCTIONS                      */
 /************************************************************************/
 
-static void Kernel_Create_Mutex(void)
+void Kernel_Create_Mutex(void)
 {
 	int i;
 	

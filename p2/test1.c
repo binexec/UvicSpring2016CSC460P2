@@ -52,7 +52,7 @@ void suspend_pong()
 
 void Task_P1(int parameter)
 {	
-	mut = Mutex_Init();
+	//mut = Mutex_Init();
 	//evt = Event_Init();
 	printf("last mutex id is %d\n", Last_MutexID);
 	printf("task 1 started and gonna lock the mut\n");
@@ -167,8 +167,8 @@ void a_main()
 		Task_Create(priority3, 3, 0);
 	} else if (test_set == 3)
 	{
-		//mut = Mutex_Init();
-		//evt = Event_Init();
+		mut = Mutex_Init();
+		evt = Event_Init();
 		Task_Create(Task_P1, 1, 0);
 		Task_Create(Task_P2, 2, 0);
 		//Task_Create(Task_P3, 3, 0);

@@ -121,14 +121,15 @@ void Task_Sleep(TICK t)
 /*Initialize an event object*/
 EVENT Event_Init(void)
 {
-	if(!KernelActive){
-		err = KERNEL_INACTIVE_ERR;
-		return 0;
+	if(KernelActive)
+	{
+		Disable_Interrupt();
+		Cp->request = CREATE_E;
+		Enter_Kernel();
 	}
-	Disable_Interrupt();
+	else
+		Kernel_Create_Event();	//Call the kernel function directly if kernel has not started yet.
 	
-	Cp->request = CREATE_E;
-	Enter_Kernel();
 	
 	//Return zero as Event ID if the event creation process gave errors. Note that the smallest valid event ID is 1
 	if (err == MAX_EVENT_ERR)
@@ -170,14 +171,15 @@ void Event_Signal(EVENT e)
 
 MUTEX Mutex_Init(void)
 {
-	if(!KernelActive){
-		err = KERNEL_INACTIVE_ERR;
-		return 0;
+	if(KernelActive)
+	{
+		Disable_Interrupt();
+		Cp->request = CREATE_M;
+		Enter_Kernel();
 	}
-	Disable_Interrupt();
+	else
+		Kernel_Create_Mutex();	//Call the kernel function directly if OS hasn't start yet
 	
-	Cp->request = CREATE_M;
-	Enter_Kernel();
 	
 	//Return zero as Mutex ID if the mutex creation process gave errors. Note that the smallest valid mutex ID is 1
 	if (err == MAX_MUTEX_ERR)
