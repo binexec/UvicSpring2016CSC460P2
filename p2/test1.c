@@ -164,6 +164,7 @@ void task_p()
 	Mutex_Lock(mut);
 	printf("p: gonna create q\n");
 	Task_Create(task_q, 1, 0);
+	Task_Yield();
 	for(;;){
 		printf("hello from p\n");
 	}
