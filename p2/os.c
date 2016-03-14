@@ -70,7 +70,10 @@ void Task_Yield()
 
 int Task_GetArg()
 {
-	return Cp->arg;
+	if (KernelActive) 
+		return Cp->arg;
+	else
+		return -1;
 }
 
 void Task_Suspend(PID p)
