@@ -10,9 +10,9 @@ os.c
 
 test1.c
 
-test2_mut_and_evt.c
+test1_provided.c
 
-test3_priority_inheritance.c
+test_priority_inheritance.c
 
 uart\uart.c
 

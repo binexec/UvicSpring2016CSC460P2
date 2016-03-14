@@ -15,6 +15,7 @@ void task_r()
 	{
 		printf("Hello from R!\n");
 	}
+	Task_Terminate();
 }
 
 void task_q()
@@ -26,6 +27,7 @@ void task_q()
 	printf("q: I got into the mutex yeah! But I will let it go\n");
 	Mutex_Lock(mut);
 	printf("q: I am gonna die, good bye world\n");
+	Task_Terminate();
 }
 
 void task_p()
@@ -41,8 +43,8 @@ void task_p()
 	}
 	Mutex_Unlock(mut);
 	Task_Yield();
-	for(;;)
-		printf("p: if r runs before me, I lost the priority :(\n");
+	printf("p: if I appear at last, I lost the priority :(\n");
+	Task_Terminate();
 }
 
 void a_main() {

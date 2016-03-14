@@ -41,8 +41,8 @@ C_SRCS +=  \
 ../kernel.c \
 ../os.c \
 ../test1.c \
-../test2_mut_and_evt.c \
-../test3_priority_inheritance.c \
+../test1_provided.c \
+../test_priority_inheritance.c \
 ../uart/uart.c
 
 
@@ -58,8 +58,8 @@ cswitch.o \
 kernel.o \
 os.o \
 test1.o \
-test2_mut_and_evt.o \
-test3_priority_inheritance.o \
+test1_provided.o \
+test_priority_inheritance.o \
 uart/uart.o
 
 OBJS_AS_ARGS +=  \
@@ -67,8 +67,8 @@ cswitch.o \
 kernel.o \
 os.o \
 test1.o \
-test2_mut_and_evt.o \
-test3_priority_inheritance.o \
+test1_provided.o \
+test_priority_inheritance.o \
 uart/uart.o
 
 C_DEPS +=  \
@@ -76,8 +76,8 @@ cswitch.d \
 kernel.d \
 os.d \
 test1.d \
-test2_mut_and_evt.d \
-test3_priority_inheritance.d \
+test1_provided.d \
+test_priority_inheritance.d \
 uart/uart.d
 
 C_DEPS_AS_ARGS +=  \
@@ -85,8 +85,8 @@ cswitch.d \
 kernel.d \
 os.d \
 test1.d \
-test2_mut_and_evt.d \
-test3_priority_inheritance.d \
+test1_provided.d \
+test_priority_inheritance.d \
 uart/uart.d
 
 OUTPUT_FILE_PATH +=p2.elf
