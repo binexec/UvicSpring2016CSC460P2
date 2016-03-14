@@ -138,10 +138,42 @@ void priority3()
 	}
 }
 
+void task_r()
+{
+	for(;;)
+	{
+		printf("Hello from R!\n");
+	}
+}
+
+void task_q()
+{
+	printf("q: hello, gonna create R\n");
+	Task_Create(task_r, 2, 0);
+	printf("q: gonna try to lock mut\n");
+	Mutex_Lock(mut);
+	for(;;) {
+		printf("hello from q\n");
+	}
+}
+
+void task_p()
+{
+	mut = Mutex_Init();
+	printf("p:hello, gonna lock mut\n");
+	Mutex_Lock(mut);
+	printf("p: gonna create q\n");
+	Task_Create(task_q, 1, 0);
+	for(;;){
+		printf("hello from p\n");
+	}
+}
+
+
 /*Entry point for application*/
 void a_main()
 {
-	int test_set = 3;				//Which set of tests to run?
+	int test_set = 4;				//Which set of tests to run?
 
 	OS_Init();
 	
@@ -172,6 +204,9 @@ void a_main()
 		Task_Create(Task_P1, 1, 0);
 		Task_Create(Task_P2, 2, 0);
 		//Task_Create(Task_P3, 3, 0);
+	} else if (test_set == 4)
+	{
+		Task_Create(task_p, 3, 0);
 	}
 	
 	//mut = Mutex_Init();
