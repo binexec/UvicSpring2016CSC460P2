@@ -177,7 +177,7 @@ void task_p()
 /*Entry point for application*/
 void a_main()
 {
-	int test_set = 3;				//Which set of tests to run?
+	int test_set = 4;				//Which set of tests to run?
 
 	OS_Init();
 	

@@ -714,6 +714,7 @@ static void Next_Kernel_Request()
 			
 			case SIGNAL_E:
 			Kernel_Signal_Event();
+			Dispatch();
 			break;
 			
 			case CREATE_M:
