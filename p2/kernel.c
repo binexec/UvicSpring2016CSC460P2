@@ -78,7 +78,7 @@ EVENT_TYPE* findEventByEventID(EVENT e)
 	return NULL;
 }
 
-MUTEX_TYPE* findMutexByEventID(MUTEX m)
+MUTEX_TYPE* findMutexByMutexID(MUTEX m)
 {
 	int i;
 	
@@ -488,7 +488,7 @@ static void Dispatch();
 
 static void Kernel_Lock_Mutex(void)
 {
-	MUTEX_TYPE* m = findMutexByEventID(Cp->request_arg);
+	MUTEX_TYPE* m = findMutexByMutexID(Cp->request_arg);
 	PD *m_owner = findProcessByPID(m->owner);
 	
 	if(m == NULL)
@@ -535,7 +535,7 @@ static void Kernel_Lock_Mutex(void)
 
 static void Kernel_Unlock_Mutex(void)
 {
-	MUTEX_TYPE* m = findMutexByEventID(Cp->request_arg);
+	MUTEX_TYPE* m = findMutexByMutexID(Cp->request_arg);
 	PD *m_owner = findProcessByPID(m->owner);
 	
 	if(m == NULL)
@@ -779,6 +779,7 @@ void OS_Init()
 	Task_Count = 0;
 	Event_Count = 0;
 	KernelActive = 0;
+	Tick_Count = 0;
 	NextP = 0;
 	Last_PID = 0;
 	Last_EventID = 0;
@@ -797,8 +798,11 @@ void OS_Init()
 		Event[x].id = 0;
 	}
 	
-	/*Initialize and start Timer needed for sleep*/
-	Timer_init();
+	//Clear and initialize the memory used for Mutex
+	memset(Mutex, 0, MAXMUTEX*sizeof(MUTEX_TYPE));
+	for (x = 0; x < MAXMUTEX; x++) {
+		Event[x].id = 0;
+	}
 	
 	#ifdef DEBUG
 	printf("OS initialized!\n");
@@ -815,6 +819,9 @@ void OS_Start()
 		/* we may have to initialize the interrupt vector for Enter_Kernel() here. */
 			/* here we go...  */
 		KernelActive = 1;
+		
+		/*Initialize and start Timer needed for sleep*/
+		Timer_init();
 		
 		#ifdef DEBUG
 		printf("OS begins!\n");
