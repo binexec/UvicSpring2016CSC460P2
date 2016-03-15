@@ -1,7 +1,7 @@
 #include "os.h"
 #include "kernel.h"
 
-#define DEBUG
+//#define DEBUG
 
 extern void Enter_Kernel();				//Subroutine for entering into the kernel defined in cswitch.s
 extern void a_main();					//External entry point for application once kernel and OS has initialized.
