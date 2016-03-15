@@ -815,9 +815,9 @@ void Timer_init()
 {
 	/*Timer1 is configured for the task*/
 	
-	//Use Prescaler = 1024
-	TCCR1B |= (1<<CS12)|(1<<CS10);
-	TCCR1B &= ~(1<<CS11);
+	//Use Prescaler = 256
+	TCCR1B |= (1<<CS12);
+	TCCR1B &= ~((1<<CS11)|(1<<CS10));
 	
 	//Use CTC mode (mode 4)
 	TCCR1B |= (1<<WGM12);
