@@ -40,6 +40,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../kernel.c \
 ../os.c \
+../test1.c \
 ../test2_provided.c \
 ../uart/uart.c
 
@@ -55,6 +56,7 @@ OBJS +=  \
 cswitch.o \
 kernel.o \
 os.o \
+test1.o \
 test2_provided.o \
 uart/uart.o
 
@@ -62,6 +64,7 @@ OBJS_AS_ARGS +=  \
 cswitch.o \
 kernel.o \
 os.o \
+test1.o \
 test2_provided.o \
 uart/uart.o
 
@@ -69,6 +72,7 @@ C_DEPS +=  \
 cswitch.d \
 kernel.d \
 os.d \
+test1.d \
 test2_provided.d \
 uart/uart.d
 
@@ -76,6 +80,7 @@ C_DEPS_AS_ARGS +=  \
 cswitch.d \
 kernel.d \
 os.d \
+test1.d \
 test2_provided.d \
 uart/uart.d
 
@@ -93,6 +98,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

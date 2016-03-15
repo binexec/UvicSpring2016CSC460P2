@@ -49,7 +49,6 @@ void Task_Terminate()
 		err = KERNEL_INACTIVE_ERR;
 		return;
 	}
-
 	Disable_Interrupt();
 	Cp -> request = TERMINATE;
 	Enter_Kernel();			

@@ -618,6 +618,7 @@ static void Kernel_Terminate_Task(void)
 		if (Mutex[index].owner == Cp->pid) {
 			// it owns a mutex unlock the mutex
 			if (Mutex[index].num_of_process > 0) {
+				printf("something is waiting\n");
 				// if there are other process waiting on the mutex
 				PID p_dequeue = 0;
 				unsigned int temp_order = Mutex[index].total_num + 1;
@@ -644,6 +645,7 @@ static void Kernel_Terminate_Task(void)
 				Mutex[index].owner = p_dequeue;
 				Mutex[index].own_pri = temp_pri;			//keep track of new owner's priority;
 				target_p->state = READY;
+				printf("target p is readd\n");
 			} else {
 				Mutex[index].owner = 0;
 				Mutex[index].count = 0;
@@ -752,6 +754,7 @@ static void Next_Kernel_Request()
 		   
 			case SUSPEND:
 			Kernel_Suspend_Task();
+			if(Cp->state != RUNNING) Dispatch();
 			break;
 			
 			case RESUME:
