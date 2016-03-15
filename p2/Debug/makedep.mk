@@ -8,9 +8,7 @@ kernel.c
 
 os.c
 
-test1.c
-
-test2_provided.c
+test_priority_inheritance.c
 
 uart\uart.c
 
