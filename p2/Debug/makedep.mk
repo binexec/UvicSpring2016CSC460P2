@@ -8,7 +8,7 @@ kernel.c
 
 os.c
 
-test1.c
+test1_provided.c
 
 uart\uart.c
 
