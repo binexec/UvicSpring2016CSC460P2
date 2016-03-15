@@ -127,7 +127,7 @@
     <Compile Include="kernel.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="test1_provided.c">
+    <Compile Include="test2_provided.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="uart\uart.c">

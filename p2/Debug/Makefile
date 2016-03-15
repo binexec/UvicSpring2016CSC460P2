@@ -40,7 +40,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../kernel.c \
 ../os.c \
-../test1_provided.c \
+../test2_provided.c \
 ../uart/uart.c
 
 
@@ -55,28 +55,28 @@ OBJS +=  \
 cswitch.o \
 kernel.o \
 os.o \
-test1_provided.o \
+test2_provided.o \
 uart/uart.o
 
 OBJS_AS_ARGS +=  \
 cswitch.o \
 kernel.o \
 os.o \
-test1_provided.o \
+test2_provided.o \
 uart/uart.o
 
 C_DEPS +=  \
 cswitch.d \
 kernel.d \
 os.d \
-test1_provided.d \
+test2_provided.d \
 uart/uart.d
 
 C_DEPS_AS_ARGS +=  \
 cswitch.d \
 kernel.d \
 os.d \
-test1_provided.d \
+test2_provided.d \
 uart/uart.d
 
 OUTPUT_FILE_PATH +=p2.elf

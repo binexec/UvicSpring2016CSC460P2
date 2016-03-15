@@ -289,7 +289,7 @@ static void Kernel_Suspend_Task()
 	for(int i=0; i<MAXMUTEX; i++) {
 		if (Mutex[i].owner == p->pid) {
 			#ifdef DEBUG
-			printf("Kernel_Suspend_Task: Trying to suspend a task that's in an unsuspendable state %d!\n", p->state);
+			printf("Kernel_Suspend_Task: Trying to suspend a task that currently owns a mutex\n");
 			#endif
 			err = SUSPEND_NONRUNNING_TASK_ERR;
 			return;
@@ -756,6 +756,7 @@ static void Next_Kernel_Request()
 			
 			case RESUME:
 			Kernel_Resume_Task();
+			Dispatch();
 			break;
 			
 			case SLEEP:

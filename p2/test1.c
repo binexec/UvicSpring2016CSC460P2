@@ -112,7 +112,7 @@ void priority3()
 }
 
 /*Entry point for application*/
-
+/*
 void a_main()
 {
 	int test_set = 0;				//Which set of tests to run?
@@ -142,3 +142,4 @@ void a_main()
 	}
 	OS_Start();
 }
+*/
